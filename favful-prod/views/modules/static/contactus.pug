@@ -1,0 +1,46 @@
+extends ../../layouts/default
+
+block content
+    .container
+        .row
+            .col-md-12
+                .contactustitle.text-center
+                    h1 Talk to us Babe
+                br
+                .row
+                    .col-md-6
+                        .form-group
+                            | Full Name
+                            input.form-control(type='text', required='required', placeholder='Enter your Name')
+                        .form-group
+                            | Contact Number
+                            input.form-control(type='text', required='required', placeholder='Enter your Contact Number')
+                        .form-group
+                            | Email address
+                            input.form-control(type='email', required='required', placeholder='Enter your email')
+                            small.form-text.text-muted We'll never share your email with anyone else.
+                    .col-md-6   
+                        .form-group
+                            | What's Up
+                            textarea.form-control(name='text', rows='8', required='required', placeholder='Message')
+                button.btn.btn-success(type='submit') Submit 
+                       
+                hr
+
+            .col-md-12
+                .contactustitle
+                    h4 YOU CAN CONTACT US VIA:
+                .contactustitle
+                    p 
+                        fa.fa.fa-phone                    
+                        | &nbsp;Phone: +60173694667
+                    p
+                        fa.fa.fa-envelope.o
+                        | &nbsp;Email us: hello@stayfavful.com
+                    p
+                        fa.fa.fa-map-marker
+                        | &nbsp; Locate us: Sunway Nexis Soho, Kota Damansara, 1, Jalan PJU 5/1, Kota Damansara, 47810 
+
+
+
+

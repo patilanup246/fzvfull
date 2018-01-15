@@ -1,0 +1,32 @@
+extends ../../layouts/page
+
+block content
+    .sign-overlay
+    .signpanel
+    .panel.signin
+        .panel-heading.text-center
+            img(src='../img/static/companylogo.png')
+            h4.panel-title Merchant Registration
+        .panel-body
+            if (flash.length == 0)
+            else
+                .alert.alert-danger.text-center
+                    strong
+                        i.fa.fa-exclamation-triangle(aria-hidden='true')
+                        | &nbsp;#{flash}
+        form(method='post',action='/register')
+            input(type='hidden', name='_csrf', value=csrfToken)
+            .form-group
+                label(for='company') Company
+                input.form-control(type='text', name='company', autofocus)
+            .form-group
+                label(for='email') Email
+                input.form-control(type='text', name='email', autofocus)
+            .form-group
+                label(for='username') Username
+                input.form-control(type='text', name='username', autofocus)
+            .form-group
+                label(for='password') Password
+                input.form-control(type='password', name='password', autofocus)
+            br
+            button.btn.btn-primary(type='submit') Submit

@@ -1,0 +1,86 @@
+.leftpanel
+    .leftpanelinner
+
+        // ################## LEFT PANEL PROFILE ##################
+        .media.leftpanel-profile
+            .media-left
+                a(href='/')
+                    img.media-object.img-circle(src='/img/static/defaultuser.png', alt='')
+            .media-body
+                h4.media-heading
+                    | #{logged.username}
+                    a.pull-right(data-toggle='collapse', data-target='#loguserinfo')
+                        i.fa.fa-angle-down
+                span.small #{logged.company.name}
+
+        // leftpanel-profile
+        #loguserinfo.leftpanel-userinfo.collapse
+            h5.sidebar-title Contact
+            ul.list-group
+                li.list-group-item
+                    label.pull-left Email
+                    span.pull-right #{logged.email}
+
+        // leftpanel-userinfo
+        ul.nav.nav-tabs.nav-justified.nav-sidebar
+            li.tooltips.active(data-toggle='tooltip', title='Main Menu')
+                a(data-toggle='tab', data-target='#mainmenu')
+                    i.tooltips.fa.fa-ellipsis-h
+            li.tooltips(data-toggle='tooltip', title='Support')
+                a(data-toggle='tab', data-target='#supportmenu')
+                    i.tooltips.fa.fa-question-circle
+        .tab-content
+
+            // ################# MAIN MENU ###################
+            #mainmenu.tab-pane.active
+                h5.sidebar-title Dashboard
+                ul.nav.nav-pills.nav-stacked.nav-quirk
+                    li(class=(mainactive === 'dashboard' ? 'active' : ''))
+                        a(href='/dashboard')
+                            i.fa.fa-home
+                            span Dashboard
+                h5.sidebar-title My Products
+                ul.nav.nav-pills.nav-stacked.nav-quirk
+                    li.nav-parent(class=(mainactive === 'products' ? 'active' : ''))
+                        a(href='')
+                            i.fa.fa-shopping-cart
+                            span Products
+                        ul.children
+                            li(class=(subactive === 'productlist' ? 'active' : ''))
+                                a(href='/products/list') My Products
+                h5.sidebar-title My Payouts
+                ul.nav.nav-pills.nav-stacked.nav-quirk
+                    li.nav-parent(class=(mainactive === 'payouts' ? 'active' : ''))
+                        a(href='')
+                            i.fa.fa-dollar
+                            span Payouts
+                        ul.children
+                            li(class=(subactive === 'payouthistory' ? 'active' : ''))
+                                a(href='/payout/history') Payout History
+                h5.sidebar-title My Merchant Account
+                ul.nav.nav-pills.nav-stacked.nav-quirk
+                    li.nav-parent(class=(mainactive === 'merchantprofile' ? 'active' : ''))
+                        a(href='')
+                            i.fa.fa-user-circle-o
+                            span Profile
+                        ul.children
+                            li(class=(subactive === 'myprofile' ? 'active' : ''))
+                                a(href='/profile') My Profile
+                            li(class=(subactive === 'payment' ? 'active' : ''))
+                                a(href='/profile/payment') Payment Settings
+                    li.nav-parent(class=(mainactive === 'settings' ? 'active' : ''))
+                        a(href='')
+                            i.fa.fa-gear
+                            span Settings
+                        ul.children
+                            li(class=(subactive === 'shipping' ? 'active' : ''))
+                                a(href='/settings/shipping') Shipping & Fulfillment
+
+            // ################# SUPPORT MENU ###################
+            #supportmenu.tab-pane
+                h5.sidebar-title Supports
+                ul.nav.nav-pills.nav-stacked.nav-quirk
+                    li
+                        a(href='index.html')
+                            i.fa.fa-book
+                            span User Manual

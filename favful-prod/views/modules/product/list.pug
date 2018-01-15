@@ -1,0 +1,197 @@
+extends ../../layouts/product
+
+block content
+    .container
+        .row
+            .col-md-12
+                .row
+                    .col-md-12
+                        .home-module-title
+                            h3 TRENDING PRODUCTS
+                hr
+                .row
+                    each item in featuredproducts
+                        .col-sm-6.col-md-4.col-lg-3
+                            .product-card-wrap
+                                form
+                                    .product-card-details
+                                        .product-card-details-img-wrap
+                                            .product-card-details-img
+                                                a(href='/products/' + item.slug)
+                                                    img.object-fit(src=item.imagepath)
+                                        hr
+                                        .product-card-details-name
+                                            a.gray(href='/products/' + item.slug)
+                                                | #{item.name}
+                                        .product-card-details-desc.small.text-muted
+                                            | #{item.shortdescription}
+                                        //.beauty-tutorial-writer-product-use-stat
+                                        //    .beauty-tutorial-product-stat-star
+                                        //        | Star
+                                        //    .beauty-tutorial-product-stat-review
+                                        //        | &nbsp;Review
+                                        hr.hr-small-margin
+                                    .product-card-details-brand.small.text-center
+                                        | #{item.brand.name}
+                                    .product-card-details-price.text-center
+                                        if (item.price === 0) || (!item.price)
+                                            .product-card-details-price-na.text-muted.small Price Not Available
+                                        else
+                                            if (item.discountedprice)
+                                                span.product-card-details-price-slash
+                                                    | MYR #{parseFloat(item.price).toFixed(2)}
+                                                | &nbsp;
+                                                b.primary MYR #{parseFloat(item.discountedprice).toFixed(2)}
+                                            else
+                                                b.primary MYR #{parseFloat(item.price).toFixed(2)}
+                                    hr
+                                    .product-widget-addtocart
+                                        if (item.price)
+                                            input(type='hidden', name='_csrf', value=csrfToken)
+                                            input(type='hidden', name='item_' + item.id, id='item_' + item.id, value=item.id)
+                                            button.btn.btn-success.btn-sm(style='width:100%', type='submit', id='addToCartBtn_' + item.id)
+                                                i.fa.fa-cart-plus
+                                                | &nbsp; Add to Cart
+                                        if (!item.price)
+                                            button.btn.btn-success.btn-sm(style='width:100%', disabled)
+                                                i.fa.fa-cart-plus
+                                                | &nbsp; Add to Cart
+                                        script.
+                                            $('#addToCartBtn_#{item.id}').click(function (e) {
+                                                var item = $(this).parent().find('#item_#{item.id}').val();
+                                                $.ajax({
+                                                    url: "/addItemToCart",
+                                                    type: "POST",
+                                                    data: {
+                                                        itemID: item
+                                                    },
+                                                    beforeSend: function (request) {
+                                                        request.setRequestHeader("X-CSRF-TOKEN", "#{csrfToken}");
+                                                    },
+                                                    success: function (data) {
+                                                        $("#shoppingCart").load(" #shoppingCart");
+                                                        $(".sub-menu").css("visibility", "visible");
+                                                    }
+                                                });
+                                                return false;
+                                            });
+
+                    //.row
+                    //    .col-md-6
+                    //        a(href='#')
+                    //            h3 Dryness
+                    //        a(href='#')
+                    //            | Best products to moisturize dry skin
+                    //        .trending-products-holder
+                    //            .row
+                    //                .col-md-12
+                    //                    .trending-best
+                    //                        .product-ribbon-1.best-1.text-center
+                    //                            | Best
+                    //                            br
+                    //                            strong 1
+                    //                        .trending-best-img
+                    //                            img.object-fit(src='../img/static/empty-user.png')
+                    //                        .trending-best-details
+                    //                            br
+                    //                            .trending-best-details-brand.text-center
+                    //                                a(href='/product/single')
+                    //                                    | Brand
+                    //                            hr
+                    //                            .trending-best-details-name
+                    //                                | Product Name
+                    //                            hr
+                    //                            .trending-best-ratings
+                    //                                .trending-best-ratings-stars.pull-right
+                    //                                    | Stars
+                    //                                .trending-best-ratings-smiley
+                    //                                    | Smiley
+                    //            .row
+                    //                br
+                    //                .col-md-6
+                    //                    .trending-best
+                    //                        .product-ribbon-2.best-2
+                    //                            br
+                    //                            strong 2
+                    //                        .trending-best-img
+                    //                            img.object-fit(src='../img/static/empty-user.png')
+                    //                        .trending-best-details
+                    //                            br
+                    //                            .trending-best-details-brand.text-center
+                    //                                | Brand
+                    //                            hr
+                    //                            .trending-best-details-name
+                    //                                | Product Name
+                    //                            hr
+                    //                            .trending-best-ratings
+                    //                                .trending-best-ratings-stars.pull-right
+                    //                                    | Stars
+                    //                                .trending-best-ratings-smiley
+                    //                                    | Smiley
+                    //
+                    //                .col-md-6
+                    //                    .trending-best
+                    //                        .product-ribbon-3.best-3
+                    //                            br
+                    //                            strong 3
+                    //                        .trending-best-img
+                    //                            img.object-fit(src='../img/static/empty-user.png')
+                    //                        .trending-best-details
+                    //                            br
+                    //                            .trending-best-details-brand.text-center
+                    //                                | Brand
+                    //                            hr
+                    //                            .trending-best-details-name
+                    //                                | Product Name
+                    //                            hr
+                    //                            .trending-best-ratings
+                    //                                .trending-best-ratings-stars.pull-right
+                    //                                    | Stars
+                    //                                .trending-best-ratings-smiley
+                    //                                    | Smiley
+                    //            br
+                    //            button.btn.trending-btn-solution.center-block
+                    //               | &nbsp;All solutions »
+                    //        .row
+                    //            .col-md-12
+                    //                .trending-collection-result.text-center.small.text-muted
+                    //                    strong 467
+                    //                    |  solutions from&nbsp;
+                    //                    strong 232
+                    //                    |  &nbsp;users
+
+            //.col-md-3
+            //    .row
+            //        .col-md-12
+            //            .sidebar-component-wrap
+            //                .sidebar-component-title.text-center
+            //                    h4 TOP BRANDS
+            //    hr
+            //    if (tutorials != 0)
+            //        each tutorial in toptutorial
+            //            .trending-testimonial
+            //                .trending-testimonial-section
+            //                    | Denim you probably haven't heard of. Lorem ipsum dolor met consectetur adipisicing sit amet, consectetur adipisicing elit, of them jean shorts sed magna aliqua. Lorem ipsum dolor met.
+            //            .trending-testimonial-image
+            //                img.img-circle.object-fit(src=tutorial.author.photo)
+            //                .trending-sidebar-desc
+            //                    .trending-sidebar-benefited
+            //                        i.fa.fa-heart-o
+            //                        | &nbsp;Benefited
+            //                    .trending-sidebar-share
+            //                        i.fa.fa-facebook-official
+            //                        | &nbsp;Share
+            //            br
+    script.
+        $('.product-card-details-name').truncate({
+            lines: 2
+        });
+        $('.product-card-details-desc').truncate({
+            lines: 3
+        });
+        $('.product-card-details-brand').truncate({
+            lines: 1
+        });
+        $("img").on("error", function () {
+            $(this).attr('src', '../img/static/empty-product.png');
+        });

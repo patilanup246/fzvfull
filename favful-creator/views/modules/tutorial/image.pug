@@ -1,0 +1,43 @@
+extends ../../layouts/default
+
+block content
+    .container.white-bg
+        .row
+            .col-md-12.text-center
+                h3(style='margin-top:25px') Showcase (Image)
+        hr
+        .row
+            .col-md-6.col-md-offset-3
+                form(action='/tutorial/image', method='post', enctype="multipart/form-data")
+                    input(type='hidden', name='_csrf' value=csrfToken)
+                    .form-group
+                        label Title
+                        input.form-control(placeholder='Does K-Beauty JAMSU Work?', id='title', name='title', required='required')
+                        .input-tips.small Title that starts with "How-to" or "best" or "vs" to get better response.
+                    .form-group
+                        label Thumbnail Image
+                        input(type='file', name='mediafile', id='mediafile', required='required')
+                        .input-tips.small
+                            | Recommended resolution: 800px (width) X 450px (height)
+                    .form-group
+                        label Short Description
+                        textarea.form-control.resize-none(placeholder='e.g. 6vw_LesSzYM', rows = '3', id='shortdescription', name='shortdescription', required='required')
+                        .input-tips.small
+                            | Short description about your tutorial. For better result, keep it short and simple.
+                    .form-group
+                        label Tutorial
+                        textarea(id='content', name='content', required='required')
+                    hr
+                    .text-center
+                        button.btn.btn-success(type='submit', style='color:#fff !important') Submit
+                        | &nbsp;&nbsp;&nbsp;
+                        a.btn.btn-default(href='/dashboard', style='color:#aaa !important') Cancel
+                    br
+                    br
+
+    script.
+        $(document).ready(function () {
+            $('#content').summernote({
+                height: 300
+            });
+        });

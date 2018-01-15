@@ -1,0 +1,34 @@
+extends ../../layouts/dashboard
+
+block content
+    .container.white-bg
+        .row
+            .col-md-12.text-center
+                h3 Favful's Creators
+        hr
+        .row
+            each creator in creators
+                .col-md-3
+                    //a(href='/' + creator.username)
+                    .creator-item
+                        .creator-item-tint.img-circle.object-fit
+                            .creator-item-tint-details.text-center
+                                if (creator.influence == null) || (creator.influence == 0)
+                                    - var influencescount = creator.youtube.subscribers + creator.instagram.followers + creator.blog.monthlyviews
+                                    - var influences = (influencescount).toLocaleString('en')
+                                    | #{creator.firstname}
+                                    br
+                                    .creator-item-influence-count
+                                        i.fa.fa-heart(style="color:#ED145B")
+                                        | &nbsp;#{influences}
+                                else
+                                    i.fa.fa-heart.fa-4x
+                                    br
+                                    .creator-item-influence-count
+                                        - var influences = Number(creator.influence).toLocaleString('en')
+                                        | #{influences}
+                        if creator.photo == null
+                            img.img-circle.object-fit(src='../img/static/empty-user.png')
+                        else
+                            img.img-circle.object-fit(src=creator.photo)
+

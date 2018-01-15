@@ -1,0 +1,9 @@
+.header-topic-slider-tutorial
+    .header-topic-slider-content.text-center
+        .custom-search-input.col-sm-6.col-md-12
+            form(action='/search', method='get')
+                .input-group
+                    input.form-control.input-lg(type='text', placeholder='Search for tutorial...', id='q', name='q')
+                    span.input-group-btn
+                        button.btn.btn-custom-search.btn-lg(type='text')
+                            i.fa.fa-search

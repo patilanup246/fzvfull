@@ -1,0 +1,60 @@
+if (!logged)
+    #loginModal.modal.fade(role='dialog')
+        .modal-dialog.modal-lg
+            .modal-content
+                .modal-body.text-center
+                    .row
+                        a(href='', type='button', data-dismiss='modal', style='position:absolute;top:5px;right:10px')
+                            i.fa.fa-times
+                        .sign-in-content-wrap
+                            .col-md-12
+                                .sign-in-content-img
+                                    img.object-fit(src='../img/static/login-img.png')
+                                p
+                                    a(href="/auth/facebook")
+                                        button.loginBtn.loginBtn--facebook
+                                            | Login with Facebook
+                                hr
+                                p.small.text-muted
+                                    | By clicking on "Login with Facebook", you agree to Favful's&nbsp;
+                                    a(href='/terms-and-conditions', target='_blank') Creator Community Terms & Conditions
+                                    |,&nbsp;
+                                    a(href='/terms-of-use', target='_blank') Terms of Use
+                                    | &nbsp;and&nbsp;
+                                    a(href='/privacy-policy', target='_blank') Privacy Policy.
+    #checkoutLoginModal.modal.fade(role='dialog')
+        .modal-dialog.modal-md
+            .modal-content
+                .modal-body.text-center
+                    .row
+                        a(href='', type='button', data-dismiss='modal', style='position:absolute;top:5px;right:10px')
+                            i.fa.fa-times
+                        .sign-in-content-wrap
+                            .col-md-4
+                                img.object-fit(src='../img/static/login-meme.png')
+                            .col-md-8
+                                .sign-in-content-wrap
+                                h4 "It takes 2 secs to sign in, and it will save you hours to come, while you earn friends and rewards!"
+                    .row
+                        hr
+                        .col-md-12
+                            h4 True, save my info to my account now!
+                            p
+                                a(href="/auth/facebook")
+                                    button.loginBtn.loginBtn--facebook
+                                        | Login with Facebook
+                            p.small.text-muted
+                                | By clicking on "Login with Facebook", you agree to Favful's&nbsp;
+                                a(href='/terms-and-conditions', target='_blank') Creator Community Terms & Conditions
+                                |,&nbsp;
+                                a(href='/terms-of-use', target='_blank') Terms of Use
+                                | &nbsp;and&nbsp;
+                                a(href='/privacy-policy', target='_blank') Privacy Policy.
+
+script.
+    jQuery(document).ready(function($) {
+        $('footer').stickyFooter();
+        if (window.location.href.indexOf('#_=_') > 0) {
+            window.location = window.location.href.replace(/#.*/, '');
+        }
+    });

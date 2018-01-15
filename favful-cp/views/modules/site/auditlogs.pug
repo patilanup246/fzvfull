@@ -1,0 +1,27 @@
+extends ../../layouts/admin
+
+block content
+    .panel
+        .panel-heading
+            h4.panel-title Audit Logs
+            p Last 50 Activities Log
+        .panel-body
+            .table-responsive
+                table.table.table-hover.nomargin
+                    thead
+                        tr
+                            th Timestamp
+                            th Action
+                            th Origin
+                            th Status
+                            th User
+                            th Remark
+                    tbody
+                        each item in logs
+                            tr
+                                td #{moment(item.date).format('DD/MM/YYYY - hh:mmA')}
+                                td #{item.action}
+                                td #{item.origin}
+                                td !{item.label}
+                                td #{item.actor}
+                                td #{item.description}

@@ -1,0 +1,72 @@
+extends ../../layouts/admin
+
+block content
+    .panel
+        .panel-heading
+            h4.panel-title Add New Tutorial
+            p Add new tutorial to Favful member.
+            hr
+        .panel-body
+            form.form-horizontal(action='/tutorials/add', method='post', enctype='multipart/form-data')
+                input(type='hidden', name='_csrf', value=csrfToken)
+                .form-group
+                    label.col-sm-2.control-label Member
+                    .col-sm-8
+                        select.form-control.event-list(name='member' id='member')
+                            each item in members
+                                option(value=item.id) #{item.displayname}
+                .form-group
+                    label.col-sm-2.control-label Status
+                    .col-sm-8
+                        select.form-control.event-list(name='status' id='status')
+                            option(value='active') Active
+                            option(value='reject') Reject
+                .form-group
+                    label.col-sm-2.control-label Title
+                    .col-sm-8
+                        input.form-control(type='text', name='title', id='title', required='required')
+                .form-group
+                    label.col-sm-2.control-label Video Upload
+                    .col-sm-8
+                        input.form-control(type='file', name='videofile', id='videofile', required='required')
+                .form-group
+                    label.col-sm-2.control-label Video Thumbnail
+                    .col-sm-8
+                        input.form-control(type='file', name='thumbnailfile', id='thumbnailfile', required='required')
+                .form-group
+                    label.col-sm-2.control-label Short Description
+                    .col-sm-8
+                        textarea.form-control(name='shortdescription', id='shortdescription', rows='3', required='required')
+                .form-group
+                    label.col-sm-2.control-label Content
+                    .col-sm-8
+                        textarea.form-control(name='content', id='content', required='required')
+                .form-group
+                    label.col-sm-2.control-label Tag Product
+                    .col-sm-8
+                        select.form-control.event-list(name='products' id='products', data-placeholder="Tag Products", multiple)
+                            each item in products
+                                option(value=item.id) #{item.name}
+                hr
+                .row
+                    .col-sm-6.col-sm-offset-3.text-center
+                        button.btn.btn-success.btn-quirk.btn-wide.mr5(type="submit") Save
+                        a(href="/tutorials/list").btn.btn-quirk.btn-wide.btn-default Cancel
+
+    script.
+        $(document).ready(function () {
+            $.get('/get_signature', {})
+                .done(function (s3Hash) {
+                    $('#content').froalaEditor({
+                        imageUploadToS3: s3Hash,
+                        videoUploadToS3: s3Hash,
+                        fileUploadToS3: s3Hash,
+                        toolbarButtons: ['bold', 'italic', 'underline', '|', 'align', 'formatUL', 'formatOL', '|', 'fontSize', 'fontFamily', 'color', '|', 'insertLink', 'insertImage', 'insertVideo', '|', 'clearFormatting', 'html'],
+                        spellcheck: true,
+                        heightMin: 300,
+                        toolbarSticky: true,
+                        toolbarStickyOffset: 60
+                    })
+                });
+            $('#products').select2();
+        });

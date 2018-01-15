@@ -1,0 +1,72 @@
+extends ../../layouts/admin
+
+block content
+    .row.panel-statistics
+        .col-sm-4
+            .panel.panel-updates
+                .panel-body
+                    .row
+                        .col-md-12
+                            h4.panel-title.text-success(style='margin-top:10px') Total Sales
+                            h3 MYR #{totalSales}
+                            p In the past 14 days
+        .col-sm-4
+            .panel.panel-warning-full.panel-updates
+                .panel-body
+                    .row
+                        .col-md-12
+                            h4.panel-title.text-success(style='margin-top:10px') Next Payout After Commission
+                            h3 MYR 0.00
+                            p Payout on 1st and 16th of the month
+                            //- var today = moment().format('DD');
+                            //if (today < '17')
+                            //    p Next Payout: 17 #{moment().format('MMM YYYY')}
+                            //if (today > '17')
+                            //    p Next Payout: 29 #{moment().format('MMM YYYY')}
+        .col-sm-4
+            .panel.panel-success-full.panel-updates
+                .panel-body
+                    .row
+                        .col-md-12
+                            h4.panel-title.text-success(style='margin-top:10px') Total Payout
+                            h3 MYR 0.00
+                            p Accumulated Payout
+
+    .panel
+        .panel-heading
+            .pull-left
+                h4.panel-title Pending Fulfillment
+                p Pending orders for shipping.
+            //.pull-right
+            //    a(href="/products/add").btn.btn-success.btn-sm
+            //        | See All
+        .clearfix
+        .panel-body
+            .table-responsive
+                table.table.nomargin
+                    thead
+                        tr
+                            th No.
+                            th Order ID
+                            th Order Date
+                            th Fulfillment Status
+                            th Action
+                    tbody
+                        each item, index in pendingOrders
+                            tr
+                                td(style='width:5%') #{index + 1}
+                                td
+                                    b #{item.orderId}
+                                    | &nbsp;(#{item.memberEmail})
+                                td #{moment(item.createdAt).format('DD MMMM YYYY')}
+                                td #{item.status}
+                                td(style='width:15%')
+                                    a(href='').btn.btn-success.btn-sm Enter Tracking Details
+    script.
+        $('table').DataTable({
+            "columnDefs": [
+                {"width": "50%", "targets": 0}
+            ],
+            "order": [[1, "asc"]],
+            "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, "All"]],
+        });

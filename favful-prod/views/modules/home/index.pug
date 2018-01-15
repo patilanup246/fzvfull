@@ -1,0 +1,248 @@
+extends ../../layouts/home
+
+block content
+    .container
+        .row
+            .col-md-9
+                .row
+                    .col-md-12
+                        .home-module-title
+                            h3 TRENDING BEAUTY HAULS
+                        .home-module-viewall.pull-right.hidden-xs
+                            a(href='/tutorial')
+                                | View all tutorials >>
+                        .home-module-viewall.text-center.visible-xs
+                            a(href='/tutorial')
+                                | View all tutorials
+                        .home-module-description.hidden-xs
+                            | Get inspired and shop from these real-life usage videos by the beauty gurus!
+                br
+                .row
+                    if (tutorials != 0)
+                        each tutorial in toptutorial
+                            .col-sm-4.col-md-4
+                                .tutorial-card-wrap
+                                    .tutorial-card-author-wrap
+                                        a(href='/' + tutorial.author.username)
+                                            .tutorial-card-author-photo
+                                                img.img-circle.object-fit(src=tutorial.author.photo)
+                                        .tutorial-card-author-details-wrap
+                                            a.gray(href='/' + tutorial.author.username)
+                                                .tutorial-card-author-name
+                                                    | #{tutorial.author.displayname}
+                                            .tutorial-card-author-stats.small.text-muted
+                                                i.fa.fa.fa-clock-o
+                                                span(style='text-transform:capitalize') &nbsp;#{moment(tutorial.timestamp).format('DD MMM YYYY')}
+                                    hr.no-margin
+                                    .tutorial-card-title
+                                        a.gray(href='/tutorial/' + tutorial.slug) #{tutorial.title}
+                                    .tutorial-card-thumbnail-container
+                                        if tutorial.type == 'video-youtube'
+                                            .tutorial-card-thumbnail-wrap
+                                                .tutorial-card-thumbnail
+                                                    a(href='/tutorial/' + tutorial.slug)
+                                                        .tutorial-card-video-tint
+                                                            i.fa.fa-youtube-play.fa-4x
+                                                        img.object-fit(src='http://img.youtube.com/vi/' + tutorial.youtubeid + '/0.jpg')
+                                        if tutorial.type == 'video-vimeo'
+                                            .tutorial-card-thumbnail-wrap
+                                                .tutorial-card-thumbnail
+                                                    a(href='/tutorial/' + tutorial.slug)
+                                                        .tutorial-card-video-tint
+                                                            i.fa.fa-youtube-play.fa-4x
+                                                        img.object-fit(src='http://img.youtube.com/vi/' + tutorial.youtubeid + '/0.jpg')
+                                        if tutorial.type == 'video-upload'
+                                            .tutorial-card-thumbnail-wrap
+                                                .tutorial-card-thumbnail
+                                                    a(href='/tutorial/' + tutorial.slug)
+                                                        .tutorial-card-video-tint
+                                                            i.fa.fa-youtube-play.fa-4x
+                                                        img.object-fit(src=tutorial.thumbnailpath)
+                                        if tutorial.type == 'image'
+                                            .tutorial-card-thumbnail-wrap
+                                                .tutorial-card-thumbnail
+                                                    a(href='/tutorial/' + tutorial.slug)
+                                                        img.object-fit(src=tutorial.thumbnail)
+                                    hr
+                                    .tutorial-card-cta-wrap.clearfix
+                                        p Products used in this video:
+                                        .row
+                                            .col-xs-12.col-md-12
+                                                .variable-width
+                                                    if (tutorial.products)
+                                                        each item in tutorial.products
+                                                            a.gray(href='/products/' + item.slug)
+                                                                .product-home-widget-wrap
+                                                                    .product-home-widget-display
+                                                                        .tutorial-card-author-photo
+                                                                            img.img-circle.object-fit(src=item.imagepath)
+                                                                    .product-home-widget-display
+                                                                        .product-home-widget-stats-name
+                                                                            b #{item.name}
+                                                                        .product-home-widget-stats.small
+                                                                            i #{item.brand.name}
+                                                                        .product-home-widget-stats.small
+                                                                            | RM #{parseFloat(item.price).toFixed(2)}
+                                                    if (!tutorial.products)
+                                                        .product-home-widget-wrap.text-center
+                                                            i No products found
+                                    //.tutorial-card-cta-wrap
+                                    //    .tutorial-card-cta-btn.small
+                                    //        i.fa.fa.fa-heart.fa-fw
+                                    //        | &nbsp;#{tutorial.heart} Benefited
+                                    
+
+                                        //.tutorial-card-cta-btn.small
+                                        //    i.fa.fa.fa-comment.fa-fw
+                                        //    | &nbsp;Comment
+                                        //.tutorial-card-cta-btn.small
+                                        //    i.fa.fa.fa-share.fa-fw
+                                        //    | &nbsp;Share
+                hr
+                .row
+                    .col-md-12
+                        .home-module-title
+                            h3 FEATURED BY US
+                        .home-module-description.hidden-xs
+                            | Too cute to not mention this!
+                        br
+                        .home-container-padding
+                            a(href='/products/toothbrush-foundation-brushblending-spongebrush-egg-set')
+                                img.object-fit(src='../img/banners/home-banner-02.png')
+                hr
+                .row
+                    .col-md-12
+                        .home-container-padding
+                            .home-module-block
+                                .home-module-title
+                                    h3 TRENDING PRODUCTS
+                                .home-module-viewall.pull-right.hidden-xs
+                                    a(href='/products')
+                                        | View all products >>
+                                .home-module-viewall.text-center.visible-xs
+                                    a(href='/products')
+                                        | View all products
+                                .home-module-description.hidden-xs
+                                    | Babes are loving these this week!
+                                br
+                                .row
+                                    each item in productlist
+                                        .col-sm-4.col-md-4.col-lg-4
+                                            .product-card-wrap
+                                                .product-card-details
+                                                    .product-card-details-img-wrap
+                                                        .product-card-details-img
+                                                            a(href='/products/' + item.slug)
+                                                                img.object-fit(src=item.imagepath)
+                                                    hr
+                                                    .product-card-details-name
+                                                        a.gray(href='/products/' + item.slug)
+                                                            | #{item.name}
+                                                    .product-card-details-desc.small.text-muted
+                                                        | #{item.shortdescription}
+                                                    hr.hr-small-margin
+                                                .product-card-details-brand.small.text-center
+                                                    | #{item.brand.name}
+                                                .product-card-details-price.text-center
+                                                    if (item.price === 0) || (!item.price)
+                                                        .product-card-details-price-na.text-muted.small Price Not Available
+                                                    else
+                                                        if (item.discountedprice)
+                                                            span.product-card-details-price-slash
+                                                                | MYR #{parseFloat(item.price).toFixed(2)}
+                                                            | &nbsp;
+                                                            b.primary MYR #{parseFloat(item.discountedprice).toFixed(2)}
+                                                        else
+                                                            b.primary MYR #{parseFloat(item.price).toFixed(2)}
+            .col-md-3
+                .sidebar-component-wrap
+                    .sidebar-component-title
+                        h4 RISING BEAUTY GURUS
+                        | Beauty experts who deserve some love!
+                    hr
+                    .row
+                        each item in topexperts
+                            .col-xs-4.col-sm-2.col-md-6
+                                .expert-widget-small-wrap.text-center
+                                    .expert-widget-small-photo-wrap
+                                        .expert-widget-small-photo
+                                            a(href='/' + item.username)
+                                                img.img-circle.object-fit(src=item.photo)
+                                        if item.rank === 'creator'
+                                            .expert-widget-small-flag
+                                                img.object-fit(src='../img/badge/creator.png')
+                                    .expert-widget-small-details-wrap
+                                        .expert-widget-small-details-name
+                                            a.gray(href='/' + item.username)
+                                                | #{item.displayname}
+                                        .expert-widget-small-details-influence.small.text-muted
+                                            i.fa.fa-user
+                                            | &nbsp;!{(item.influence).toLocaleString('en')}
+                                        //.home-sidebar-topbeauty-stats.small
+                                        //    i.fa.fa-user(style='color:#ED145B')
+                                        //    | &nbsp; benefited
+                //.home-sidebar-block
+                //    .home-module-title-experts
+                //        h4 TRENDING BEAUTY REVIEWS
+                //    hr
+                //    .trending-testimonial-image
+                //        img.object-fit(src='../img/static/empty-user.png')
+                //        .trending-sidebar-desc
+                //            .trending-sidebar-benefited
+                //                i.fa.fa-heart-o
+                //                | &nbsp;Benefited
+                //            .trending-sidebar-share
+                //                i.fa.fa-facebook-official
+                //                | &nbsp;Share
+                //        br
+    //.home-featured-container
+    //    .home-featured-wrapper
+    //        .row
+    //            .container
+    //                .col-md-12
+    //                    h3.home-featured-title
+    //                        | As seen on
+    //                    br
+    //                    .home-featured-logo
+    //                        .responsive
+    //                            img(src='../img/static/newsstraittimes.png')
+    //                            img(src='../img/static/star-logo.png')
+    //                            img(src='../img/static/techinasia.svg')
+    //                            img(src='../img/static/says.png')
+    //                            img(src='../img/static/theedge.png')
+    //                            img(src='../img/static/forbes.svg')
+    //                            img(src='../img/static/oriental.png')
+    //                            img(src='../img/static/Lipstiq-Favful.png')
+    //                            img(src='../img/static/female.png')
+
+    script.
+        $('.expert-widget-small-details-name').truncate({
+            lines: 1
+        });
+
+        $('.product-card-details-name').truncate({
+            lines: 2
+        });
+        $('.product-card-details-desc').truncate({
+            lines: 3
+        });
+        $('.product-card-details-brand').truncate({
+            lines: 1
+        });
+        $("img").on("error", function () {
+            $(this).attr('src', '../img/static/empty-product.png');
+        });
+
+        $('.variable-width').slick({
+            infinite: true,
+            dots: false,
+            speed: 300,
+            slidesToShow: 1,
+            variableWidth: true,
+            arrows: false,
+            autoplay: true,
+            autoplaySpeed: 3000
+        });
+        $('.product-home-widget-stats-name').truncate({
+            lines: 1
+        });

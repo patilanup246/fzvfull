@@ -1,0 +1,45 @@
+doctype html
+html
+    head
+        include ../partials/gtm
+        title Favful - #{title}
+        meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0')
+
+        meta(name='title', content='Favful - ' + title)
+        meta(name='description', content='Favful provides the latest beauty reviews, ratings, price comparisons, makeup tips and tutorials! Earn points to redeem free beauty products.')
+        meta(name='keywords', content='favful, beauty, reviews, makeup, skin, care, tips, tutorials, product, shop, buy')
+
+        meta(property='og:title', content=title + ' | Favful')
+        meta(property='og:type', content='Website')
+        meta(property='og:image', content='https://www.favful.com.my/img/static/favful-logo.svg')
+        meta(property='og:image:width', content='800')
+        meta(property='og:image:height', content='600')
+        meta(property='og:description', content='Favful provides the latest beauty reviews, ratings, price comparisons, makeup tips and tutorials! Earn points to redeem free beauty products.')
+        meta(property='fb:app_id', content='1912122202399258')
+
+        link(rel='stylesheet', href='../css/custom.css')
+        link(rel='stylesheet', href='../css/components.css')
+        link(rel='stylesheet', href='../css/responsive.css')
+        link(rel='stylesheet', href='../vendors/bootstrap/bootstrap.min.css')
+        link(rel='stylesheet', href='../vendors/font-awesome/css/font-awesome.min.css')
+        link(rel='stylesheet', href='../vendors/stickyfooter/jquery.stickyfooter.min.css')
+        link(rel='stylesheet', href='../vendors/calendar/css/bootstrap-datepicker.min.css')
+        link(rel='stylesheet', href='../vendors/slick-1.6.0/slick/slick.css')
+        link(rel='stylesheet', href='../vendors/slick-1.6.0/slick/slick-theme.css')
+        script(src='../vendors/jquery/jquery-3.2.0.min.js')
+        script(src='../vendors/bootstrap/bootstrap.min.js')
+        script(src='../vendors/stickyfooter/jquery.stickyfooter.min.js')
+        script(src='../vendors/calendar/js/bootstrap-datepicker.min.js')
+        script(src='../vendors/slick-1.6.0/slick/slick.min.js')
+        script(src='/vendors/truncate/truncate.min.js')
+        include ../partials/ga
+
+    body
+        include ../partials/gtm-noscript
+        header
+            include ../partials/header
+        .dashboard-content-wrap
+            block content
+    footer.footer
+        include ../partials/footer
+    include ../partials/scripts

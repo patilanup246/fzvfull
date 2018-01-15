@@ -1,0 +1,88 @@
+extends ../../layouts/admin
+
+block content
+    .panel
+        .panel-heading
+            h4.panel-title Edit Member
+            p
+                | Currently editing user&nbsp;
+                i.fa.fa-chevron-circle-right(aria-hidden='true')
+                | &nbsp;
+                b #{member.displayname} (#{member.email})
+            hr
+        .panel-body
+            form.form-horizontal(method='post', action='/members/edit/' + member.id)
+                input(type="hidden", name="_csrf", value=csrfToken)
+                .row
+                    .col-sm-12
+                        h4.panel-title Member Details
+                        hr
+                        .form-group
+                            label.control-label.col-sm-2 Display Name
+                            .col-sm-6
+                                input.form-control(type='text', name='displayname', id='displayname', value=member.displayname)
+                        .form-group
+                            label.control-label.col-sm-2 First Name
+                            .col-sm-6
+                                input.form-control(type='text', name='firstname', id='firstname', value=member.firstname)
+                        .form-group
+                            label.control-label.col-sm-2 Last Name
+                            .col-sm-6
+                                input.form-control(type='text', name='lastname', id='lastname', value=member.lastname)
+                        .form-group
+                            label.control-label.col-sm-2 Email Address
+                            .col-sm-6
+                                input.form-control(type='text', name='email', id='email', value=member.email)
+                        .form-group
+                            label.control-label.col-sm-2 Birthday
+                            .col-sm-6
+                                input.form-control(type='date', name='birthday', id='birthday', value=moment(member.birthday).format('YYYY-MM-DD'))
+                        h4.panel-title Social Influences
+                        hr
+                        .form-group
+                            label.control-label.col-sm-2 Facebook ID
+                            .col-sm-6
+                                input.form-control(type='text', name='fbid', id='fbid', value=member.fb.id, readonly)
+                        .form-group
+                            label.control-label.col-sm-2 Facebook Access Token
+                            .col-sm-6
+                                input.form-control(type='text', name='fbtoken', id='fbtoken', value=member.fb.access_token, readonly)
+                        .form-group
+                            label.control-label.col-sm-2 Facebook Friends
+                            .col-sm-6
+                                input.form-control(type='text', name='fbfriends', id='fbfriends', value=member.fb.friends)
+                        .form-group
+                            label.control-label.col-sm-2 Blog URL
+                            .col-sm-6
+                                input.form-control(type='text', name='blogurl', id='blogurl', value=member.blog.url)
+                        .form-group
+                            label.control-label.col-sm-2 Blog Monthly Visitors
+                            .col-sm-6
+                                input.form-control(type='text', name='blogmonthlyviews', id='blogmonthlyviews', value=member.blog.monthlyviews)
+                        .form-group
+                            label.control-label.col-sm-2 Youtube Channel
+                            .col-sm-6
+                                input.form-control(type='text', name='youtubeurl', id='youtubeurl', value=member.youtube.url)
+                        .form-group
+                            label.control-label.col-sm-2 Youtube Subscribers
+                            .col-sm-6
+                                input.form-control(type='text', name='youtubesubscribers', id='youtubesubscribers', value=member.youtube.subscribers)
+                        .form-group
+                            label.control-label.col-sm-2 Instagram Username
+                            .col-sm-6
+                                input.form-control(type='text', name='instausername', id='instausername', value=member.instagram.url)
+                        .form-group
+                            label.control-label.col-sm-2 Instagram Followers
+                            .col-sm-6
+                                input.form-control(type='text', name='instafollowers', id='instafollowers', value=member.instagram.followers)
+
+                hr
+                .row
+                    .col-sm-6.col-sm-offset-3.text-center
+                        button.btn.btn-success.btn-quirk.btn-wide.mr5(type="submit") Save
+                        a(href="/members/list").btn.btn-quirk.btn-wide.btn-default Cancel
+    //script.
+    //    $(window).on('load', function () {
+    //        $('select[name="company"]').val('#{user.company}');
+    //    });
+

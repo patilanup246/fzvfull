@@ -1,0 +1,357 @@
+extends ../../layouts/tutorial-single
+
+block content
+    .beauty-tutorial-single-title-wrap
+        .container
+            .beauty-tutorial-single-desc
+                .beauty-tutorial-writer-single-desc
+                    .beauty-tutorial-single-title
+                        h3 #{tutorial.title}
+                    .beauty-tutorial-single-shortdesc
+                        .small #{tutorial.shortdescription}
+                    .beauty-tutorial-single-writer-name.text-muted.small
+                        | By:&nbsp;
+                        a(href='/' + tutorial.author.username) #{tutorial.author.displayname}
+                    .beauty-tutorial-single-writer-date.text-muted.small
+                        i.fa.fa.fa-clock-o
+                        | &nbsp;#{moment(tutorial.timestamp).format('DD MMMM YYYY')}
+    hr.no-margin
+    br
+    .container
+        .row
+            .col-md-8.beauty-tutorial-content-mobile-padding
+                .beauty-tutorial-content-wrap
+                    .beauty-tutorial-writer-single-like
+                        if (!logged)
+                            a(href='', data-toggle="modal", data-target="#loginModal")
+                                .btn-writer-like
+                                    i.fa.fa.fa-heart
+                                    | &nbsp;&nbsp;#{heartcount}
+                                    span.hidden-xs &nbsp;Benefited
+                        if (logged) && (heartvalidate >= 1)
+                            a(href='/tutorial/unheart/' + tutorial.id)
+                                .btn-writer-like
+                                    i.fa.fa.fa-heart
+                                    | &nbsp;&nbsp;#{heartcount}
+                                    span.hidden-xs &nbsp;Benefited
+                        if (logged) && (heartvalidate == 0)
+                            a(href='/tutorial/heart/' + tutorial.id)
+                                .btn-writer-like-outline
+                                    i.fa.fa.fa-heart
+                                    | &nbsp;&nbsp;#{heartcount}
+                                    span.hidden-xs &nbsp;Benefited
+                        .beauty-tutorial-single-recommend-friend.pull-right
+                            .beauty-tutorial-single-recommend
+                                #share
+                    hr
+                    .row
+                        .col-md-12
+                            if (tutorial.type === 'video-youtube')
+                                .embed-responsive.embed-responsive-16by9
+                                    iframe.embed-responsive-item(width='100%', height='100%', src='https://www.youtube.com/embed/' + tutorial.videoid, frameborder='0', allowfullscreen='')
+                            if (tutorial.type === 'video-vimeo')
+                                .embed-responsive.embed-responsive-16by9
+                                    iframe.embed-responsive-item(width='100%', height='100%', src='https://player.vimeo.com/video/' + tutorial.videoid, frameborder='0', webkitallowfullscreen='', mozallowfullscreen='', allowfullscreen='')
+                            if (tutorial.type === 'video-upload')
+                                .tutorial-card-thumbnail-wrap
+                                    .tutorial-card-thumbnail
+                                        video(width='100%', controls='', controlsList="nodownload", autoplay)
+                                            source(src=tutorial.videopath, type='video/mp4', autoplay)
+                                            |  Your browser does not support HTML5 video.
+                            if (tutorial.type === 'image')
+                                img.object-fit(src=tutorial.thumbnail)
+                        //.col-md-7
+                        //    .beauty-tutorial-writer-single-img
+                        //        img(src='../img/static/empty-user.png')
+                        //.col-md-5
+                        //    .beauty-tutorial-writer-single-side-img
+                        //        img(src='../img/static/empty-user.png')
+                        //    br
+                        //    .row
+                        //        .col-md-5
+                        //            .beauty-tutorial-writer-single-side-img
+                        //                img(src='../img/static/empty-user.png')
+                        //            br
+                        //            .beauty-tutorial-writer-single-side-img
+                        //                img(src='../img/static/empty-user.png')
+                        //            br
+                        //            .beauty-tutorial-writer-single-side-img
+                        //                img(src='../img/static/empty-user.png')
+                    br
+                    .row
+                        .col-md-12
+                            //.beauty-tutorial-writer-single-step
+                            //    | Test
+                            .beauty-tutorial-writer-single-step-body
+                                | !{tutorial.content}
+
+                    .row
+                        .col-md-12
+                            .author-card-wrap
+                                .author-card-img
+                                    img.object-fit(src=tutorial.author.photo)
+                                .author-card-details
+                                    .author-card-name
+                                        a.gray(href=href='/' + tutorial.author.username)
+                                            h4 #{tutorial.author.displayname}
+                                    .author-card-shortdesc.text-muted
+                                        | #{tutorial.author.shortintro}
+                                    .author-card-influence
+                                        i.fa.fa-heart.primary
+                                        | &nbsp;#{tutorial.author.influence}
+                    hr
+                    .beauty-tutorial-writer-single-like
+                        if (!logged)
+                            a(href='/auth/facebook')
+                                .btn-writer-like
+                                    i.fa.fa.fa-heart
+                                    | &nbsp;&nbsp;#{heartcount}
+                                    span.hidden-xs &nbsp;Benefited
+                        if (logged) && (heartvalidate >= 1)
+                            a(href='/tutorial/unheart/' + tutorial.id)
+                                .btn-writer-like
+                                    i.fa.fa.fa-heart
+                                    | &nbsp;&nbsp;#{heartcount}
+                                    span.hidden-xs &nbsp;Benefited
+                        if (logged) && (heartvalidate == 0)
+                            a(href='/tutorial/heart/' + tutorial.id)
+                                .btn-writer-like-outline
+                                    i.fa.fa.fa-heart
+                                    | &nbsp;&nbsp;#{heartcount}
+                                    span.hidden-xs &nbsp;Benefited
+                        .beauty-tutorial-single-recommend-friend.pull-right
+                            .beauty-tutorial-single-recommend
+                                #shareBottom
+                    hr
+                    .row
+                        .col-md-12
+                            h4 Up Next!
+                            br
+                    .row
+                        each tutorial in relatedtutorials
+                            .col-sm-4.col-md-4
+                                .tutorial-card-wrap
+                                    .tutorial-card-author-wrap
+                                        a(href='/' + tutorial.author.username)
+                                            .tutorial-card-author-photo
+                                                img.img-circle.object-fit(src=tutorial.author.photo)
+                                        .tutorial-card-author-details-wrap
+                                            a.gray(href='/' + tutorial.author.username)
+                                                .tutorial-card-author-name
+                                                    | #{tutorial.author.displayname}
+                                            .tutorial-card-author-stats.small.text-muted
+                                                i.fa.fa.fa-clock-o
+                                                span(style='text-transform:capitalize') &nbsp;#{moment(tutorial.timestamp).format('DD MMM YYYY')}
+                                    hr.no-margin
+                                    .tutorial-card-title
+                                        a.gray(href='/tutorial/' + tutorial.slug) #{tutorial.title}
+                                    .tutorial-card-thumbnail-container
+                                        if tutorial.type == 'video-youtube'
+                                            .tutorial-card-thumbnail-wrap
+                                                .tutorial-card-thumbnail
+                                                    a(href='/tutorial/' + tutorial.slug)
+                                                        .tutorial-card-video-tint
+                                                            i.fa.fa-youtube-play.fa-4x
+                                                        img.object-fit(src='http://img.youtube.com/vi/' + tutorial.youtubeid + '/0.jpg')
+                                        if tutorial.type == 'video-vimeo'
+                                            .tutorial-card-thumbnail-wrap
+                                                .tutorial-card-thumbnail
+                                                    a(href='/tutorial/' + tutorial.slug)
+                                                        .tutorial-card-video-tint
+                                                            i.fa.fa-youtube-play.fa-4x
+                                                        img.object-fit(src='http://img.youtube.com/vi/' + tutorial.youtubeid + '/0.jpg')
+                                        if tutorial.type == 'video-upload'
+                                            .tutorial-card-thumbnail-wrap
+                                                .tutorial-card-thumbnail
+                                                    a(href='/tutorial/' + tutorial.slug)
+                                                        .tutorial-card-video-tint
+                                                            i.fa.fa-youtube-play.fa-4x
+                                                        img.object-fit(src=tutorial.thumbnailpath)
+                                        if tutorial.type == 'image'
+                                            .tutorial-card-thumbnail-wrap
+                                                .tutorial-card-thumbnail
+                                                    a(href='/tutorial/' + tutorial.slug)
+                                                        img.object-fit(src=tutorial.thumbnail)
+                                    hr
+                                    .tutorial-card-cta-wrap.clearfix
+                                        p Product use in this tutorial:
+                                        .row
+                                            .col-xs-12.col-md-12
+                                                .variable-width
+                                                    if (tutorial.products)
+                                                        each item in tutorial.products
+                                                            a.gray(href='/products/' + item.slug)
+                                                                .product-home-widget-wrap
+                                                                    .product-home-widget-display
+                                                                        .tutorial-card-author-photo
+                                                                            img.img-circle.object-fit(src=item.imagepath)
+                                                                    .product-home-widget-display
+                                                                        .product-home-widget-stats-name
+                                                                            b #{item.name}
+                                                                        .product-home-widget-stats.small
+                                                                            i #{item.brand.name}
+                                                                        .product-home-widget-stats.small
+                                                                            | RM #{parseFloat(item.price).toFixed(2)}
+                                                    if (!tutorial.products)
+                                                        .product-home-widget-wrap.text-center
+                                                            i No products found
+                                    //hr
+                                    //.tutorial-card-cta-wrap
+                                    //    .tutorial-card-cta-btn.small
+                                    //        i.fa.fa.fa-heart.fa-fw
+                                    //        | &nbsp;#{tutorial.heart} Benefited
+                                        //.tutorial-card-cta-btn.small
+                                        //    i.fa.fa.fa-comment.fa-fw
+                                        //    | &nbsp;Comment
+                                        //.tutorial-card-cta-btn.small
+                                        //    i.fa.fa.fa-share.fa-fw
+                                        //    | &nbsp;Share
+                    //.row
+                    //    .col-md-12
+                    //        .beauty-tutorial-single-desc-container
+                    //            .beauty-tutorial-single-desc
+                    //                .beauty-tutorial-single-img
+                    //                    img.object-fit(src='https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100', alt='')
+                    //            .beauty-tutorial-writer-desc
+                    //                .beauty-tutorial-writer-name
+                    //                    | Kim Sarah
+                    //                .beauty-tutorial-writer-designation
+                    //                    | Skin type: Dry
+                    //                .beauty-tutorial-writer-designation
+                    //                    | Skin color: Medium Fair
+                    //                .beauty-tutorial-writer-designation
+                    //                    button.btn.profile-btn-follow
+                    //                        i.fa.fa-user
+                    //                        b &nbsp;Follow
+                    //            .beauty-tutorial-writer-single-influence-desc.pull-right
+                    //                .beauty-tutorial-single-comment-logo
+                    //                    fa.fa.fa-thumbs-o-up
+                    //                    | &nbsp;123
+                    //                .beauty-tutorial-single-comment-logo
+                    //                    fa.fa.fa-thumbs-o-down
+                    //                    | &nbsp;456
+                    //                .beauty-tutorial-single-comment-logo
+                    //                    fa.fa.fa-facebook-official
+                    //        .beauty-tutorial-comment-module-card
+                    //            .beauty-tutorial-single-comment
+                    //                .beauty-tutorial-single-comment-desc
+                    //                    .beauty-tutorial-single-comment-img
+                    //                        img.object-fit(src='https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100', alt='')
+                    //                    .beauty-tutorial-single-comment-img-shape
+                    //                .beauty-tutorial-single-comment-input-group
+                    //                    .input-group.beauty-tutorial-single-comment-box
+                    //                        input.form-control(placeholder='Add a comment', type='text')
+                    //                        span.input-group-addon
+                    //                            a(href='#')
+                    //                                i.fa.fa-edit
+                    //        .beauty-tutorial-user-reply
+                    //            .beauty-tutorial-single-user-img
+                    //               img.object-fit(src='https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100', alt='')
+                    //        .beauty-tutorial-single-user
+                    //            .beauty-tutorial-single-user-name
+                    //                | name
+                    //            .beauty-tutorial-single-user-reply
+                    //                | reply
+                    //            .beauty-tutorial-single-user-reply-date
+                    //                | date
+
+            .col-md-4
+                hr.hidden-xs
+                .beauty-tutorial-product-use-desc.text-center
+                    h4 Products in this Tutorial
+                hr
+                .row.small-margin
+                    if (tutorial.products == null) || (tutorial.products == 0) || (!tutorial.products)
+                        .col-md-12
+                            .text-center.text-muted
+                                | No product has been mentioned in this tutorial
+                    else
+                        each item in tutorial.products
+                            .col-xs-6.col-md-6.small-padding
+                                .product-widget-wrap
+                                    .product-widget-img
+                                        a(href='/products/' + item.slug)
+                                            img.object-fit(src=item.imagepath)
+                                    hr.hr-small-margin
+                                    .product-widget-name.small
+                                        a.gray(href='/products/' + item.slug)
+                                            | #{item.name}
+                                    hr.hr-small-margin
+                                    .product-widget-price.small.text-center
+                                        if (item.price)
+                                            | MYR #{parseFloat(item.price).toFixed(2)}
+                                        if (!item.price)
+                                            .text-muted MYR 0.00
+                                    hr.hr-small-margin
+                                    .product-widget-addtocart
+                                        if (item.price)
+                                            form
+                                                input(type='hidden', name='_csrf', value=csrfToken)
+                                                input(type='hidden', name='item_' + item.id, id='item_' + item.id, value=item.id)
+                                                input(type='hidden', name='referrer', id='referrer', value=tutorial.author.id)
+                                                button.btn.btn-success.btn-sm(style='width:100%', type='submit', id='addToCartBtn_' + item.id)
+                                                    i.fa.fa-cart-plus
+                                                    | &nbsp; Add to Cart
+                                        if (!item.price)
+                                            button.btn.btn-success.btn-sm(style='width:100%', disabled)
+                                                i.fa.fa-cart-plus
+                                                | &nbsp; Add to Cart
+
+                                        script.
+                                            $('#addToCartBtn_#{item.id}').click(function (e) {
+                                                var item = $(this).parent().find('#item_#{item.id}').val();
+                                                var referrer = $(this).parent().find('#referrer').val();
+                                                $.ajax({
+                                                    url: "/addItemToCart",
+                                                    type: "POST",
+                                                    data: {
+                                                        itemID: item,
+                                                        referrer: referrer
+                                                    },
+                                                    beforeSend: function (request) {
+                                                        request.setRequestHeader("X-CSRF-TOKEN", "#{csrfToken}");
+                                                    },
+                                                    success: function (data) {
+                                                        location.reload();
+                                                    }
+                                                });
+                                                return false;
+                                            });
+
+
+                        
+ 
+    script.
+        $(document).ready(function () {
+            $("#share").jsSocials({
+                showLabel: false,
+                shareIn: "popup",
+                showCount: "inside",
+                shares: ["facebook", "twitter", "pinterest"]
+            });
+            $("#shareBottom").jsSocials({
+                showLabel: false,
+                shareIn: "popup",
+                showCount: "inside",
+                shares: ["facebook", "twitter", "pinterest"]
+            });
+            $('.product-widget-name').truncate({
+                lines: 2
+            });
+        });
+        $("img").on("error", function () {
+            $(this).attr('src', '../img/static/empty-product.png');
+        });
+        $('.variable-width').slick({
+            infinite: true,
+            dots: false,
+            speed: 300,
+            slidesToShow: 1,
+            variableWidth: true,
+            arrows: false,
+            autoplay: true,
+            autoplaySpeed: 3000
+        });
+        $('.product-home-widget-stats-name').truncate({
+            lines: 1
+        });

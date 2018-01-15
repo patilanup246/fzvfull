@@ -1,0 +1,73 @@
+extends ../../layouts/admin
+
+block content
+    .panel
+        .panel-heading
+            .pull-left
+                h4.panel-title Report Summary
+                p
+                    | Overview of Favful's site performance.
+        .clearfix
+        .panel-body
+            .row
+                .col-md-6
+                    .row
+                        .col-md-12
+                            .table-responsive
+                                table.table.nomargin
+                                    thead
+                                        tr
+                                            th Statistics
+                                            th Counts
+                                    tbody
+                                        tr
+                                            td Total Members In Database
+                                            td #{results.totalmembers}
+                                        tr
+                                            td Total Registered
+                                            td #{results.totalregistered}
+                                        tr
+                                            td Yesterday's Registrations
+                                            td #{results.yesterreg}
+                                        tr
+                                            td Today's Registrations
+                                            td #{results.todayreg}
+                .col-md-6
+                    .row
+                        .col-md-12
+                            .table-responsive
+                                table.table.nomargin
+                                    thead
+                                        tr
+                                            th Brands
+                                            th Counts
+                                    tbody
+                                        tr
+                                            td Total Brands In Database
+                                            td #{results.totalbrands}
+                    br
+                    .row
+                        .col-md-12
+                            .table-responsive
+                                table.table.nomargin
+                                    thead
+                                        tr
+                                            th Products
+                                            th Counts
+                                    tbody
+                                        tr
+                                            td Total Products In Database
+                                            td #{results.totalproducts}
+                    br
+                    .row
+                        .col-md-12
+                            .table-responsive
+                                table.table.nomargin
+                                    thead
+                                        tr
+                                            th Tutorials
+                                            th Counts
+                                    tbody
+                                        tr
+                                            td Total Tutorials In Database
+                                            td #{results.totaltutorials}

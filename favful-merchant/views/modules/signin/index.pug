@@ -1,0 +1,34 @@
+extends ../../layouts/page
+
+block content
+    .sign-overlay
+    .signpanel
+    .panel.signin
+        .panel-heading.text-center
+            img(src='../img/static/companylogo.png')
+            h4.panel-title Merchant Sign In
+        .panel-body
+            if (flash.length == 0)
+            else
+                .alert.alert-info.text-center
+                    strong #{flash}
+            form(action='/', method='post')
+                input(type='hidden', name='_csrf', value=csrfToken)
+                .form-group.mb10
+                    .input-group
+                        span.input-group-addon
+                            i.fa.fa-user
+                        input.form-control(type='text', id='username', name='username', placeholder='Enter username', required='required')
+                .form-group.nomargin
+                    .input-group
+                        span.input-group-addon
+                            i.fa.fa-lock
+                        input.form-control(type='password', id='password', name='password', placeholder='Enter Password', required='required')
+                br
+                .form-group
+                    button.btn.btn-success.btn-quirk.btn-block(type='submit') Sign In
+        hr
+        .text-center.text-muted.small
+            span
+                a.forgot(href='/register') Register A Merchant Account
+

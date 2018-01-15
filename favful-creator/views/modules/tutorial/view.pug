@@ -1,0 +1,62 @@
+extends ../../layouts/tutorial
+
+block content
+    .container.white-bg
+        .row
+            .col-md-9
+                h4(style='margin-top:25px') #{tutorial.title}
+                p.small.text-muted
+                    | By:&nbsp;
+                    a(href='/' + tutorial.author.username) #{tutorial.author.displayname}
+                hr
+                if (tutorial.type === 'video-youtube')
+                    .embed-responsive.embed-responsive-16by9
+                        iframe.embed-responsive-item(width='100%', height='100%', src='https://www.youtube.com/embed/' + tutorial.videoid, frameborder='0', allowfullscreen='')
+                if (tutorial.type === 'video-vimeo')
+                    .embed-responsive.embed-responsive-16by9
+                        iframe.embed-responsive-item(width='100%', height='100%', src='https://player.vimeo.com/video/' + tutorial.videoid, frameborder='0', webkitallowfullscreen='', mozallowfullscreen='', allowfullscreen='')
+                if (tutorial.type === 'video-upload')
+                    .embed-responsive.embed-responsive-16by9
+                        video(width='100%', controls='')
+                            source(src=tutorial.videopath, type='video/mp4', autoplay)
+                            |  Your browser does not support HTML5 video.
+
+                if (tutorial.type === 'image')
+                    img.object-fit(src=tutorial.thumbnail)
+                .tutorial-view-content
+                    | !{tutorial.content}
+                br
+                br
+            .col-md-3
+                .tutorial-view-sidebar
+                    h4 Latest Tutorials
+                    hr
+                    .row
+                        each item in latesttuts
+                            .col-xs-12.col-md-12
+                                .tutorial-card
+                                    if item.type == 'video-youtube'
+                                        .embed-responsive.embed-responsive-16by9
+                                            a(href='/tutorial/' + item.slug)
+                                                .tutorial-card-video-tint
+                                                    i.fa.fa-youtube-play.fa-4x
+                                                img.object-fit.embed-responsive-item(src='http://img.youtube.com/vi/' + item.videoid + '/0.jpg')
+                                    if item.type == 'video-vimeo'
+                                        .embed-responsive.embed-responsive-16by9
+                                            a(href='/tutorial/' + item.slug)
+                                                .tutorial-card-video-tint
+                                                    i.fa.fa-youtube-play.fa-4x
+                                                img.object-fit.embed-responsive-item(src='http://img.youtube.com/vi/' + item.videoid + '/0.jpg')
+                                    if item.type == 'video-upload'
+                                        .embed-responsive.embed-responsive-16by9
+                                            a(href='/tutorial/' + item.slug)
+                                                .tutorial-card-video-tint
+                                                    i.fa.fa-youtube-play.fa-4x
+                                                img.object-fit.embed-responsive-item(src=item.thumbnail)
+                                    if item.type == 'image'
+                                        a(href='/tutorial/' + item.slug)
+                                            img.object-fit(src=item.thumbnail)
+                                    .tutorial-card-title
+                                        a(href='/tutorial/' + item.slug) #{item.title}
+                                    .tutorial-card-desc.small.text-muted
+                                        | #{item.shortdescription}

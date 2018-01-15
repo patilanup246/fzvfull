@@ -1,0 +1,160 @@
+extends ../../layouts/admin
+
+block content
+    .panel
+        .panel-heading
+            h4.panel-title Edit Merchant
+            p
+                | Currently editing user&nbsp;
+                i.fa.fa-chevron-circle-right(aria-hidden='true')
+                | &nbsp;
+                b #{merchant.company.name}
+            hr
+        .panel-body
+            form.form-horizontal(method='post', action='/merchants/edit/' + merchant.id)
+                input(type="hidden", name="_csrf", value=csrfToken)
+                .row
+                    .col-sm-12
+                        h4.panel-title Login Details
+                        hr
+                        .form-group
+                            label.col-sm-2.control-label Status
+                            .col-sm-8
+                                select.form-control.event-list(name='status' id='status')
+                                    option(value='active') Active
+                                    option(value='suspended') Suspended
+                        .form-group
+                            label.col-sm-2.control-label Username
+                            .col-sm-8
+                                input.form-control(type='text', name='username', id='username', value=merchant.username, disabled='disabled')
+                        .form-group
+                            label.col-sm-2.control-label Email
+                            .col-sm-8
+                                input.form-control(type='email', name='email', id='email', value=merchant.email)
+                        br
+                        h4.panel-title Company Information
+                        hr
+                        .form-group
+                            label.col-sm-2.control-label Company Name
+                            .col-sm-8
+                                input.form-control(type='text', name='companyname', id='companyname', value=merchant.company.name)
+                        .form-group
+                            label.col-sm-2.control-label Company Registration Number
+                            .col-sm-8
+                                input.form-control(type='text', name='regnumber', id='regnumber', value=merchant.company.regnumber)
+                        .form-group
+                            label.col-sm-2.control-label Phone
+                            .col-sm-8
+                                input.form-control(type='text', name='companyphone', id='companyphone', value=merchant.company.phone)
+                        .form-group
+                            label.col-sm-2.control-label Address Line 1
+                            .col-sm-8
+                                input.form-control(type='text', name='address01', id='address01', value=merchant.company.address01)
+                        .form-group
+                            label.col-sm-2.control-label Address Line 2
+                            .col-sm-8
+                                input.form-control(type='text', name='address02', id='address02', value=merchant.company.address02)
+                        .form-group
+                            label.col-sm-2.control-label City
+                            .col-sm-8
+                                input.form-control(type='text', name='city', id='city', value=merchant.company.city)
+                        .form-group
+                            label.col-sm-2.control-label Postal Code
+                            .col-sm-8
+                                input.form-control(type='text', name='postcode', id='postcode', value=merchant.company.postcode)
+                        .form-group
+                            label.col-sm-2.control-label State
+                            .col-sm-8
+                                select.form-control(name="state", id="state")
+                                    option(value="Johor") Johor
+                                    option(value="Kedah") Kedah
+                                    option(value="Kuala Lumpur") Kuala Lumpur
+                                    option(value="Kelantan") Kelantan
+                                    option(value="Melaka") Melaka
+                                    option(value="Negeri Sembilan") Negeri Sembilan
+                                    option(value="Pahang") Pahang
+                                    option(value="Penang") Penang
+                                    option(value="Perak") Perak
+                                    option(value="Perlis") Perlis
+                                    option(value="Sabah") Sabah
+                                    option(value="Sarawak") Sarawak
+                                    option(value="Selangor") Selangor
+                                    option(value="Terengganu") Terengganu
+                        .form-group
+                            label.col-sm-2.control-label Country
+                            .col-sm-8
+                                select.form-control(name="country", id="country")
+                                    option(value="Malaysia") Malaysia
+                        br
+                        h4.panel-title Banking Information
+                        hr
+                        .form-group
+                            label.col-sm-2.control-label Account Number
+                            .col-sm-8
+                                input.form-control(type='text', name='accountnumber', id='accountnumber', value=merchant.bank.accountnumber)
+                        .form-group
+                            label.col-sm-2.control-label Beneficiary Name
+                            .col-sm-8
+                                input.form-control(type='text', name='accountname', id='accountname', value=merchant.bank.accountname)
+                        .form-group
+                            label.col-sm-2.control-label Bank Name
+                            .col-sm-8
+                                input.form-control(type='text', name='bankname', id='bankname', value=merchant.bank.name)
+                        .form-group
+                            label.col-sm-2.control-label Bank SWIFT Code
+                            .col-sm-8
+                                input.form-control(type='text', name='bankswift', id='bankswift', value=merchant.bank.swift)
+                        .form-group
+                            label.col-sm-2.control-label Bank Country
+                            .col-sm-8
+                                input.form-control(type='text', name='bankcountry', id='bankcountry', value=merchant.bank.country)
+                        br
+                        h4.panel-title Shipping Information
+                        hr
+                        .row
+                            .col-md-6
+                                .form-group
+                                    label.col-sm-4.control-label Local Shipping Days
+                                    .col-sm-2
+                                        input.form-control(type='text', name='localMinShippingDays', id='localMinShippingDays', value=merchant.shippingDays.localMinShippingDays)
+                                    .col-sm-2.text-center
+                                        label.control-label.text-center to
+                                    .col-sm-2
+                                        input.form-control(type='text', name='localMaxShippingDays', id='localMaxShippingDays', value=merchant.shippingDays.localMaxShippingDays)
+
+                                .form-group
+                                    label.col-sm-4.control-label Local Shipping Fees (MYR)
+                                    .col-sm-6
+                                        input.form-control(type='text', name='localshippingfees', id='localshippingfees', value=merchant.shippingfees.local)
+                            .col-md-6
+                                .form-group
+                                    label.col-sm-4.control-label International Shipping Days
+                                    .col-sm-2
+                                        input.form-control(type='text', name='intMinShippingDays', id='intMinShippingDays', value=merchant.shippingDays.intMinShippingDays)
+                                    .col-sm-2.text-center
+                                        label.control-label.text-center to
+                                    .col-sm-2
+                                        input.form-control(type='text', name='intMaxShippingDays', id='intMaxShippingDays', value=merchant.shippingDays.intMaxShippingDays)
+                                .form-group
+                                    label.col-sm-4.control-label International Shipping Fees (MYR)
+                                    .col-sm-6
+                                        input.form-control(type='text', name='intshippingfees', id='intshippingfees', value=merchant.shippingfees.international)
+                        br
+                        h4.panel-title Payouts & Commission
+                        hr
+                        .form-group
+                            label.col-sm-2.control-label Commission (%)
+                            .col-sm-3
+                                input.form-control(type='number', name='commission', id='commission', value=(merchant.payment.salesComission * 100))
+                hr
+                .row
+                    .col-sm-6.col-sm-offset-3.text-center
+                        button.btn.btn-success.btn-quirk.btn-wide.mr5(type="submit") Save
+                        a(href="/merchants/").btn.btn-quirk.btn-wide.btn-default Cancel
+    script.
+        $(window).on('load', function () {
+            $('select[name="status"]').val('#{merchant.status}');
+            $('select[name="state"]').val('#{merchant.company.state}');
+            $('select[name="country"]').val('#{merchant.company.country}');
+        });
+

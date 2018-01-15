@@ -1,0 +1,47 @@
+extends ../../layouts/admin
+
+block content
+    .panel
+        .panel-heading
+            .pull-left
+                h4.panel-title #{title}
+                p
+                    | Manage Favful's member.
+        .clearfix
+        .panel-body
+            if (flash.length == 0)
+            else
+                .alert.alert-info.text-center
+                    button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+                    strong
+                        i.fa.fa-exclamation-circle(aria-hidden='true')
+                        | &nbsp;#{flash}
+            .table-responsive
+                table.table.nomargin
+                    thead
+                        tr
+                            th Name
+                            th Email
+                            th Influence
+                            th Created On
+                            th.text-center Action
+                    tbody
+                        each member in members
+                            tr
+                                td(style='width:30%') #{member.displayname}
+                                td #{member.email}
+                                td #{member.influence}
+                                td #{moment(member.created_at).format('DD-MMM-YYYY')}
+                                td
+                                    ul.table-options
+                                        li.tooltips(data-toggle='tooltip', title='Edit Member')
+                                            a(href='/members/edit/' + member.id)
+                                                i.fa.fa-pencil
+    script.
+        $('table').DataTable({
+            "columnDefs": [
+                {"width": "50%", "targets": 0}
+            ],
+            "order": [[0, "asc"]],
+            "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, "All"]]
+        });

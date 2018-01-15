@@ -1,0 +1,130 @@
+extends ../../layouts/beautytutorial
+
+block content
+    .container
+        .row
+            .col-md-12
+                .beauty-tutorial-single-desc
+                    .beauty-tutorial-single-img
+                        img.object-fit(src='https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100', alt='')
+                    .beauty-tutorial-writer-single-desc
+                        .beauty-tutorial-single-writer-title
+                            h3 The 20mins perfect makeup for your saturday night party.
+                        .beauty-tutorial-single-writer-name 
+                            | By: Kim Sarah
+                            .beauty-tutorial-single-writer-date
+                                | &nbsp;12 December 2017
+                br
+        .row
+            .col-md-8
+                .beauty-tutorial-writer-single-like
+                    .btn-writer-like
+                        fa.fa.fa-heart
+                        | &nbsp;1236
+                    .beauty-tutorial-single-recommend-friend.pull-right  
+                        .beauty-tutorial-single-recommend
+                            | Recommend to a friend
+                            .beauty-tutorial-single-influence-logo
+                                fa.fa.fa-instagram
+                            .beauty-tutorial-single-influence-logo      
+                                fa.fa.fa-facebook-official
+                            .beauty-tutorial-single-influence-logo      
+                                fa.fa.fa-envelope-o
+                .row
+                    .col-md-7
+                        .beauty-tutorial-writer-single-img
+                            img(src='../img/static/empty-user.png')
+                    .col-md-5
+                        .beauty-tutorial-writer-single-side-img
+                            img(src='../img/static/empty-user.png')
+                        br
+                        .row
+                            .col-md-5
+                                .beauty-tutorial-writer-single-side-img
+                                    img(src='../img/static/empty-user.png')
+                                br
+                                .beauty-tutorial-writer-single-side-img
+                                    img(src='../img/static/empty-user.png')
+                                br
+                                .beauty-tutorial-writer-single-side-img
+                                    img(src='../img/static/empty-user.png')
+                br                        
+                .row
+                    .col-md-12
+                        .beauty-tutorial-writer-single-step
+                            | Test
+                        .beauty-tutorial-writer-single-step-body
+                            |test
+                    .beauty-tutorial-single-desc-container
+                        .beauty-tutorial-single-desc
+                            .beauty-tutorial-single-img
+                                img.object-fit(src='https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100', alt='')
+                        .beauty-tutorial-writer-desc
+                            .beauty-tutorial-writer-name 
+                                | Kim Sarah
+                            .beauty-tutorial-writer-designation
+                                | Skin type: Dry
+                            .beauty-tutorial-writer-designation
+                                | Skin color: Medium Fair
+                            .beauty-tutorial-writer-designation
+                                button.btn.profile-btn-follow
+                                    i.fa.fa-user
+                                    b &nbsp;Follow
+                        .beauty-tutorial-writer-single-influence-desc.pull-right
+                            .beauty-tutorial-single-comment-logo
+                                fa.fa.fa-thumbs-o-up
+                                | &nbsp;123
+                            .beauty-tutorial-single-comment-logo      
+                                fa.fa.fa-thumbs-o-down
+                                | &nbsp;456
+                            .beauty-tutorial-single-comment-logo      
+                                fa.fa.fa-facebook-official
+                    .beauty-tutorial-comment-module-card
+                        .beauty-tutorial-single-comment
+                            .beauty-tutorial-single-comment-desc
+                                .beauty-tutorial-single-comment-img
+                                    img.object-fit(src='https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100', alt='')
+                                .beauty-tutorial-single-comment-img-shape
+                            .beauty-tutorial-single-comment-input-group
+                                .input-group.beauty-tutorial-single-comment-box
+                                    input.form-control(placeholder='Add a comment', type='text')
+                                    span.input-group-addon
+                                        a(href='#')
+                                            i.fa.fa-edit
+                    .beauty-tutorial-user-reply
+                        .beauty-tutorial-single-user-img
+                           img.object-fit(src='https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100', alt='')              
+                    .beauty-tutorial-single-user
+                        .beauty-tutorial-single-user-name
+                            | name          
+                        .beauty-tutorial-single-user-reply
+                            | reply
+                        .beauty-tutorial-single-user-reply-date
+                            | date
+
+            .col-md-4
+                .beauty-tutorial-product-use-desc
+                    h4 Product i use in this tutorials
+                .row    
+                    .col-md-6
+                        .beauty-tutorial-product-module-card
+                            .beauty-tutorial-writer-product-use.text-center
+                                .beauty-tutorial-writer-product-use-img
+                                    img.object-fit(src='../img/static/empty-user.png')
+                                .beauty-tutorial-writer-product-use-title
+                                    | Product Name
+                                .beauty-tutorial-writer-product-use-desc
+                                    | Product Summary
+                                .beauty-tutorial-writer-product-use-stat      
+                                    .beauty-tutorial-product-stat-star
+                                        | Star
+                                    .beauty-tutorial-product-stat-review        
+                                        | &nbsp;Review
+                                hr
+                            .beauty-tutorial-writer-product-use-brand
+                                | Brand
+                            .beauty-tutorial-writer-product-use-price
+                                | Price
+                            .beauty-tutorial-writer-product-more-price.text-center
+                                a(href="#")
+                                    | Show more Price 

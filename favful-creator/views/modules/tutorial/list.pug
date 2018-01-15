@@ -1,0 +1,38 @@
+extends ../../layouts/dashboard
+
+block content
+    .container.white-bg
+        .row
+            .col-md-12.text-center
+                h3 Favful's Tutorial List
+        hr
+        .tutorial-card-wrap
+            .row-flex
+                each tutorial in tutorials
+                    .tutorial-card
+                        if tutorial.type == 'video-youtube'
+                            .embed-responsive.embed-responsive-16by9
+                                a(href='/tutorial/' + tutorial.slug)
+                                    .tutorial-card-video-tint
+                                        i.fa.fa-youtube-play.fa-4x
+                                    img.object-fit.embed-responsive-item(src='http://img.youtube.com/vi/' + tutorial.videoid + '/0.jpg')
+                        if tutorial.type == 'video-vimeo'
+                            .embed-responsive.embed-responsive-16by9
+                                a(href='/tutorial/' + tutorial.slug)
+                                    .tutorial-card-video-tint
+                                        i.fa.fa-youtube-play.fa-4x
+                                    img.object-fit.embed-responsive-item(src='http://img.youtube.com/vi/' + tutorial.videoid + '/0.jpg')
+                        if tutorial.type == 'video-upload'
+                            .embed-responsive.embed-responsive-16by9
+                                a(href='/tutorial/' + tutorial.slug)
+                                    .tutorial-card-video-tint
+                                        i.fa.fa-youtube-play.fa-4x
+                                    img.object-fit.embed-responsive-item(src=tutorial.thumbnail)
+                        if tutorial.type == 'image'
+                            a(href='/tutorial/' + tutorial.slug)
+                                img.object-fit(src=tutorial.thumbnail)
+                        .tutorial-card-title
+                            a(href='/tutorial/' + tutorial.slug) #{tutorial.title}
+                        .tutorial-card-desc.small.text-muted
+                            | #{tutorial.shortdescription}
+

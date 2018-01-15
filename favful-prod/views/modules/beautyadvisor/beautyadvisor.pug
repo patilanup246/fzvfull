@@ -1,0 +1,64 @@
+extends ../../layouts/beautyadvisor
+
+block content
+    .container
+        .row    
+            .col-md-9
+                .beauty-advisor-about
+                    | Trending Questions
+                br    
+                .row
+                    .col-md-4
+                        .beauty-advisor-testimonial
+                            .beauty-advisor-testimonial-section
+                                .beauty-advisor-title
+                                    | Title            
+                                .advisor-toptutorial-title
+                                    | "Lorem ipsum dolor sit amet, consectetur adipiscing elit."Denim you probably haven't heard of. Lorem ipsum dolor met consectetur adipisicing sit amet, consectetur adipisicing elit, of them jean shorts sed magna aliqua. Lorem ipsum dolor met.
+                            .beauty-advisor-ques-details
+                                .ques-like.pull-right
+                                    fa.fa.fa-thumbs-o-up
+                                    | &nbsp;52&nbsp;
+                                .ques-comment.pull-right
+                                    fa.fa.fa-comment-o
+                                    | &nbsp;100&nbsp;
+                                .ques-post-date.pull-right
+                                    fa.fa.fa-calendar-o
+                                    | &nbsp;12/2/2017&nbsp;            
+                            br    
+                            .beauty-advisor-expert-property        
+                                .beauty-advisor-expert-photo
+                                    img.img-circle.object-fit(src='../img/static/empty-user.png')
+                                    .beauty-advisor-expert-stat-property.pull-right
+                                        .beauty-advisor-writer-name
+                                            | Username
+                                        .profile-property-item
+                                            | Skin Type:&nbsp;
+                                            | skintype
+                                        .profile-property-item
+                                            | Skin Color:&nbsp;
+                                            | skincolor         
+                                    .clearfix
+                            br
+                   
+            .col-md-3
+                .beauty-advisor-description-sidebar
+                    h4 TRENDING EXPERTS
+                .beauty-advisor-desc-sidebar
+                    .beauty-advisor-img-sidebar
+                        img(src='https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100', alt='')
+                .beauty-advisor-writer-desc-sidebar.pull-right
+                    .beauty-advisor-writer-name-sidebar 
+                        | Username
+                    .beauty-advisor-writer-designation-sidebar
+                        | Title
+                    .beauty-advisor-writer-designation-sidebar
+                        | Tutorial
+                    .beauty-advisor-writer-designation-sidebar
+                        | Answers
+                    button.btn.btn-follow-sidebar
+                        i.fa.fa-user
+                        | &nbsp;Follow
+                    .beauty-topadvisor
+                        a(href="/beautyadvisor/topadvisor")
+                            | Our Fav Top Advisor>>

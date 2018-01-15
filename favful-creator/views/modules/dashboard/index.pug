@@ -1,0 +1,114 @@
+extends ../../layouts/dashboard
+
+block content
+        .container.white-bg
+            .row
+                .col-md-3
+                    .dashboard-sidebar.text-center
+                        .profile-photo
+                            img.img-circle.object-fit(src=logged.photo)
+                        .profile-details.hidden-xs.hidden-sm
+                            .profile-details-title
+                                i.fa.fa-heart(style='color:#ED145B')
+                                | &nbsp;Influences
+                            .profile-details-value
+                                | #{influences}
+                            //.profile-details-title
+                            //    | Skin Color
+                            //.profile-details-value
+                            //    | #{logged.profile.skincolor}
+                            //.profile-details-title
+                            //    | Age Group
+                            //.profile-details-value
+                            //    | #{logged.profile.agegroup}
+                        .signout-btn
+                            a.btn.btn-danger.btn-outline(href='/signout', style='width:100%')
+                                i.fa.fa-sign-out
+                                span.hidden-xs &nbsp; Sign Out
+                .col-md-9
+                    .profile-data
+                        .profile-name
+                            h2 #{logged.displayname}
+                        .profile-username.small
+                            i.fa.fa-heart.profile-username-icon
+                            | &nbsp;
+                            a(href='http://www.favful.com.my/' + logged.username) http://www.favful.com.my/#{logged.username}
+                        .profile-oneliner.small
+                            | #{logged.oneliner}
+                    .profile-stats
+                        if (logged.youtube.subscribers === 0) || (logged.youtube.subscribers === null)
+                        else
+                            .profile-stats-item
+                                .profile-stats-icon
+                                    i.fa.fa-youtube-play.fa-2x
+                                .profile-stats-details
+                                    .profile-stats-number
+                                        | #{logged.youtube.subscribers}
+                                    .profile-stats-text
+                                        | Subscribers
+                        if (logged.instagram.followers === 0) || (logged.instagram.followers === null)
+                        else
+                            .profile-stats-item
+                                .profile-stats-icon
+                                    i.fa.fa-instagram.fa-2x
+                                .profile-stats-details
+                                    .profile-stats-number
+                                        | #{logged.instagram.followers}
+                                    .profile-stats-text
+                                        | Followers
+                        if (logged.blog.monthlyviews === 0) || (logged.blog.monthlyviews === null)
+                        else
+                            .profile-stats-item
+                                .profile-stats-icon
+                                    i.fa.fa-rss.fa-2x
+                                .profile-stats-details
+                                    .profile-stats-number
+                                        | #{logged.blog.monthlyviews}
+                                    .profile-stats-text
+                                        | Monthly Visitors
+                    .profile-mypost-title
+                        h4 My Posts - Showcase Your Expertise!
+                        .row
+                            .col-xs-6
+                                a(href='/tutorial/video')
+                                    .tutorial-button.text-center
+                                        .tutorial-button-text
+                                            i.fa.fa-youtube-play.fa-4x
+                                            br
+                                            | CREATE A VIDEO TUTORIAL
+                            .col-xs-6
+                                a(href='/tutorial/image')
+                                    .tutorial-button.text-center
+                                        .tutorial-button-text
+                                            i.fa.fa-picture-o.fa-4x
+                                            br
+                                            | CREATE A IMAGE TUTORIAL
+                    .tutorial-card-wrap
+                        .row-flex
+                            each tutorial in tutorials
+                                .tutorial-card
+                                    if tutorial.type == 'video-youtube'
+                                        .embed-responsive.embed-responsive-16by9
+                                            a(href='/tutorial/' + tutorial.slug)
+                                                .tutorial-card-video-tint
+                                                    i.fa.fa-youtube-play.fa-4x
+                                                img.object-fit.embed-responsive-item(src='http://img.youtube.com/vi/' + tutorial.videoid + '/0.jpg')
+                                    if tutorial.type == 'video-vimeo'
+                                        .embed-responsive.embed-responsive-16by9
+                                            a(href='/tutorial/' + tutorial.slug)
+                                                .tutorial-card-video-tint
+                                                    i.fa.fa-youtube-play.fa-4x
+                                                img.object-fit.embed-responsive-item(src='http://img.youtube.com/vi/' + tutorial.videoid + '/0.jpg')
+                                    if tutorial.type == 'video-upload'
+                                        .embed-responsive.embed-responsive-16by9
+                                            a(href='/tutorial/' + tutorial.slug)
+                                                .tutorial-card-video-tint
+                                                    i.fa.fa-youtube-play.fa-4x
+                                                img.object-fit.embed-responsive-item(src=tutorial.thumbnail)
+                                    if tutorial.type == 'image'
+                                        a(href='/tutorial/' + tutorial.slug)
+                                            img.object-fit(src=tutorial.thumbnail)
+                                    .tutorial-card-title
+                                        a(href='/tutorial/' + tutorial.slug) #{tutorial.title}
+                                    .tutorial-card-desc.small.text-muted
+                                        | #{tutorial.shortdescription}

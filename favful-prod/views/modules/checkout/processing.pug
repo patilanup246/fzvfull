@@ -1,0 +1,58 @@
+extends ../../layouts/checkout
+
+block content
+    .container
+        .row
+            .col-md-12
+                .shoppingcart-margin
+                    .thankyoufont
+                        i.fa.fa.fa-check-circle.fa-6
+                        span.shoppingcart-small Payment Received
+                    .shoppingcart-tq
+                        h5 Dear Sir/Madam  Thank you for your Order
+                    .shoppingcart-tq-module-card               
+                        .shoppingcart-order-summary
+                            h4 Order Summary for 03020101, 1 items ordered
+                            hr
+                        .shoppingcart-order-product
+                            | UserName
+                        .shoppingcart-order-product
+                            | Address
+                        .shoppingcart-order-product
+                            | Email confirmation sent to your email address
+                            hr
+                        .shoppingcart-order-product
+                            .row
+                                .col-md-2
+                                    .shoppingcart-product
+                                        .shoppingcart-product-price
+                                            img.object-fit(src='../img/static/nr.jpg')
+                                .col-md-4
+                                    .shoppingcart-product-price
+                                        | Product Name
+                                    .shoppingcart-product-price
+                                        | Quantity:
+                                    .shoppingcart-product-price
+                                        | Sold by:   
+                                .col-md-4
+                                    .shoppingcart-product-price
+                                        | Delivery Date
+                                .col-md-2
+                                    .shoppingcart-product-price
+                                        | Price
+                            hr
+                        .shoppingcart-order-subtotal
+                            b Subtotal: 
+                            | RM123
+                        .shoppingcart-order-subtotal
+                            b Shipping fee: 
+                            | RM123
+                            hr(align='right', width='30%')
+                        .shoppingcart-order-subtotal
+                            b Total(Tax included): 
+                            | RM 123
+                        .shoppingcart-order-subtotal
+                            b Paid by Credit Card
+
+
+

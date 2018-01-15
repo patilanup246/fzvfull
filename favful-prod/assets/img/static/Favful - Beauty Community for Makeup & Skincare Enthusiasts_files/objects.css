@@ -1,0 +1,11 @@
+.tutorial-card-wrap {background: #fff;padding:10px;border-radius:5px;border: 1px solid #E0E0E0; margin-bottom:20px;width: 410px}
+.tutorial-card-author-wrap {vertical-align:middle;margin-bottom:10px}
+.tutorial-card-author-photo {display:inline-block;width:70px;vertical-align:middle}
+.tutorial-card-author-photo img{border: 1px solid #777;border-radius: 60px;height:50px;width:50px;padding: 3px}
+.tutorial-card-author-details-wrap {display:inline-block;width:calc(100% - 75px);height:60px;vertical-align:middle;padding-top:5px}
+.tutorial-card-author-name{font-weight: bold;}
+.tutorial-card-author-stats{font-size: 85%;}
+.tutorial-card-title {margin-top:10px;line-height:18px;height:36px}
+.tutorial-card-thumbnail {}
+.tutorial-card-video-tint {position: absolute;top:0;left:0;z-index:99;background-color:rgba(0,0,0,0.2);width:100%;height:100%;display:flex;justify-content: center;align-items: center;color: rgba(255,255,255,0.5);transition: all 0.3s ease-in-out}
+.tutorial-card-video-tint:hover {background-color:rgba(0,0,0,0);color: rgba(255,255,255,0.8);transition: all 0.3s ease-in-out}

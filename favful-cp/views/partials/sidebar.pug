@@ -1,0 +1,124 @@
+.leftpanel
+    .leftpanelinner
+
+        // ################## LEFT PANEL PROFILE ##################
+        .media.leftpanel-profile
+            .media-left
+                a(href='/')
+                    img.media-object.img-circle(src='/img/static/defaultuser.png', alt='')
+            .media-body
+                h4.media-heading
+                    | #{logged.displayname}
+                    a.pull-right(data-toggle='collapse', data-target='#loguserinfo')
+                        i.fa.fa-angle-down
+                span #{logged.username}
+
+        // leftpanel-profile
+        #loguserinfo.leftpanel-userinfo.collapse
+            h5.sidebar-title Contact
+            ul.list-group
+                li.list-group-item
+                    label.pull-left Email
+                    span.pull-right #{logged.email}
+
+        // leftpanel-userinfo
+        ul.nav.nav-tabs.nav-justified.nav-sidebar
+            li.tooltips.active(data-toggle='tooltip', title='Main Menu')
+                a(data-toggle='tab', data-target='#mainmenu')
+                    i.tooltips.fa.fa-ellipsis-h
+            li.tooltips(data-toggle='tooltip', title='Support')
+                a(data-toggle='tab', data-target='#supportmenu')
+                    i.tooltips.fa.fa-question-circle
+        .tab-content
+
+            // ################# MAIN MENU ###################
+            #mainmenu.tab-pane.active
+                h5.sidebar-title Dashboard
+                ul.nav.nav-pills.nav-stacked.nav-quirk
+                    li(class=(mainactive === 'dashboard' ? 'active' : ''))
+                        a(href='/dashboard')
+                            i.fa.fa-home
+                            span Dashboard
+                h5.sidebar-title Favful Store Management
+                ul.nav.nav-pills.nav-stacked.nav-quirk
+                    li.nav-parent(class=(mainactive === 'products' ? 'active' : ''))
+                        a(href='')
+                            i.fa.fa-shopping-cart
+                            span Products
+                        ul.children
+                            li(class=(subactive === 'instore' ? 'active' : ''))
+                                a(href='/products/instore') In-store Product List
+                            li(class=(subactive === 'excluded' ? 'active' : ''))
+                                a(href='/products/excluded') Excluded Product List
+                            li(class=(subactive === 'brands' ? 'active' : ''))
+                                a(href='/products/brands') Brands
+                    li.nav-parent(class=(mainactive === 'orders' ? 'active' : ''))
+                        a(href='')
+                            i.fa.fa-file-text
+                            span Orders
+                        ul.children
+                            li(class=(subactive === 'fulfillmentcontrol' ? 'active' : ''))
+                                a(href='/orders/fulfillment') Fulfillment Control
+                            li(class=(subactive === 'orderlist' ? 'active' : ''))
+                                a(href='/orders/list') Order List
+                    li.nav-parent(class=(mainactive === 'merchant' ? 'active' : ''))
+                        a(href='')
+                            i.fa.fa-user
+                            span Merchants
+                        ul.children
+                            li(class=(subactive === 'merchantlist' ? 'active' : ''))
+                                a(href='/merchants') Merchant List
+                h5.sidebar-title Content Management
+                ul.nav.nav-pills.nav-stacked.nav-quirk
+                    li.nav-parent(class=(mainactive === 'tutorialmanagement' ? 'active' : ''))
+                        a(href='')
+                            i.fa.fa-bookmark
+                            span Tutorials
+                        ul.children
+                            li(class=(subactive === 'tutoriallist' ? 'active' : ''))
+                                a(href='/tutorials/list') Tutorial List
+                h5.sidebar-title Member Management
+                ul.nav.nav-pills.nav-stacked.nav-quirk
+                    li.nav-parent(class=(mainactive === 'membersmanagement' ? 'active' : ''))
+                        a(href='')
+                            i.fa.fa-users
+                            span Members
+                        ul.children
+                            li(class=(subactive === 'creatorlist' ? 'active' : ''))
+                                a(href='/members/creator') Creator List
+                            li(class=(subactive === 'normallist' ? 'active' : ''))
+                                a(href='/members/normal') Normal Member List
+                h5.sidebar-title Site Management
+                ul.nav.nav-pills.nav-stacked.nav-quirk
+                    li.nav-parent(class=(mainactive === 'statistics' ? 'active' : ''))
+                        a(href='')
+                            i.fa.fa-line-chart
+                            span Site Statistics
+                        ul.children
+                            li(class=(subactive === 'statisticsummary' ? 'active' : ''))
+                                a(href='/statistics/summary') Statistic Summary
+                    li.nav-parent(class=(mainactive === 'usermanagement' ? 'active' : ''))
+                        a(href='')
+                            i.fa.fa-user
+                            span User Management
+                        ul.children
+                            li(class=(subactive === 'userlist' ? 'active' : ''))
+                                a(href='/user/list') User List
+                            li(class=(subactive === 'adduser' ? 'active' : ''))
+                                a(href='/user/add') Add User
+                    li.nav-parent(class=(mainactive === 'management' ? 'active' : ''))
+                        a(href='')
+                            i.fa.fa-gears
+                            span Management
+                        ul.children
+                            li(class=(subactive === 'auditlogs' ? 'active' : ''))
+                                a(href='/site/auditlogs') Audit Logs
+
+            // ################# SUPPORT MENU ###################
+            #supportmenu.tab-pane
+                h5.sidebar-title Supports
+                ul.nav.nav-pills.nav-stacked.nav-quirk
+                    li
+                        a(href='index.html')
+                            i.fa.fa-book
+                            span User Manual

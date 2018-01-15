@@ -1,0 +1,143 @@
+extends ../../layouts/admin
+
+block content
+    .panel
+        .panel-heading
+            h4.panel-title Edit Product
+            p
+                | Currently editing&nbsp;
+                i.fa.fa-chevron-circle-right(aria-hidden='true')
+                | &nbsp;#{result.name}
+            hr
+        .panel-body
+            form.form-horizontal(action='/products/edit/' + result.id, method='post', enctype='multipart/form-data')
+                input(type='hidden', name='_csrf', value=csrfToken)
+                .form-group
+                    label.col-sm-2.control-label Brand
+                    .col-sm-8
+                        select.form-control.event-list(name='brand' id='brand')
+                            each item in brands
+                                option(value=item.id) #{item.name}
+                .form-group
+                    label.col-sm-2.control-label Name
+                    .col-sm-8
+                        input.form-control(type='text', name='name', id='name', value=result.name, required='required')
+                .form-group
+                    label.col-sm-2.control-label Picture
+                    .col-sm-8
+                        input.form-control(type='file', name='mediafile', id='mediafile')
+                .form-group
+                    label.col-sm-2.control-label Short Description
+                    .col-sm-8
+                        textarea.form-control(name='shortdescription', id='shortdescription', rows='3', required='required') #{result.shortdescription}
+                .form-group
+                    label.col-sm-2.control-label Details
+                    .col-sm-8
+                        textarea.form-control(name='details', id='details', required='required') #{result.details}
+                .form-group
+                    label.col-sm-2.control-label Tags
+                    .col-sm-8
+                        select.form-control(style='width: 100%', name='tags', id='tags', data-placeholder='', multiple='', required='required')
+                            each item in producttags
+                                option(value=item.slug) #{item.name}
+                br
+                h4.panel-title Attribute Control
+                hr
+                .form-group
+                    label.col-sm-2.control-label Skin Type
+                    .col-sm-8
+                        select.form-control(style='width: 100%', name='skintype', id='skintype', data-placeholder='', multiple='')
+                            each item in productattributes
+                                option(value=item.slug) #{item.name}
+                .form-group
+                    label.col-sm-2.control-label Flavor
+                    .col-sm-8
+                        select.form-control(style='width: 100%', name='flavor', id='flavor', data-placeholder='', multiple='')
+                            each item in productattributes
+                                option(value=item.slug) #{item.name}
+                .form-group
+                    label.col-sm-2.control-label Color
+                    .col-sm-8
+                        select.form-control(style='width: 100%', name='color', id='color', data-placeholder='', multiple='')
+                            each item in productattributes
+                                option(value=item.slug) #{item.name}
+                .form-group
+                    label.col-sm-2.control-label Design
+                    .col-sm-8
+                        select.form-control(style='width: 100%', name='design', id='design', data-placeholder='', multiple='')
+                            each item in productattributes
+                                option(value=item.slug) #{item.name}
+                .form-group
+                    label.col-sm-2.control-label Ingredient
+                    .col-sm-8
+                        textarea.form-control(name='ingredient', id='ingredient', rows='3') #{result.ingredient}
+                .form-group
+                    label.col-sm-2.control-label Volume
+                    .col-sm-8
+                        input.form-control(type='text', name='volume', id='volume', value=result.volume)
+                br
+                h4.panel-title Pricing Control
+                hr
+                .form-group
+                    label.col-sm-2.control-label Cost Price (MYR)
+                    .col-sm-8
+                        input.form-control(type='text', name='costprice', id='costprice', value=result.costPrice, required='required')
+                .form-group
+                    label.col-sm-2.control-label Recommended Retail Price (MYR)
+                    .col-sm-8
+                        input.form-control(type='text', name='price', id='price', value=result.price, required='required')
+                .form-group
+                    label.col-sm-2.control-label Discounted Price (MYR)
+                    .col-sm-8
+                        input.form-control(type='text', name='discountedprice', id='discountedprice', value=result.discountedprice)
+                hr
+                .row
+                    .col-sm-6.col-sm-offset-3.text-center
+                        button.btn.btn-success.btn-quirk.btn-wide.mr5(type="submit") Save
+                        a(href="/products/list").btn.btn-quirk.btn-wide.btn-default Cancel
+
+    script.
+        $(document).ready(function () {
+            $.get('/admin/get_signature', {})
+                .done(function (s3Hash) {
+                    $('#details').froalaEditor({
+                        imageUploadToS3: s3Hash,
+                        videoUploadToS3: s3Hash,
+                        fileUploadToS3: s3Hash,
+                        toolbarButtons: ['bold', 'italic', 'underline', '|', 'align', 'formatUL', 'formatOL', '|', 'fontSize', 'fontFamily', 'color', '|', 'insertLink', 'insertImage', 'insertVideo', '|', 'clearFormatting', 'html'],
+                        spellcheck: true,
+                        heightMin: 300,
+                        toolbarSticky: true,
+                        toolbarStickyOffset: 60
+                    })
+                });
+
+            $('#brand').val('#{result.brand}');
+
+            var Categories = !{JSON.stringify(result.tags)};
+            $("#tags")
+                .select2({tags: true})
+                .val(Categories)
+                .trigger("change");
+            var SkinTypes = !{JSON.stringify(result.attribute.skintype)};
+            $("#skintype")
+                .select2({tags: true})
+                .val(SkinTypes)
+                .trigger("change");
+            var Flavors = !{JSON.stringify(result.attribute.flavor)};
+            $("#flavor")
+                .select2({tags: true})
+                .val(Flavors)
+                .trigger("change");
+            var Colors = !{JSON.stringify(result.attribute.color)};
+            $("#color")
+                .select2({tags: true})
+                .val(Colors)
+                .trigger("change");
+            var Designs = !{JSON.stringify(result.attribute.design)};
+            $("#design")
+                .select2({tags: true})
+                .val(Designs)
+                .trigger("change");
+
+        });

@@ -1,0 +1,8 @@
+{
+  "bucket" : "favful-public",
+  "region" : "ap-southeast-1",
+  "keyStart" : "editor/media/favful_",
+  "acl" : "public-read" ,
+  "accessKey" : "AKIAJ6XYENCXB3VKCYHQ",
+  "secretKey": "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"
+}

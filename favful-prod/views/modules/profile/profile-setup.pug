@@ -1,0 +1,280 @@
+extends ../../layouts/profile
+
+block content
+    .container
+        .row
+            section
+            .wizard
+                .wizard-inner
+                    .connecting-line
+                    ul.nav.nav-tabs(role='tablist')
+                        li.active(role='presentation')
+                            a(href='#step1', data-toggle='tab', aria-controls='step1', role='tab', title='Step 1')
+                                span.round-tab
+                                    i.fa.fa-user-o
+                        li.disabled(role='presentation')
+                            a(href='#step2', data-toggle='tab', aria-controls='step2', role='tab', title='Step 2')
+                                span.round-tab
+                                    i.fa.fa-user-plus
+                        li.disabled(role='presentation')
+                            a(href='#step3', data-toggle='tab', aria-controls='step3', role='tab', title='Step 3')
+                                span.round-tab
+                                    i.fa.fa-calendar
+                        li.disabled(role='presentation')
+                            a(href='#complete', data-toggle='tab', aria-controls='complete', role='tab', title='Complete')
+                                span.round-tab
+                                    i.fa.fa-check
+            form(role='form')
+                .tab-content
+                    #step1.tab-pane.active(role='tabpanel')
+                        .setup-box
+                            .row
+                                .col-md-12
+                                    .profile-setup-desc.text-center
+                                        h1 What's your skin type?
+                                    hr
+                            .row
+                                .col-md-12
+                                    .skin-type-img.text-center
+                                        .col-md-4
+                                            img(src='../img/beauty_profile/skin_type/normal.png', alt='')
+                                            label.checkbox
+                                                input(type='checkbox', value='')
+                                                | &nbsp;Normal
+                                        .col-md-4
+                                            img(src='../img/beauty_profile/skin_type/dry.png', alt='')
+                                            label.checkbox
+                                                input(type='checkbox', value='')
+                                                | &nbsp;Dry
+                                        .col-md-4
+                                            img(src='../img/beauty_profile/skin_type/oily.png', alt='')
+                                            label.checkbox
+                                                input(type='checkbox', value='')
+                                                | &nbsp;Oily
+                                        .col-md-4
+                                            img(src='../img/beauty_profile/skin_type/acne_prone.png', alt='')
+                                            label.checkbox
+                                                input(type='checkbox', value='')
+                                                | &nbsp;Acne Prone
+                                        .col-md-4
+                                            img(src='../img/beauty_profile/skin_type/sensitive.png', alt='')
+                                            label.checkbox
+                                                input(type='checkbox', value='')
+                                                | &nbsp;Sensitive
+                                        .col-md-4
+                                            img(src='../img/beauty_profile/skin_type/combination.png', alt='')
+                                            label.checkbox
+                                                input(type='checkbox', value='')
+                                                | &nbsp;Combination 
+                                ul.list-inline.pull-right
+                                    li
+                                        button.btn.btn-primary.next-step(type='button') Save and continue
+                    #step2.tab-pane(role='tabpanel')
+                        .step2
+                            .setup-box
+                                .row
+                                    .col-md-12
+                                        .profile-setup-desc.text-center
+                                            h1 What's your skin tone?
+                                        hr
+                                .row
+                                    .col-md-12
+                                        .skin-type-img.text-center
+                                            .col-md-3
+                                                img(src='../img/beauty_profile/skin_tone/fair.jpg', alt='')
+                                                label.checkbox
+                                                    input(type='checkbox', value='')
+                                                    | &nbsp;Fair
+                                            .col-md-3
+                                                img(src='../img/beauty_profile/skin_tone/medium-fair.jpg', alt='')
+                                                label.checkbox
+                                                    input(type='checkbox', value='')
+                                                    | &nbsp;Medium Fair
+                                            .col-md-3
+                                                img(src='../img/beauty_profile/skin_tone/medium.jpg', alt='')
+                                                label.checkbox
+                                                    input(type='checkbox', value='')
+                                                    | &nbsp;Medium
+                                            .col-md-3
+                                                img(src='../img/beauty_profile/skin_tone/olive.jpg', alt='')
+                                                label.checkbox
+                                                    input(type='checkbox', value='')
+                                                    | &nbsp;Olive
+                                            .col-md-3
+                                                img(src='../img/beauty_profile/skin_tone/tan.jpg', alt='')
+                                                label.checkbox
+                                                    input(type='checkbox', value='')
+                                                    | &nbsp;Tan
+                                            .col-md-3
+                                                img(src='../img/beauty_profile/skin_tone/medium-brown.jpg', alt='')
+                                                label.checkbox
+                                                    input(type='checkbox', value='')
+                                                    | &nbsp;Medium Brown
+                                            .col-md-3
+                                                img(src='../img/beauty_profile/skin_tone/dark.jpg', alt='')
+                                                label.checkbox
+                                                    input(type='checkbox', value='')
+                                                    | &nbsp;Dark
+                                            .col-md-3
+                                                img(src='../img/beauty_profile/skin_tone/deep-dark.jpg', alt='')
+                                                label.checkbox
+                                                    input(type='checkbox', value='')
+                                                    | &nbsp;Deep Dark               
+                                    ul.list-inline.pull-right
+                                        li
+                                            button.btn.btn-default.prev-step(type='button') Previous
+                                        li
+                                            button.btn.btn-primary.next-step(type='button') Save and continue
+                    #step3.tab-pane(role='tabpanel')
+                        .step3
+                            .setup-box
+                                .row
+                                    .col-md-12
+                                        .profile-setup-desc.text-center
+                                            h1 When is your birthday?
+                                        hr
+                                .row
+                                    .col-md-12
+                                        .calendar-picker.text-center
+                                            #sandbox-container
+
+                                    ul.list-inline.pull-right
+                                        li
+                                            button.btn.btn-default.prev-step(type='button') Previous
+                                        li
+                                            button.btn.btn-default.next-step(type='button') Skip
+                                        li
+                                            button.btn.btn-primary.btn-info-full.next-step(type='button') Save and continue
+                    #complete.tab-pane(role='tabpanel')
+                        .setup-box
+                            .row
+                                .col-md-12.text-center
+                                    h2 Create account with these info?
+                            br     
+                            .row
+                                .col-md-12
+                                    .confirm-selections
+                                        .col-sm-4.text-center
+                                            .user-avatar
+                                                img(src='https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100')
+                                        .col-sm-8
+                                            table
+                                                tbody
+                                                    tr
+                                                        td.label-col 
+                                                            | Name:
+                                                        td
+                                                            input#user_username.textbox(required='required', type='text', value='', name='user[username]')
+                                                    tr
+                                                        td.label-col 
+                                                            | Email:
+                                                        td
+                                                            input#user_email.textbox(type='email', value='', name='user[email]')
+                                                    tr
+                                                        td.label-col 
+                                                            | Skin Type:
+                                                        td 
+                                                            | normal
+                                                    tr
+                                                        td.label-col 
+                                                            | Skin Color:
+                                                        td 
+                                                            | medium_brown
+                                                    tr
+                                                        td.label-col 
+                                                            | Birthday:
+                                                        td 
+                                                            | 14 / 12 / 2016
+                            .setup-footer
+                                br
+                                .row
+                                    .col.col-sm-6
+                                        a.btn.btn-block.btn-outline.prev-step « Back
+                                    .col.col-sm-6
+                                        input.btn.btn-block.btn-success(type='submit', name='commit', value='Completed')
+                                br
+                                .text-sm.text-light.text-center
+                                    i
+                                        | By signing up, you're agree to accept our &nbsp;
+                                    u
+                                        a.text-light.text-black(target='_blank', href='#') T&Cs
+                                    span.translation_missing(title='translation missing: en.disclaimers.and') &nbsp;And&nbsp;
+
+                                    u
+                                        a.text-light.text-black(target='_blank', href='#') Privacy Policy
+
+    
+    script.
+        $(document).ready(function () {
+            //Initialize tooltips
+            $('.nav-tabs > li a[title]').tooltip();
+            
+            //Wizard
+            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+
+                var $target = $(e.target);
+        
+                if ($target.parent().hasClass('disabled')) {
+                        return false;
+                }
+            });
+
+            $(".next-step").click(function (e) {
+
+                var $active = $('.wizard .nav-tabs li.active');
+                $active.next().removeClass('disabled');
+                nextTab($active);
+
+            });
+            $(".prev-step").click(function (e) {
+
+                var $active = $('.wizard .nav-tabs li.active');
+                prevTab($active);
+
+            });
+        });
+
+        function nextTab(elem) {
+            $(elem).next().find('a[data-toggle="tab"]').click();
+        }
+        function prevTab(elem) {
+            $(elem).prev().find('a[data-toggle="tab"]').click();
+        }
+
+
+        //according menu
+
+        $(document).ready(function(){
+            //Add Inactive Class To All Accordion Headers
+            $('.accordion-header').toggleClass('inactive-header');
+        //Set The Accordion Content Width
+        var contentwidth = $('.accordion-header').width();
+        $('.accordion-content').css({});
+        
+        //Open The First Accordion Section When Page Loads
+        $('.accordion-header').first().toggleClass('active-header').toggleClass('inactive-header');
+        $('.accordion-content').first().slideDown().toggleClass('open-content');
+        
+        // The Accordion Effect
+        $('.accordion-header').click(function () {
+            if($(this).is('.inactive-header')) {
+                $('.active-header').toggleClass('active-header').toggleClass('inactive-header').next().slideToggle().toggleClass('open-content');
+                $(this).toggleClass('active-header').toggleClass('inactive-header');
+                $(this).next().slideToggle().toggleClass('open-content');
+            }
+            
+            else {
+                $(this).toggleClass('active-header').toggleClass('inactive-header');
+                $(this).next().slideToggle().toggleClass('open-content');
+            }
+        });
+        
+            return false;
+        });
+
+        $(document).ready(function () {
+            $('#sandbox-container').datepicker({
+                maxViewMode: 0,
+                todayHighlight: true
+        });
+     });

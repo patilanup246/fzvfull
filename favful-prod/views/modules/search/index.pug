@@ -1,0 +1,132 @@
+extends ../../layouts/search
+
+block content
+    .container
+        .row
+            .search-margin
+                .col-md-3
+                    //.search-sidebar
+                    //    .search-sidebar-desc
+                    //        | Categories
+                    //.col-md-6
+                    //    .search-name-number
+                    //        | All
+                    //.col-md-6
+                    //    .search-name-number
+                    //        | 1
+                    //hr
+                    //.search-sidebar
+                    //    .search-sidebar-desc
+                    //        | Skin Type
+                    //.col-md-6
+                    //    .search-name-number
+                    //        | All
+                    //.col-md-6
+                    //    .search-name-number
+                    //        | 1
+                    //hr
+                    //.search-sidebar
+                    //    .search-sidebar-desc
+                    //        |Brand
+                    //.col-md-6
+                    //    .search-name-number
+                    //        | All
+                    //.col-md-6
+                    //    .search-name-number
+                    //        | 1
+                    //hr
+                    //.search-sidebar
+                    //    .search-sidebar-desc
+                    //        | Price
+                    //.button-slider
+                    //    input#bootstrap-slider(type='text', data-slider-min='1', data-slider-max='50', data-slider-step='1', data-slider-value='25')
+                    //    .valueLabel
+                    //        | From RM
+                    //        span#sliderValue 25
+                    //
+                    //
+                    //hr
+                   
+                .col-md-12
+                    .custom-search-input
+                        form(action='/search', method='get')
+                            .input-group.col-md-12
+                                input.form-control.input-lg(type='text', placeholder='Search products by brand or keywords...', id='q', name='q')
+                                span.input-group-btn
+                                    button.btn.btn-custom-search.btn-lg(type='text')
+                                        i.fa.fa-search
+                    hr
+                    .small.text-muted.text-center
+                        | #{productResultCount} result
+                        if (productResultCount > 1)
+                            | s
+                        | &nbsp;found for '
+                        b #{q}
+                        | '
+                    hr
+                    if (featuredproducts.length > 0)
+                        .row
+                            each item in featuredproducts
+                                .col-sm-6.col-md-4.col-lg-3
+                                    .product-card-wrap
+                                        .product-card-details
+                                            .product-card-details-img-wrap
+                                                .product-card-details-img
+                                                    a(href='/products/' + item.slug)
+                                                        img.object-fit(src=item.imagepath)
+                                            hr
+                                            .product-card-details-name
+                                                a.gray(href='/products/' + item.slug)
+                                                    | #{item.name}
+                                            .product-card-details-desc.small.text-muted
+                                                | #{item.shortdescription}
+                                            hr.hr-small-margin
+                                        .product-card-details-brand.small.text-center
+                                            | #{item.brand.name}
+                                        .product-card-details-price.text-center
+                                            if (item.price === 0) || (!item.price)
+                                                .product-card-details-price-na.text-muted.small Price Not Available
+                                            else
+                                                if (item.discountedprice)
+                                                    span.product-card-details-price-slash
+                                                        | MYR #{parseFloat(item.price).toFixed(2)}
+                                                    | &nbsp;
+                                                    b.primary MYR #{parseFloat(item.discountedprice).toFixed(2)}
+                                                else
+                                                    b.primary MYR #{parseFloat(item.price).toFixed(2)}
+                                        hr
+                                        button.btn.btn-success.btn-sm(style='width:100%', type='submit', id='addToCartBtn_' + item.id)
+                                            i.fa.fa-cart-plus
+                                            | &nbsp; Add to Cart
+                    hr
+                    br
+                    .row
+                        each item in productlist
+                            .col-sm-4.col-md-3.col-lg-2
+                                .product-card-wrap
+                                    .product-card-details
+                                        .product-card-details-img-wrap
+                                            .product-card-details-img
+                                                a(href='/products/' + item.slug)
+                                                    img.object-fit(src=item.imagepath)
+                                        hr
+                                        .product-card-details-name.small
+                                            a.gray(href='/products/' + item.slug)
+                                                | #{item.name}
+                                        hr.hr-small-margin
+                                    .product-card-details-brand.small.text-center
+                                        | #{item.brand.name}
+
+    script.
+        $('.product-card-details-name').truncate({
+            lines: 2
+        });
+        $('.product-card-details-desc').truncate({
+            lines: 3
+        });
+        $('.product-card-details-brand').truncate({
+            lines: 1
+        });
+        $("img").on("error", function () {
+            $(this).attr('src', '../img/static/empty-product.png');
+        });

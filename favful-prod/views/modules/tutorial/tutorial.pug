@@ -1,0 +1,92 @@
+extends ../../layouts/tutorial
+
+block content
+    .container
+        .row
+        .tab-content
+            ul.nav.nav-tabs.nav-justified
+                li.active
+                    a(data-toggle='tab', href='#videotutor') 
+                        i.fa.fa-video-camera
+                        | &nbsp;Post Video Tutorial
+                li
+                    a(data-toggle='tab', href='#texttutor') 
+                        i.fa.fa-picture-o
+                        | &nbsp;Post Image Tutorial
+            br
+        .tab-content
+            br
+            #videotutor.tab-pane.fade.in.active
+                .row
+                    .col-md-12.text-center
+                        h3(style='margin-top:25px') 
+                            i.fa.fa-video-camera
+                            | &nbsp;Showcase (Video)
+                hr
+                .row
+                    .col-md-6.col-md-offset-3
+                        .form-group
+                            label(for='inputdefault', ) Title
+                            input#inputdefault.form-control(type='text', placeholder='Does K-Beauty JAMSU Work?')
+                            .input-tips Title that starts with "How-to" or "best" or "vs" to get better response.
+                        .form-group
+                            label(for='inputdefault', ) Video Link
+                            input#inputdefault.form-control(type='text', placeholder='https://www.youtube.com/watch?v=6vw_LesSzYM')
+                            .input-tips Currently supports: YouTube, Vimeo, Dailymotion
+                        .form-group
+                            label(for='comment') Short Description:
+                            textarea#comment.form-control(rows='5', placeholder='Short and catchy description of your tutorial')
+                            .input-tips Short description about your tutorial. For better result, keep it short and simple.
+
+                        .form-group
+                            label Tutorial
+                            textarea(id='content', name='content', required='required')
+                        hr
+                        .text-center
+                            button.btn.btn-success(type='submit', style='color:#fff !important') Submit
+                            | &nbsp;&nbsp;&nbsp;
+                            a.btn.btn-default(href='/profile', style='color:#aaa !important') Cancel  
+            #texttutor.tab-pane.fade
+                    .row
+                        .col-md-12.text-center
+                            h3(style='margin-top:25px') 
+                                i.fa.fa-picture-o
+                                | &nbsp;Showcase (Image)
+                    hr
+                    .row
+                        .col-md-6.col-md-offset-3
+                            form(action='/tutorial/image', method='post', enctype="multipart/form-data")
+                                input(type='hidden', name='_csrf' value=csrfToken)
+                                .form-group
+                                    label Title
+                                    input.form-control(placeholder='Does K-Beauty JAMSU Work?', id='title', name='title', required='required')
+                                    .input-tips.small Title that starts with "How-to" or "best" or "vs" to get better response.
+                                .form-group
+                                    label Thumbnail Image
+                                    input(type='file', name='mediafile', id='mediafile', required='required')
+                                    .input-tips.small
+                                        | Recommended resolution: 800px (width) X 450px (height)
+                                .form-group
+                                    label Short Description
+                                    textarea.form-control.resize-none(placeholder='e.g. 6vw_LesSzYM', rows = '3', id='shortdescription', name='shortdescription', required='required')
+                                .input-tips.small
+                                        | Short description about your tutorial. For better result, keep it short and simple.
+                                .form-group
+                                    label Tutorial
+                                    textarea(id='content-1', name='content-1', required='required')
+                                hr
+                                .text-center
+                                    button.btn.btn-success(type='submit', style='color:#fff !important') Submit
+                                    | &nbsp;&nbsp;&nbsp;
+                                    a.btn.btn-default(href='/profile', style='color:#aaa !important') Cancel
+                                br
+                                br
+    script.
+        $(document).ready(function () {
+            $('#content').summernote({
+            height: 300
+            });
+            $('#content-1').summernote({
+            height: 300
+            });
+        });

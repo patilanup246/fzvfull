@@ -1,0 +1,185 @@
+.home-header.hidden-xs.hidden-sm
+    .container-fluid.header-container
+        .pull-left
+            .header-logo
+                a(href='/')
+                    img.object-fit(src='../img/static/favful-logo.svg')
+            //.header-search
+            //    form(action='/search', method='get')
+            //        .input-group.header-search-wrap
+            //            input.form-control(type='text', placeholder='Search for products...',id='q', name='q')
+            //            span.input-group-btn
+            //                button.btn.btn-header-search(type='text')
+            //                    i.fa.fa-search.fa-fw
+            .clearfix
+        .pull-right
+            .header-menu
+                ul.navbar-right
+                    li.sub-menu-parent#shoppingCart
+                        if (cartItemCounts == 0)
+                            a(href='/checkout')
+                                i.fa.fa.fa-shopping-cart
+                                | &nbsp;Cart&nbsp;
+                        else
+                            if (!logged)
+                                a(href='', data-toggle="modal", data-target="#checkoutLoginModal")
+                                    i.fa.fa.fa-shopping-cart
+                                    | &nbsp;Cart&nbsp;
+                                    span.badge #{cartItemCounts}
+                            if (logged)
+                                a(href='/checkout')
+                                    i.fa.fa.fa-shopping-cart
+                                    | &nbsp;Cart&nbsp;
+                                    span.badge #{cartItemCounts}
+                            ul.sub-menu
+                                .shopping-cart
+                                    if (!cartDetails)
+                                        .text-muted.text-center
+                                            | Your cart is empty
+                                    if (cartDetails)
+                                        for merchant in cartDetails.merchants
+                                            .shopping-cart-merchant-wrap
+                                                .shopping-cart-merchant-details.small
+                                                    .pull-left
+                                                        b #{merchant.companyName}
+                                                    .pull-right.text-muted.small
+                                                        if (merchant.minShippingDay) || (merchant.maxShippingDay)
+                                                            | Shipping Days: #{merchant.minShippingDay} - #{merchant.maxShippingDay} days
+                                                        else
+                                                            | No shipping days mentioned
+                                                        | &nbsp;&bull;&nbsp;
+                                                        | Shipping Fees: MYR #{parseFloat(merchant.shippingFees).toFixed(2)}
+                                                .clearfix
+                                                hr.hr-shopping-cart
+                                                .shopping-cart-item-title.small
+                                                    .row
+                                                        .col-md-2
+                                                            .text-center
+                                                                b Photo
+                                                        .col-md-5
+                                                            b Name
+                                                        .col-md-2
+                                                            .text-center
+                                                                b Qty
+                                                        .col-md-2
+                                                            .text-center
+                                                                b Unit Price
+                                                        .col-md-1
+
+                                                each item in merchant.items
+                                                    .shopping-cart-item-wrap.small
+                                                        .row
+                                                            .col-md-2
+                                                                .shopping-cart-item-image
+                                                                    .product-img-wrap
+                                                                        .product-img
+                                                                            img.object-fit(src=item.imagePath)
+                                                            .col-md-5
+                                                                .shopping-cart-item-name
+                                                                    b #{item.name}
+                                                                .shopping-cart-item-options.small
+                                                                    if (item.attributes.color)
+                                                                        | Color: #{item.attributes.color}
+                                                                    if (item.attributes.flavor)
+                                                                        | Flavor: #{item.attributes.flavor}
+                                                                    if (item.attributes.design)
+                                                                        | Design: #{item.attributes.design}
+                                                            .col-md-2
+                                                                .shopping-cart-item-quantity
+                                                                    .text-center #{item.quantity}
+                                                            .col-md-2
+                                                                .shopping-cart-item-price
+                                                                    if (item.discountedPrice)
+                                                                        .text-center
+                                                                            b MYR #{parseFloat(item.finalPrice).toFixed(2)}
+                                                                            .small.strike MYR #{parseFloat(item.originalPrice).toFixed(2)}
+                                                            .col-md-1
+                                                                .shopping-cart-item-cross
+                                                                    a(href='/removeItemInCart/' + item.id)
+                                                                        i.fa.fa.fa-times.light-gray(style='font-size:0.7em;line-height:25px;vertical-align:middle')
+                                    .shopping-stat.clearfix
+                                        .shopping-cart-total.pull-right.text-right
+                                            .small.lighter-text Sub-Total:&nbsp;&nbsp; MYR #{cartSubTotal}
+                                            .small.lighter-text Shipping Fees:&nbsp;&nbsp; MYR #{cartTotalShipping}
+                                            b.small.main-color-text Total:&nbsp;&nbsp;MYR #{cartTotalPrice}
+                                    hr.hr-small-margin(style='margin-bottom:10px')
+                                    .pull-right
+                                        if (!logged)
+                                            a(href='', data-toggle="modal", data-target="#checkoutLoginModal")
+                                                .btn.btn-follow-sidebar Checkout Now
+                                        if (logged)
+                                            a(href="/checkout")
+                                                .btn.btn-follow-sidebar Checkout Now
+                    li
+                        a(href='/products') Trending Products
+                    li
+                        a(href='/tutorial') Beauty Tutorials
+                    //- li
+                    //-     a(href='/beautyadvisor') Q&As
+                    //- li
+                    //-     a(href='') 
+                    //-         i.fa.fa-heart-o
+                    if logged != null
+                        li
+                            .header-photo
+                                a(href='/dashboard')
+                                    .header-photo-overlay
+                                        i.fa.fa-gear
+                                    img.img-circle.object-fit(src=logged.photo)
+                    else
+                        li
+                            a(data-toggle="modal", data-target="#loginModal").btn.btn-white.btn-outline Join the Fun
+
+.mobile-header.visible-xs.visible-sm
+    .pull-left
+        .mobile-header-icon-left-wrap
+            a(href='/tutorial')
+                .mobile-header-icon-left
+                    i.fa.fa-video-camera
+            | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            a(href='/products')
+                .mobile-header-icon-left
+                    i.fa.fa-shopping-basket
+    .pull-right
+        if logged != null
+            .mobile-header-icon-right
+                .header-photo(style='margin-top:-7px')
+                    a(href='/dashboard')
+                        img.img-circle.object-fit(src=logged.photo)
+        else
+            a(href='', data-toggle="modal", data-target="#loginModal")
+                .mobile-header-icon-right
+                    i.fa.fa-user-circle-o
+        | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        if (!logged)
+            a(href='', data-toggle="modal", data-target="#checkoutLoginModal")
+                .mobile-header-icon-right
+                    i.fa.fa-shopping-cart
+                    | &nbsp;
+                    .mobile-badge #{cartItemCounts}
+        if (logged)
+            a(href='/checkout')
+                .mobile-header-icon-right
+                    i.fa.fa.fa-shopping-cart
+                    | &nbsp;
+                    .mobile-badge #{cartItemCounts}
+
+    .mobile-header-logo
+        a(href='/')
+            img.object-fit(src='../img/static/favful-logo.svg')
+
+script.
+    $(function() {
+    var header = $('.home-header');
+    var headerSearch = $('.header-search');
+    $(window).scroll(function() {
+    var scroll = $(window).scrollTop();
+    if (scroll >= 100) {
+    header.addClass('whiteheader');
+    headerSearch.fadeIn().css({'display': 'inline-block'});
+    } else {
+    header.removeClass('whiteheader');
+    headerSearch.fadeOut().css({'display': 'none'});
+    }
+    });
+    });

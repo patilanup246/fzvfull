@@ -1,0 +1,67 @@
+extends ../../layouts/beautytutorial
+
+block content
+    .container
+        .row
+            .col-md-9
+                .beauty-tutorial-about
+                    | Top Rated Beauty Products
+                    //- .button-tutorial.pull-right
+                    //-     a.btn.btn-tutorial(href='/beautytutorial/post')
+                    //-         i.fa.fa-arrow-up
+                    //-         | &nbsp;Post a Tutorial    
+                br
+                .row
+                    .col-md-4
+                        .beauty-tutorial-module-card
+                            .beauty-tutorial-desc
+                                .beauty-tutorial-img
+                                    img(src='https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100', alt='')
+                            .beauty-tutorial-writer-desc.pull-right
+                                .beauty-tutorial-writer-name 
+                                    | Kim Sarah
+                                .beauty-tutorial-writer-designation
+                                    | Skin type: Dry
+                                .beauty-tutorial-writer-designation
+                                    | Skin color: Medium Fair
+                            br
+                            .beauty-tutorial-title
+                                .beauty-tutorial-writer-title
+                                    a(href='/beautytutorial/beautytutorialtitle')
+                                        | The 20mins perfect makeup for your saturday night party.
+                            br
+                            .beauty-tutorial-thumbnail
+                                img.object-fit(src='../img/static/empty-user.png')
+                            .beauty-tutorial-user-exp-category        
+                                .beauty-tutorial-user-like
+                                    i.fa.fa-heart-o 
+                                    | &nbsp;2930&nbsp;
+                                    i.fa.fa-comment-o 
+                                    | &nbsp;391
+                                    .beauty-tutorial-ueser-facebook.pull-right
+                                        | &nbsp;
+                                        i.fa.fa-facebook-official
+                        br
+                                          
+            .col-md-3
+                .beauty-tutorial-description-sidebar
+                    h4 TRENDING EXPERTS
+                .beauty-tutorial-desc-sidebar
+                    .beauty-tutorial-img
+                        img(src='https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100', alt='')
+                .beauty-tutorial-writer-desc-sidebar.pull-right
+                    .beauty-tutorial-writer-name-sidebar 
+                        | Kim Sarah
+                    .beauty-tutorial-writer-designation-sidebar
+                        | Skin type: Dry
+                    .beauty-tutorial-writer-designation-sidebar
+                        | Skin color: Medium Fair
+  
+                    button.btn.btn-follow-sidebar
+                        i.fa.fa-user
+                        | &nbsp;Follow
+
+    script.
+        $('.beauty-tutorial-writer-title-sidebar').truncate({
+            lines: 1
+        });

@@ -1,0 +1,523 @@
+extends ../../layouts/product-single
+
+block content
+    .container
+        .row
+            .col-md-9
+                .border-static
+                    .row
+                        .col-md-6
+                            .product-photo.text-center
+                                img.object-fit(src=singleproduct.imagepath)
+                        .col-md-6
+                            .single-product-stat
+                                form.form-inline
+                                    //.single-product-desc
+                                    //    h4 Top 10 best aloe vera products to soothe hair, face and body.
+                                    .single-product-title
+                                        h4 #{singleproduct.name}
+                                    .single-product-brand
+                                        h4.small By:&nbsp;
+                                            span(style='font-weight:bold;') #{singleproduct.brand.name}
+                                    .single-product-shortdesc
+                                        p.small.text-muted #{singleproduct.shortdescription}
+                                        hr
+                                    .single-product-options
+                                        -var flavor = singleproduct.attribute.flavor;
+                                        -var color = singleproduct.attribute.color;
+                                        -var design = singleproduct.attribute.design;
+                                        if (flavor)
+                                            .form-group
+                                                label Select Flavor:&nbsp;&nbsp;&nbsp;
+                                                select.form-control(name='flavor', id='flavor')
+                                                    each flavor in singleproduct.attribute.flavor
+                                                        option(value=flavor) #{flavor}
+                                            hr
+                                        if (color)
+                                            .form-group
+                                                label Select Color:&nbsp;&nbsp;&nbsp;
+                                                select.form-control(name='color', id='color')
+                                                    each color in singleproduct.attribute.color
+                                                        option(value=color) #{color}
+                                            hr
+                                        if (design)
+                                            .form-group
+                                                label Select Design:&nbsp;&nbsp;&nbsp;
+                                                select.form-control(name='design', id='design')
+                                                    each design in singleproduct.attribute.design
+                                                        option(value=design) #{design}
+                                            hr
+                                    .single-product-comparison-stat
+                                        .single-product-comparison-desc
+                                            if (singleproduct.price === 0) || (!singleproduct.price) || (singleproduct.instore != true)
+                                                .product-card-details-price-na.text-muted Price Not Available
+                                            if (singleproduct.price)
+                                                if (!singleproduct.discountedprice)
+                                                    h4
+                                                        b Price:&nbsp;
+                                                        b.primary MYR #{parseFloat(singleproduct.price).toFixed(2)}
+                                                else
+                                                    h4
+                                                        b Price:&nbsp;
+                                                        b.primary MYR #{parseFloat(singleproduct.discountedprice).toFixed(2)}
+                                                        | &nbsp;&nbsp;
+                                                        span.product-card-details-price-slash
+                                                            | MYR #{parseFloat(singleproduct.price).toFixed(2)}
+                                                    h5.product-price-save
+                                                        | You saved MYR&nbsp;#{parseFloat(singleproduct.price- singleproduct.discountedprice).toFixed(2)}
+
+                                            if (singleproduct.price)
+                                                input(type='hidden', name='_csrf', value=csrfToken)
+                                                input(type='hidden', name='item_' + singleproduct.id, id='item_' + singleproduct.id, value=singleproduct.id)
+                                                button.btn.btn-success.btn-sm(type='submit', id='addToCartBtn_' + singleproduct.id)
+                                                    i.fa.fa-cart-plus
+                                                    | &nbsp; Add to Cart
+                                            if (!singleproduct.price)
+                                                button.btn.btn-success.btn-sm(disabled)
+                                                    i.fa.fa-cart-plus
+                                                    | &nbsp; Add to Cart
+
+                                            script.
+                                                $('#addToCartBtn_#{singleproduct.id}').click(function (e) {
+                                                    var item = $(this).parent().find('#item_#{singleproduct.id}').val();
+                                                    var color = $('#color option:selected').val();
+                                                    var flavor = $('#flavor option:selected').val();
+                                                    var design = $('#design option:selected').val();
+                                                    $.ajax({
+                                                        url: "/addItemToCart",
+                                                        type: "POST",
+                                                        data: {
+                                                            itemID: item,
+                                                            color: color,
+                                                            flavor: flavor,
+                                                            design: design
+                                                        },
+                                                        beforeSend: function (request) {
+                                                            request.setRequestHeader("X-CSRF-TOKEN", "#{csrfToken}");
+                                                        },
+                                                        success: function (data) {
+                                                            $("#shoppingCart").load(" #shoppingCart");
+                                                        }
+                                                    });
+                                                    return false;
+                                                });
+
+                            //- .single-product-rating-stat
+                            //-     .single-product-rating-desc
+                            //-         h5 Rating
+                            //-     .single-product-rating-expression
+                            //-         .single-product-rating-expression-logo
+                            //-             fa.fa.fa-user-o
+                            //-         .single-product-rating-expression-stat
+                            //-             .single-product-rating-star
+                            //-                 | Star
+                            //-             .single-product-rating-star
+                            //-                 | 3 (123 ratings)
+                            //- .single-product-favourite-stat
+                            //-     .single-product-favourite-logo
+                            //-         fa.fa.fa-heart-o
+                            //-     .single-product-favourite-desc
+                            //-         | &nbsp;Fav this
+                            //- .single-product-user-fav
+                            //-     | 16 people Fav'd this product
+                            //- .single-product-categories
+                            //-     h4 Categories
+                            //- .single-product-categories-stats
+                            //-     .single-product-categories-background
+                            //-         | Moisturisers 
+                            //- .single-product-categories-stats        
+                            //-     .single-product-categories-background
+                            //-         | Face Moisturiser
+                br
+                .border-static
+                    .row
+                        .col-xs-4.col-sm-3.col-md-3
+                            | Recommend this to a friend:
+                        .col-xs-8.col-sm-9.col-md-9
+                            .beauty-tutorial-single-recommend-friend
+                                .beauty-tutorial-single-recommend
+                                    #share
+                br
+                .border-static                
+                    .row
+                        .col-md-12
+                            .nav
+                                ul.text-center.small.lead
+                                    li.nav-item.active
+                                        a(data-toggle='tab', href='#detail')
+                                            i.fa.fa-bullseye
+                                            | &nbsp;DETAILS
+                                    li
+                                        a(data-toggle='tab', href='#video')
+                                            i.fa.fa-video-camera
+                                            | &nbsp;VIDEOS
+                                    //- li.active
+                                    //-     a(data-toggle='tab', href='#review') 
+                                    //-         i.fa.fa-book
+                                    //-         | &nbsp;306(Reviews)
+                                    //- li
+                                    //-     a(data-toggle='tab', href='#rating')
+                                    //-         i.fa.fa-heart
+                                    //-         | &nbsp;Rating
+                            br
+                            .tab-content
+                                #detail.tab-pane.fade.in.active
+                                    .row     
+                                        .col-md-12
+                                            .single-product-details-dec
+                                                | !{singleproduct.details}
+
+
+                                #video.tab-pane.fade
+                                    .row     
+                                        .col-md-12
+                                            .embed-responsive.embed-responsive-16by9
+                                                iframe.embed-responsive-item(src=singleproduct.youtubeembed, frameborder='0', allowfullscreen='')
+                                //- #review.tab-pane.fade.in.active  
+                                //-     .row
+                                //-         .col-md-12
+                                //-             .single-product-review-stat
+                                //-                 .single-product-review-title
+                                //-                     h4 Reviews for Nature Republic Soothing & Moisture ALOE VERA 92% Soothing Gel 300ml
+                                //-     .row
+                                //-         .col-md-3
+                                //-             .single-product-user-img
+                                //-                     img(src='../img/static/empty-user.png')
+                                //-             .single-product-username-badge    
+                                //-                 .single-product-user-name
+                                //-                     | Username&nbsp;
+                                //-                 .single-product-user-flag
+                                //-                     img.object-fit(src='../img/flags/my.svg')
+                                //-             .single-produdct-user-skin-stat
+                                //-                 .single-product-user-skin-color
+                                //-                     | Skin Type:&nbsp;
+                                //-                     b Combination
+                                //-                 .single-product-user-skin-color
+                                //-                     | Skin Color:&nbsp;  
+                                //-                     b Fair
+                                //-         .col-md-9
+                                //-             .single-product-user-review-title
+                                //-                 b Wonderful !! will buy it again :))
+                                //-             .single-product-user-review-stat
+                                //-                 .single-product-user-review-star
+                                //-                     | Star&nbsp;
+                                //-                 .single-product-user-review-date-time
+                                //-                     fa.fa.fa-clock-o
+                                //-                     | &nbsp;21/04/17, 8:48PM
+                                //-             br
+                                //-             .single-product-review-content
+                                //-                 | This product does indeed smell like aloe vera and it does not have those fake extract and stuff, unlike many products. Before sleeping, I will apply it on my face, like a ' face mask'. After 7 hours, my skin will be very bouncy, smooth and not oily! 
+                                //-                 br
+                                //-                 | Furthermore, this product is really cheap. The one I bought cost me $9.90, but if you go elsewhere to find this product, you can find stores that sell them for only $5!!!
+                                //-             .single-product-review-action.pull-right
+                                //-                 .single-produtc-user-thumbs
+                                //-                     fa.fa.fa-thumbs-o-up
+                                //-                     | &nbsp;123&nbsp;
+                                //-                 .single-produtc-user-thumbs    
+                                //-                     fa.fa.fa-thumbs-o-down
+                                //-                     | &nbsp;456
+                                //-             br
+                                //-             hr       
+                                //-             .single-product-user-write-review
+                                //-                 .single-product-user-write-review-stat
+                                //-                     h4 Write a Review
+                                //-                 .single-product-user-write-review-stat.pull-right
+                                //-                     h4
+                                //-                         a(href='#')
+                                //-                             fa.fa.fa-video-camera
+                                //-                             | &nbsp;Upload Video Review
+                                //-             .single-product-comment-module-card
+                                //-                 .beauty-tutorial-single-comment
+                                //-                     .beauty-tutorial-single-comment-desc
+                                //-                         .beauty-tutorial-single-comment-img
+                                //-                             img.object-fit(src='https://placeholdit.imgix.net/~text?txtsize=9&txt=100%C3%97100&w=100&h=100', alt='')
+                                //-                         .beauty-tutorial-single-comment-img-shape
+                                //-                     .beauty-tutorial-single-comment-input-group
+                                //-                         .input-group.beauty-tutorial-single-comment-box
+                                //-                             input.form-control(placeholder='Product Summary (50words or less)', type='text')
+                                //-                             span.input-group-addon
+                                //-                                 a(href='#')
+                                //-                                     i.fa.fa-edit
+
+                                //- #rating.tab-pane.fade
+                                //-     .row
+                                //-         .col-md-12
+                                //-             h3 481 people say
+                                //-     .row
+                                //-         .col-md-6
+                                //-             .single-product-user-rating-stat
+                                //-                 .single-product-user-rating
+                                //-                     b Good ratings from
+                                //-             .single-product-user-stat-desc
+                                //-                 .single-product-user-stat
+                                //-                     .single-product-user-skin-type
+                                //-                         | Skin Type:&nbsp;
+                                //-                 .single-product-user-skin-type-stat    
+                                //-                     .single-product-user-skin-type-star
+                                //-                         b Combination
+                                //-                     .single-product-user-skin-type-star.pull-right
+                                //-                         | star
+                                //-                 br  
+                                //-             .single-product-user-stat-desc
+                                //-                 .single-product-user-stat
+                                //-                     .single-product-user-skin-type
+                                //-                         | Skin Color:&nbsp;
+                                //-                 .single-product-user-skin-type-stat    
+                                //-                     .single-product-user-skin-type-star
+                                //-                         b Olive
+                                //-                     .single-product-user-skin-type-star.pull-right
+                                //-                         | star
+                                //-                 br
+                                //-             .single-product-user-stat-desc
+                                //-                 .single-product-user-stat
+                                //-                     .single-product-user-skin-type
+                                //-                         | Age-Group:&nbsp;
+                                //-                 .single-product-user-skin-type-stat    
+                                //-                     .single-product-user-skin-type-star
+                                //-                         b 26-35
+                                //-                     .single-product-user-skin-type-star.pull-right
+                                //-                         | star
+
+
+                                //-         .col-md-6 
+                                //-             .single-product-user-rating-stat
+                                //-                 .single-product-user-rating
+                                //-                     b Bad ratings from
+                                //-             .single-product-user-stat-desc
+                                //-                 .single-product-user-stat
+                                //-                     .single-product-user-skin-type
+                                //-                         | Skin Type:&nbsp;
+                                //-                 .single-product-user-skin-type-stat    
+                                //-                     .single-product-user-skin-type-star
+                                //-                         b Combination
+                                //-                     .single-product-user-skin-type-star.pull-right
+                                //-                         | star
+                                //-                 br  
+                                //-             .single-product-user-stat-desc
+                                //-                 .single-product-user-stat
+                                //-                     .single-product-user-skin-type
+                                //-                         | Skin Color:&nbsp;
+                                //-                 .single-product-user-skin-type-stat    
+                                //-                     .single-product-user-skin-type-star
+                                //-                         b Olive
+                                //-                     .single-product-user-skin-type-star.pull-right
+                                //-                         | star
+                                //-                 br
+                                //-             .single-product-user-stat-desc
+                                //-                 .single-product-user-stat
+                                //-                     .single-product-user-skin-type
+                                //-                         | Age-Group:&nbsp;
+                                //-                 .single-product-user-skin-type-stat    
+                                //-                     .single-product-user-skin-type-star
+                                //-                         b 26-35
+                                //-                     .single-product-user-skin-type-star.pull-right
+                                //-                         | star
+                                //-     hr
+                                //-     .single-product-user-rating-source
+                                //-         | Source:
+                                //-     .single-product-user-rating-source-brand
+                                //-         b Favful
+                                //-         |(306)
+                                //-     .single-product-user-rating-source-brand
+                                //-         b Sephora
+                                //-         |(306)
+                                //-     .single-product-user-rating-source-brand
+                                //-         b MakeupAlley
+                                //-         | (306)
+                br
+                .border-static
+                    .row
+                        .col-md-12
+                            .single-product-stat
+                                h4 Customers who bought this brand also shopped for
+                            hr
+                    .row
+                        each item in featuredproducts
+                            .col-md-3
+                                .product-card-wrap
+                                    .product-card-details
+                                        .product-card-details-img-wrap
+                                            .product-card-details-img
+                                                a(href='/products/' + item.slug)
+                                                    img.object-fit(src=item.imagepath)
+                                        hr
+                                        .product-card-details-name
+                                            a.gray(href='/products/' + item.slug)
+                                                | #{item.name}
+                                        .product-card-details-desc.small.text-muted
+                                            | #{item.shortdescription}
+                                        hr.hr-small-margin
+                                    .product-card-details-brand.small.text-center
+                                        | #{item.brand.name}
+                                    .product-card-details-price.text-center
+                                        if (!item.price)
+                                            .product-card-details-price-na.text-muted.small Price Not Available
+                                        if (item.price)
+                                            if (!item.discountedprice)
+                                                b.primary MYR #{parseFloat(item.price).toFixed(2)}
+                                            else
+                                                span.product-card-details-price-slash
+                                                    | MYR #{parseFloat(item.price).toFixed(2)}
+                                                | &nbsp;
+                                                b.primary MYR #{parseFloat(item.discountedprice).toFixed(2)}
+                                    hr
+                                    .product-widget-addtocart
+                                        if (item.price)
+                                            form
+                                                input(type='hidden', name='_csrf', value=csrfToken)
+                                                input(type='hidden', name='item_' + item.id, id='item_' + item.id, value=item.id)
+                                                button.btn.btn-success.btn-sm(style='width:100%', type='submit', id='addToCartBtnBtm_' + item.id)
+                                                    i.fa.fa-cart-plus
+                                                    | &nbsp; Add to Cart
+                                        if (!item.price)
+                                            button.btn.btn-success.btn-sm(style='width:100%', disabled)
+                                                i.fa.fa-cart-plus
+                                                | &nbsp; Add to Cart
+
+                                        script.
+                                            $('#addToCartBtnBtm_#{item.id}').click(function (e) {
+                                                var item = $(this).parent().find('#item_#{item.id}').val();
+                                                $.ajax({
+                                                    url: "/addItemToCart",
+                                                    type: "POST",
+                                                    data: {
+                                                        itemID: item
+                                                    },
+                                                    beforeSend: function (request) {
+                                                        request.setRequestHeader("X-CSRF-TOKEN", "#{csrfToken}");
+                                                    },
+                                                    success: function (data) {
+                                                        $("#shoppingCart").load(" #shoppingCart");
+                                                    }
+                                                });
+                                                return false;
+                                            });
+            .col-md-3
+                .row
+                    .col-md-12
+                        .sidebar-component-title.text-center
+                            h4 TRENDING TUTORIALS
+                        hr
+                .row
+                    if (tutorials != 0)
+                        each tutorial in toptutorial
+                            .col-md-12
+                                .tutorial-card-wrap
+                                    .tutorial-card-author-wrap
+                                        a(href='/' + tutorial.author.username)
+                                            .tutorial-card-author-photo
+                                                img.img-circle.object-fit(src=tutorial.author.photo)
+                                        .tutorial-card-author-details-wrap
+                                            a.gray(href='/' + tutorial.author.username)
+                                                .tutorial-card-author-name
+                                                    | #{tutorial.author.displayname}
+                                            .tutorial-card-author-stats.small.text-muted
+                                                i.fa.fa.fa-clock-o
+                                                span(style='text-transform:capitalize') &nbsp;#{moment(tutorial.timestamp).format('DD MMM YYYY')}
+                                    hr.no-margin
+                                    .tutorial-card-title
+                                        a.gray(href='/tutorial/' + tutorial.slug) #{tutorial.title}
+                                    .tutorial-card-thumbnail-container
+                                        if tutorial.type == 'video-youtube'
+                                            .tutorial-card-thumbnail-wrap
+                                                .tutorial-card-thumbnail
+                                                    a(href='/tutorial/' + tutorial.slug)
+                                                        .tutorial-card-video-tint
+                                                            i.fa.fa-youtube-play.fa-4x
+                                                        img.object-fit(src='http://img.youtube.com/vi/' + tutorial.youtubeid + '/0.jpg')
+                                        if tutorial.type == 'video-vimeo'
+                                            .tutorial-card-thumbnail-wrap
+                                                .tutorial-card-thumbnail
+                                                    a(href='/tutorial/' + tutorial.slug)
+                                                        .tutorial-card-video-tint
+                                                            i.fa.fa-youtube-play.fa-4x
+                                                        img.object-fit(src='http://img.youtube.com/vi/' + tutorial.youtubeid + '/0.jpg')
+                                        if tutorial.type == 'video-upload'
+                                            .tutorial-card-thumbnail-wrap
+                                                .tutorial-card-thumbnail
+                                                    a(href='/tutorial/' + tutorial.slug)
+                                                        .tutorial-card-video-tint
+                                                            i.fa.fa-youtube-play.fa-4x
+                                                        img.object-fit(src=tutorial.thumbnailpath)
+                                        if tutorial.type == 'image'
+                                            .tutorial-card-thumbnail-wrap
+                                                .tutorial-card-thumbnail
+                                                    a(href='/tutorial/' + tutorial.slug)
+                                                        img.object-fit(src=tutorial.thumbnail)
+                                    hr
+                                    .tutorial-card-cta-wrap.clearfix
+                                        p Product use in this tutorial:
+                                        .row
+                                            .col-xs-12.col-md-12
+                                                .variable-width
+                                                    if (tutorial.products)
+                                                        each item in tutorial.products
+                                                            a.gray(href='/products/' + item.slug)
+                                                                .product-home-widget-wrap
+                                                                    .product-home-widget-display
+                                                                        .tutorial-card-author-photo
+                                                                            img.img-circle.object-fit(src=item.imagepath)
+                                                                    .product-home-widget-display
+                                                                        .product-home-widget-stats-name
+                                                                            b #{item.name}
+                                                                        .product-home-widget-stats.small
+                                                                            i #{item.brand.name}
+                                                                        .product-home-widget-stats.small
+                                                                            | RM #{parseFloat(item.price).toFixed(2)}
+                                                    if (!tutorial.products)
+                                                        .product-home-widget-wrap.text-center
+                                                            i No products found
+
+            //- .col-sm-12.visible-xs.visible-sm
+            //-     .border-static
+            //-         .row
+            //-             .col-md-12
+            //-                 .mobile-single-product-stat
+            //-                     h5 Customers who bought this brand also shopped for
+            //-                 hr
+            //-             .col-md-12
+
+
+
+
+                
+                                            
+
+    script.
+         $('.single-item').slick();
+         $("img").on("error", function () {
+             $(this).attr('src', '../img/static/empty-product.png');
+         });
+         $(document).ready(function () {
+             $("#share").jsSocials({
+                 showLabel: false,
+                 shareIn: "popup",
+                 showCount: "inside",
+                 shares: ["facebook", "twitter", "pinterest"]
+             });
+         });
+         $("img").on("error", function () {
+             $(this).attr('src', '../img/static/empty-product.png');
+         });
+         $('.product-card-details-name').truncate({
+             lines: 2
+         });
+         $('.product-card-details-desc').truncate({
+             lines: 3
+         });
+         $('.product-card-details-brand').truncate({
+             lines: 1
+         });
+        $('.variable-width').slick({
+            infinite: true,
+            dots: false,
+            speed: 300,
+            slidesToShow: 1,
+            variableWidth: true,
+            arrows: false,
+            autoplay: true,
+            autoplaySpeed: 3000
+        });
+        $('.product-home-widget-stats-name').truncate({
+            lines: 1
+        });

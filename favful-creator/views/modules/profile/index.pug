@@ -1,0 +1,94 @@
+extends ../../layouts/dashboard
+
+block content
+        .container.white-bg
+            .row
+                .col-md-3
+                    .dashboard-sidebar.text-center
+                        .profile-photo
+                            img.img-circle.object-fit(src=member.photo)
+                        .profile-details.hidden-xs.hidden-sm
+                            .profile-details-title
+                                i.fa.fa-heart(style='color:#ED145B')
+                                | &nbsp;Influences
+                            .profile-details-value
+                                | #{influences}
+                            //.profile-details-title
+                            //    | Skin Color
+                            //.profile-details-value
+                            //    | #{member.profile.skincolor}
+                            //.profile-details-title
+                            //    | Age Group
+                            //.profile-details-value
+                            //    | #{member.profile.agegroup}
+                .col-md-9
+                    .profile-data
+                        .profile-name
+                            h2 #{member.displayname}
+                        .profile-username.small
+                            i.fa.fa-heart.profile-username-icon
+                            | &nbsp;
+                            a(href='http://www.favful.com.my/' + member.username) http://www.favful.com.my/#{member.username}
+                        .profile-oneliner.small
+                            | #{member.oneliner}
+                    .profile-stats
+                        if (member.youtube.subscribers === 0) || (member.youtube.subscribers === null)
+                        else
+                            .profile-stats-item
+                                .profile-stats-icon
+                                    i.fa.fa-youtube-play.fa-2x
+                                .profile-stats-details
+                                    .profile-stats-number
+                                        | #{member.youtube.subscribers}
+                                    .profile-stats-text
+                                        | Subscribers
+                        if (member.instagram.followers === 0) || (member.instagram.followers === null)
+                        else
+                            .profile-stats-item
+                                .profile-stats-icon
+                                    i.fa.fa-instagram.fa-2x
+                                .profile-stats-details
+                                    .profile-stats-number
+                                        | #{member.instagram.followers}
+                                    .profile-stats-text
+                                        | Followers
+                        if (member.blog.monthlyviews === 0) || (member.blog.monthlyviews === null)
+                        else
+                            .profile-stats-item
+                                .profile-stats-icon
+                                    i.fa.fa-rss.fa-2x
+                                .profile-stats-details
+                                    .profile-stats-number
+                                        | #{member.blog.monthlyviews}
+                                    .profile-stats-text
+                                        | Monthly Visitors
+                    .profile-mypost-title
+                    .tutorial-card-wrap
+                        .row-flex
+                            each tutorial in tutorials
+                                .tutorial-card
+                                    if tutorial.type == 'video-youtube'
+                                        .embed-responsive.embed-responsive-16by9
+                                            a(href='/tutorial/' + tutorial.slug)
+                                                .tutorial-card-video-tint
+                                                    i.fa.fa-youtube-play.fa-4x
+                                                img.object-fit.embed-responsive-item(src='http://img.youtube.com/vi/' + tutorial.videoid + '/0.jpg')
+                                    if tutorial.type == 'video-vimeo'
+                                        .embed-responsive.embed-responsive-16by9
+                                            a(href='/tutorial/' + tutorial.slug)
+                                                .tutorial-card-video-tint
+                                                    i.fa.fa-youtube-play.fa-4x
+                                                img.object-fit.embed-responsive-item(src='http://img.youtube.com/vi/' + tutorial.videoid + '/0.jpg')
+                                    if tutorial.type == 'video-upload'
+                                        .embed-responsive.embed-responsive-16by9
+                                            a(href='/tutorial/' + tutorial.slug)
+                                                .tutorial-card-video-tint
+                                                    i.fa.fa-youtube-play.fa-4x
+                                                img.object-fit.embed-responsive-item(src=tutorial.thumbnail)
+                                    if tutorial.type == 'image'
+                                        a(href='/tutorial/' + tutorial.slug)
+                                            img.object-fit(src=tutorial.thumbnail)
+                                    .tutorial-card-title
+                                        a(href='/tutorial/' + tutorial.slug) #{tutorial.title}
+                                    .tutorial-card-desc.small.text-muted
+                                        | #{tutorial.shortdescription}

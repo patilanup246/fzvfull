@@ -1,0 +1,73 @@
+extends ../../layouts/admin
+
+block content
+    .panel
+        .panel-heading
+            h4.panel-title Manual Order Entry
+            p Make purchase order manually
+            hr
+        .panel-body
+            form.form-horizontal(method='post', action='/orders/add')
+                input(type="hidden", name="_csrf", value=csrfToken)
+                .row
+                    .col-sm-12
+                        h4.panel-title Purchase By
+                        hr
+                        .form-group
+                            label.col-sm-2.control-label Member
+                            .col-sm-8
+                                select.form-control(name="memberid", id="memberid")
+                                    each member in memberList
+                                        option(value=member.id) #{member.displayname}
+                        br
+                        h4.panel-title Order Form
+                        hr
+                        .col-md-12
+                            div(data-role='dynamic-fields')
+                                .form-inline
+                                    .form-group
+                                        label.sr-only(for='field-name') Field Name
+                                        select.form-control(name="memberid", id="memberid")
+                                            each member in memberList
+                                                option(value=member.id) #{member.displayname}
+                                    span -
+                                    .form-group
+                                        label.sr-only(for='field-value') Field Value
+                                        input#field-value.form-control(type='text', placeholder='Field Value')
+                                    button.btn.btn-danger(data-role='remove')
+                                        span.glyphicon.glyphicon-remove
+                                    button.btn.btn-primary(data-role='add')
+                                        span.glyphicon.glyphicon-plus
+
+                hr
+                .row
+                    .col-sm-6.col-sm-offset-3.text-center
+                        button.btn.btn-success.btn-quirk.btn-wide.mr5(type="submit") Save
+                        a(href="/merchants/").btn.btn-quirk.btn-wide.btn-default Cancel
+
+    script.
+        $(function () {
+            // Remove button click
+            $(document).on(
+                'click',
+                '[data-role="dynamic-fields"] > .form-inline [data-role="remove"]',
+                function (e) {
+                    e.preventDefault();
+                    $(this).closest('.form-inline').remove();
+                }
+            );
+            // Add button click
+            $(document).on(
+                'click',
+                '[data-role="dynamic-fields"] > .form-inline [data-role="add"]',
+                function (e) {
+                    e.preventDefault();
+                    var container = $(this).closest('[data-role="dynamic-fields"]');
+                    new_field_group = container.children().filter('.form-inline:first-child').clone();
+                    new_field_group.find('input').each(function () {
+                        $(this).val('');
+                    });
+                    container.append(new_field_group);
+                }
+            );
+        });

@@ -1,0 +1,389 @@
+extends ../../layouts/dashboard
+
+block content
+    .container
+        .row
+            .col-md-3
+                .dashboard-mobile-logout.text-center.visible-xs.visible-sm
+                    a(href='/signout')
+                        i.fa.fa-sign-out.fa-2x
+                .profile-photo-wrap
+                    .profile-image.text-center
+                        img.object-fit.img-circle(src=member.photo)
+                    .badge-profile-flag
+                        img.object-fit(src='../img/flags/my.svg')
+                    if member.rank === 'creator'
+                        .badge-profile-creator
+                            img.object-fit(src='../img/badge/creator.png')
+                .profile-details.text-center
+                    h4.profile-name.text-center #{member.displayname}
+                    .profile-property
+                        .profile-property-item
+                            b.small.text-muted Skin Type
+                            br
+                            span(style='text-transform:capitalize') #{member.profile.skintype}
+                        br
+                        .profile-property-item
+                            b.small.text-muted Skin Color
+                            br
+                            span(style='text-transform:capitalize') #{member.profile.skintone}
+                        br
+                        .profile-property-item
+                            b.small.text-muted Age Group
+                            br
+                            | #{member.profile.agegroup}
+                hr
+                .dashboard-buttons-wrap
+                    .row
+                        .col-xs-12.dashboard-buttons.text-center
+                            a(href='', type='button', data-toggle='modal', data-target='#editProfile')
+                                i.fa.fa.fa-cog.fa-fw
+                                | Edit Profile
+                            #editProfile.modal.fade(role='dialog')
+                                .modal-dialog
+                                    .modal-content
+                                        form(action='/dashboard/save-profile', method='POST')
+                                            input(type='hidden', name='_csrf' value=csrfToken)
+                                            .modal-header
+                                                button.close(type='button', data-dismiss='modal') ×
+                                                h4.modal-title Edit Profile
+                                            .modal-body
+                                                .form-group
+                                                    label Short Introduction:
+                                                    textarea.form-control(id='shortintro', name='shortintro', rows='2', required='required') #{member.shortintro}
+                                                .form-group
+                                                    label Skin Type:
+                                                    select.form-control(id='skintype', name='skintype', required='required')
+                                                        option(value='normal') Normal
+                                                        option(value='dry') Dry
+                                                        option(value='oily') Oily
+                                                        option(value='acne-prone') Acne Prone
+                                                        option(value='sensitive') Sensitive
+                                                        option(value='combination') Combination
+                                                .form-group
+                                                    label Skin Tone:
+                                                    select.form-control(id='skintone', name='skintone', required='required')
+                                                        option(value='fair') Fair
+                                                        option(value='medium-fair') Medium Fair
+                                                        option(value='medium') Medium
+                                                        option(value='olive') Olive
+                                                        option(value='tan') Tan
+                                                        option(value='medium-brown') Medium Brown
+                                                        option(value='dark') Dark
+                                                        option(value='deep-dark') Deep Dark
+                                                .form-group
+                                                    label Birthday:
+                                                    input.form-control(type='date', id='birthday', name='birthday', required='required', value=moment(member.birthday).format('YYYY-MM-DD'))
+                                            .modal-footer
+                                                button.btn.btn-success(type='submit') Save Profile
+                        //.col-xs-6.dashboard-buttons.text-center
+                        //    a(href='/profile')
+                        //        i.fa.fa.fa-pencil
+                        //        | &nbsp; Settings
+            hr.visible-xs.visible-sm
+            .col-md-9
+                .row
+                    .col-md-12
+                        .profile-all
+                            .dashboard-logout.text-center.hidden-xs.hidden-sm
+                                a(href='/signout')
+                                    i.fa.fa-sign-out
+                                    | &nbsp; Sign Out
+                            .profile-about
+                                .profile-name.hidden-xs.hidden-sm
+                                    h3 #{member.displayname}&nbsp;
+                                        if member.rank === 'creator'
+                                            .beauty-guru-tag Beauty Guru
+
+                            .profile-dec-about
+                                if (member.shortintro != null || 0)
+                                    p.text-muted #{member.shortintro}
+                                else
+                                    p.text-muted
+                                        i.fa.fa-edit
+                                        | &nbsp; Add short introduction about yourself
+                hr
+                .row.overview
+                    .col-xs-4
+                        .profile-stats.text-center
+                            i.fa.fa-book
+                            | &nbsp;CONTRIBUTED
+                            br
+                            .user-exp-category.text-center
+                                | &nbsp;#{contributed}
+                    .col-xs-4
+                        .profile-stats.text-center
+                            i.fa.fa-heart
+                            | &nbsp;BENEFITED
+                            br
+                            .user-exp-category.text-center
+                                | &nbsp;#{member.benefited}
+                    .col-xs-4
+                        .profile-stats.text-center
+                            i.fa.fa-user
+                            | &nbsp;INFLUENCE
+                            br
+                            .user-exp-category
+                                - var influence = Number(member.influence).toLocaleString('en')
+                                | &nbsp;#{influence}
+
+                hr
+                ul.nav.nav-tabs.nav-justified
+                    li.active
+                        a(data-toggle='tab', href='#tutorial')
+                            i.fa.fa-book
+                            | &nbsp;&nbsp;My Contribution
+                    li
+                        a(data-toggle='tab', href='#myinfluence')
+                            i.fa.fa-commenting
+                            | &nbsp;&nbsp;My Influence
+                    //li
+                    //    a(data-toggle='tab', href='#QnA')
+                    //        i.fa.fa-heart
+                    //        | &nbsp;QnA
+                    li
+                        a(data-toggle='tab', href='#myorder')
+                            i.fa.fa-shopping-basket
+                            | &nbsp;&nbsp;My Orders
+                    //li
+                    //    a(data-toggle='tab', href='#favfulfollower')
+                    //        i.fa.fa-user
+                    //        | &nbsp;&nbsp;Favful Followers
+                br
+
+                .tab-content
+                    #tutorial.tab-pane.fade.in.active
+                        .row
+                            if (tutorials != 0)
+                                each tutorial in tutorials
+                                    .col-md-4
+                                        .tutorial-card-wrap
+                                            .tutorial-card-author-wrap
+                                                a(href='/' + tutorial.author.username)
+                                                    .tutorial-card-author-photo
+                                                        img.img-circle.object-fit(src=tutorial.author.photo)
+                                                .tutorial-card-author-details-wrap
+                                                    a.gray(href='/' + tutorial.author.username)
+                                                        .tutorial-card-author-name
+                                                            | #{tutorial.author.displayname}
+                                                    .tutorial-card-author-stats.small.text-muted
+                                                        i.fa.fa.fa-clock-o
+                                                        span(style='text-transform:capitalize') &nbsp;#{moment(tutorial.timestamp).format('DD MMM YYYY')}
+                                            hr.no-margin
+                                            .tutorial-card-title
+                                                a.gray(href='/tutorial/' + tutorial.slug) #{tutorial.title}
+                                            .tutorial-card-thumbnail-wrap
+                                                if tutorial.type == 'video-youtube'
+                                                    .square
+                                                        .tutorial-card-thumbnail
+                                                            a(href='/tutorial/' + tutorial.slug)
+                                                                .tutorial-card-video-tint
+                                                                    i.fa.fa-youtube-play.fa-4x
+                                                                img.object-fit(src='http://img.youtube.com/vi/' + tutorial.videoid + '/0.jpg')
+                                                if tutorial.type == 'video-vimeo'
+                                                    .square
+                                                        .tutorial-card-thumbnail
+                                                            a(href='/tutorial/' + tutorial.slug)
+                                                                .tutorial-card-video-tint
+                                                                    i.fa.fa-youtube-play.fa-4x
+                                                                img.object-fit(src='http://img.youtube.com/vi/' + tutorial.youtubeid + '/0.jpg')
+                                                if tutorial.type == 'video-upload'
+                                                    .square
+                                                        .tutorial-card-thumbnail
+                                                            a(href='/tutorial/' + tutorial.slug)
+                                                                .tutorial-card-video-tint
+                                                                    i.fa.fa-youtube-play.fa-4x
+                                                                img.object-fit(src=tutorial.thumbnailpath)
+                                                if tutorial.type == 'image'
+                                                    .square
+                                                        .tutorial-card-thumbnail
+                                                            a(href='/tutorial/' + tutorial.slug)
+                                                                img.object-fit(src=tutorial.thumbnail)
+                                            //hr
+                                            //.beauty-tutorial-writer-single-like-home
+                                            //    if (heartvalidate >= 1)
+                                            //        a(href='/tutorial/unheart/' + tutorial.id)
+                                            //            i.fa.fa.fa-heart
+                                            //            | &nbsp;&nbsp;#{tutorial.heart} Benefited
+                                            //    else
+                                            //        a(href='/tutorial/heart/' + tutorial.id)
+                                            //            i.fa.fa.fa-heart
+                                            //            | &nbsp;&nbsp;#{tutorial.heart} Benefited
+                                            //.beauty-tutorial-writer-single-like-home
+                                            //    i.fa.fa.fa-comment
+                                            //    | &nbsp;Comment
+                                            //.beauty-tutorial-writer-single-like-home
+                                            //    i.fa.fa.fa-share
+                                            //    | &nbsp;Share
+                            else
+                                .text-center.text-muted
+                                    h4 Sorry
+                                    p You haven't post any tutorial.
+                        //- .post-tutorial
+                        //-     a.btn.btn-tutorial.pull-right(href='/beautytutorial/post')
+                        //-         i.fa.fa-arrow-up
+                        //-         | &nbsp;Post a Tutorial
+                    #myorder.tab-pane.fade
+                        if (!orders.orderId)
+                            br
+                            .text-muted.text-center You have not purchase any order.
+                            br
+                        if (orders.orderId)
+                            each order in orders
+                                .shoppingcart-tq-module-card
+                                    .shoppingcart-order-summary
+                                        h5
+                                            | Order ID:&nbsp;
+                                            b #{order.orderId}
+                                            br
+                                        .small Order Date: #{moment(order.created_at).format('DD MMMM YYYY')}
+                                        //| You have purchased #{(orders.items).length} items
+                                        hr
+                                    for merchant in order.merchants
+                                        .shopping-cart-merchant-wrap
+                                            .shopping-cart-merchant-details.small
+                                                .pull-left
+                                                    b #{merchant.companyName}
+                                                .pull-right.text-muted.small
+                                                    if (merchant.minShippingDay) || (merchant.maxShippingDay)
+                                                        | Shipping Days: #{merchant.minShippingDay} - #{merchant.maxShippingDay} days
+                                                    else
+                                                        | No shipping days mentioned
+                                                    | &nbsp;&bull;&nbsp;
+                                                    | Shipping Fees: MYR #{parseFloat(merchant.shippingFees).toFixed(2)}
+                                            .clearfix
+                                            hr.hr-shopping-cart
+                                            .shopping-cart-item-title.small.hidden-xs
+                                                .row
+                                                    .col-xs-2
+                                                        .text-center
+                                                            b Photo
+                                                    .col-xs-6
+                                                        b Name
+                                                    .col-xs-2
+                                                        .text-center
+                                                            b Qty
+                                                    .col-xs-2
+                                                        .text-center
+                                                            b Unit Price
+
+                                            each item in merchant.items
+                                                .shopping-cart-item-wrap.small
+                                                    .row
+                                                        .col-xs-2
+                                                            .shopping-cart-item-image
+                                                                .product-img-wrap
+                                                                    .product-img
+                                                                        img.object-fit(src=item.imagePath)
+                                                        .col-xs-6
+                                                            .shopping-cart-item-name
+                                                                b #{item.name}
+                                                            .shopping-cart-item-options.small
+                                                                if (item.attributes.color)
+                                                                    | Color: #{item.attributes.color}
+                                                                if (item.attributes.flavor)
+                                                                    | Flavor: #{item.attributes.flavor}
+                                                                if (item.attributes.design)
+                                                                    | Design: #{item.attributes.design}
+                                                        .col-xs-2
+                                                            .shopping-cart-item-quantity
+                                                                .text-center #{item.quantity}
+                                                        .col-xs-2
+                                                            .shopping-cart-item-price
+                                                                if (item.discountedPrice)
+                                                                    .text-center
+                                                                        b MYR #{parseFloat(item.finalPrice).toFixed(2)}
+                                                                        .small.strike MYR #{parseFloat(item.originalPrice).toFixed(2)}
+                    //#QnA.tab-pane.fade
+                    //    .row
+                    //        .col-md-4
+                    //            .beauty-advisor-testimonial
+                    //                .beauty-advisor-testimonial-section
+                    //                    .beauty-advisor-title
+                    //                        a(href='#')
+                    //                            | Title
+                    //                    .advisor-toptutorial-title
+                    //                        | Lorem ipsum dolor sit amet, consectetur adipiscing elit."Denim you probably haven't heard of. Lorem ipsum dolor met consectetur adipisicing sit amet, consectetur adipisicing elit, of them jean shorts sed magna aliqua. Lorem ipsum dolor met.
+                    //                .beauty-tutorial-ques-details
+                    //                    .ques-like.pull-right
+                    //                        fa.fa.fa-thumbs-o-up
+                    //                        | &nbsp;52&nbsp;
+                    //                    .ques-comment.pull-right
+                    //                        fa.fa.fa-comment-o
+                    //                        | &nbsp;100&nbsp;
+                    //                    .ques-post-date.pull-right
+                    //                        fa.fa.fa-calendar-o
+                    //                        | &nbsp;12/2/2017&nbsp;
+                    //                br
+                    //                .beauty-advisor-expert-photo
+                    //                    img.img-circle(src='../img/static/empty-user.png')
+                    //                .beauty-advisor-expert-stats.pull-right
+                    //                    .beauty-advisor-writer-name
+                    //                        | Username
+                    //                    .profile-property-item
+                    //                        | Skin Type:&nbsp;
+                    //                        | skintype
+                    //                    .profile-property-item
+                    //                        | Skin Color:&nbsp;
+                    //                        | skincolor
+
+
+                    #myinfluence.tab-pane.fade
+                        .setup-box
+                            .row
+                                .influence-box.text-center
+                                    .col-md-4
+                                        .profile-influence-logo
+                                            fa.fa.fa-instagram
+                                    .col-md-4
+                                        .profile-influence-desc
+                                            | #{member.instagram.followers}
+                                    .col-md-4
+                                        .profile-influence-desc
+                                            | Followers
+                                    //.col-md-3
+                                    //    .profile-influence-desc-button
+                                    //        button.btn.profile-btn-connect
+                                    //            b Connect
+                            br
+                            .row
+                                .influence-box.text-center
+                                    .col-md-4
+                                        .profile-influence-logo
+                                            fa.fa.fa-youtube-play
+                                    .col-md-4
+                                        .profile-influence-desc
+                                            | #{member.youtube.subscribers}
+                                    .col-md-4
+                                        .profile-influence-desc
+                                            | Subscribers
+                                    //.col-md-3
+                                    //    .profile-influence-desc-button
+                                    //        button.btn.profile-btn-connect
+                                    //            b Connect
+                            br
+                            .row
+                                .influence-box.text-center
+                                    .col-md-4
+                                        .profile-influence-logo
+                                            fa.fa.fa-rss-square
+                                    .col-md-4
+                                        .profile-influence-desc
+                                            | #{member.blog.monthlyviews}
+                                    .col-md-4
+                                        .profile-influence-desc
+                                            | Monthly Visitor
+                                    //.col-md-3
+                                    //    .profile-influence-desc-button
+                                    //        button.btn.profile-btn-connect
+                                    //            b Connect
+                    #favfulfollower.tab-pane.fade
+                        .row
+                            .text-center.text-muted
+                                h4 Sorry
+                                p You do not have any favful followers.
+
+
+    script.
+        $('#skintype').val('#{member.profile.skintype}');
+        $('#skintone').val('#{member.profile.skintone}');

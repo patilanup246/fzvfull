@@ -1,0 +1,88 @@
+extends ../../layouts/admin
+
+block content
+    .panel
+        .panel-heading
+            .pull-left
+                h4.panel-title Tutorial List
+                p
+                    | Manage all Favful's tutorials.
+            .pull-right
+                a(href="/tutorials/add").btn.btn-success.btn-sm
+                    i.fa.fa-plus.fa-fw
+                    | Create New Video Tutorial
+                | &nbsp;
+                a(href="/tutorials/add-image").btn.btn-success.btn-sm
+                    i.fa.fa-plus.fa-fw
+                    | Create New Image Tutorial
+        .clearfix
+        .panel-body
+            if (flash.length == 0)
+            else
+                .alert.alert-info.text-center
+                    button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+                    strong
+                        i.fa.fa-exclamation-circle(aria-hidden='true')
+                        | &nbsp;#{flash}
+            .table-responsive
+                table.table.nomargin
+                    thead
+                        tr
+                            th Email
+                            th Author
+                            th Date
+                            th Type
+                            th Status
+                            th.text-center Action
+                    tbody
+                        each item in tutorials
+                            tr
+                                td
+                                    if (item.type === 'image')
+                                        a(href='/tutorials/edit-image/' + item.id) #{item.title}
+                                    if (item.type === 'video-upload') || (item.type === 'video-youtube') || (item.type === 'video-vimeo')
+                                        a(href='/tutorials/edit/' + item.id) #{item.title}
+                                td #{item.author.displayname}
+                                td #{moment(item.timestamp).format('DD-MMMM-YYYY')}
+                                td #{item.type}
+                                td #{item.status}
+                                td
+                                    ul.table-options
+                                        li.tooltips(data-toggle='tooltip', title='View Tutorial')
+                                            a(href='http://www.new.favful.com.my/tutorial/' + item.slug, target='_blank')
+                                                i.fa.fa-eye
+                                        if (item.type === 'image')
+                                            li
+                                                a(href='/tutorials/edit-image/' + item.id)
+                                                    i.fa.fa-pencil
+                                        if (item.type === 'video-upload') || (item.type === 'video-youtube') || (item.type === 'video-vimeo')
+                                            li
+                                                a(href='/tutorials/edit/' + item.id)
+                                                    i.fa.fa-pencil
+                                        li
+                                            a(href='' data-toggle='modal' data-target='#delete_' + item.id)
+                                                i.fa.fa-trash
+                                        .modal.bounceIn.animated(id='delete_' + item.id, tabindex='-1', role='dialog', aria-hidden='true', style='display: none;')
+                                            .modal-dialog
+                                                .modal-content
+                                                    .modal-header
+                                                        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                                                        h4.modal-title Delete shows
+                                                    .modal-body
+                                                        | Confirm to delete&nbsp;
+                                                        b #{item.title}&nbsp;
+                                                        | ?
+                                                    .modal-footer
+                                                        a.btn.btn-default(data-dismiss='modal') Cancel
+                                                        if (item.type === 'image')
+                                                            a.btn.btn-danger(href='/tutorials/delete-image/' + item.id) Delete
+                                                        if (item.type === 'video-upload') || (item.type === 'video-youtube') || (item.type === 'video-vimeo')
+                                                            a.btn.btn-danger(href='/tutorials/delete/' + item.id) Delete
+    script.
+        $('table').DataTable({
+            "columnDefs": [
+                {"width": "50%", "targets": 0}
+            ],
+            "order": [[2, "desc"]],
+            "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, "All"]]
+        });

@@ -1,0 +1,108 @@
+extends ../../layouts/admin
+
+block content
+    .panel
+        .panel-heading
+            h4.panel-title Edit User
+            p
+                | Currently editing user&nbsp;
+                i.fa.fa-chevron-circle-right(aria-hidden='true')
+                | &nbsp;
+                b #{user.email} (#{user.displayname})
+            hr
+        .panel-body
+            form.form-horizontal(method='post', action='/user/edit/' + user.id)
+                input(type="hidden", name="_csrf", value=csrfToken)
+                .row
+                    .col-sm-6
+                        h4.panel-title Login Details
+                        hr
+                        .form-group
+                            label.col-sm-3.control-label Display Name
+                            .col-sm-8
+                                input.form-control(type='text', name='displayname', id='displayname', value=user.displayname)
+                        .form-group
+                            label.col-sm-3.control-label Username
+                            .col-sm-8
+                                input.form-control(type='text', name='username', id='username', value=user.username)
+                        .form-group
+                            label.col-sm-3.control-label Email
+                            .col-sm-8
+                                input.form-control(type='email', name='email', id='email', value=user.email)
+                        br
+                        h4.panel-title Personal Information
+                        hr
+                        .form-group
+                            label.col-sm-3.control-label First Name
+                            .col-sm-8
+                                input.form-control(type='text', name='firstname', id='firstname', value=user.firstname)
+                        .form-group
+                            label.col-sm-3.control-label Last Name
+                            .col-sm-8
+                                input.form-control(type='text', name='lastname', id='lastname', value=user.lastname)
+                        .form-group
+                            label.col-sm-3.control-label Phone
+                            .col-sm-8
+                                input.form-control(type='text', name='phone', id='phone', value=user.phone)
+                        .form-group
+                            label.col-sm-3.control-label Address Line 1
+                            .col-sm-8
+                                input.form-control(type='text', name='address1', id='address1', value=user.address.address1)
+                        .form-group
+                            label.col-sm-3.control-label Address Line 2
+                            .col-sm-8
+                                input.form-control(type='text', name='address2', id='address2', value=user.address.address2)
+                        .form-group
+                            label.col-sm-3.control-label City
+                            .col-sm-8
+                                input.form-control(type='text', name='city', id='city', value=user.address.city)
+                        .form-group
+                            label.col-sm-3.control-label Postal Code
+                            .col-sm-8
+                                input.form-control(type='text', name='postcode', id='postcode', value=user.address.postcode)
+                        .form-group
+                            label.col-sm-3.control-label State
+                            .col-sm-8
+                                select.form-control(name="state", id="state")
+                                    option(value="Johor") Johor
+                                    option(value="Kedah") Kedah
+                                    option(value="Kuala Lumpur") Kuala Lumpur
+                                    option(value="Kelantan") Kelantan
+                                    option(value="Melaka") Melaka
+                                    option(value="Negeri Sembilan") Negeri Sembilan
+                                    option(value="Pahang") Pahang
+                                    option(value="Penang") Penang
+                                    option(value="Perak") Perak
+                                    option(value="Perlis") Perlis
+                                    option(value="Sabah") Sabah
+                                    option(value="Sarawak") Sarawak
+                                    option(value="Selangor") Selangor
+                                    option(value="Terengganu") Terengganu
+                        .form-group
+                            label.col-sm-3.control-label Country
+                            .col-sm-8
+                                select.form-control(name="country", id="country")
+                                    option(value="Malaysia") Malaysia
+                    .col-sm-6
+                        br.visible-xs
+                        h4.panel-title User Access Control List
+                        hr
+                        label
+                            b Content Management
+                        .row
+                            .col-sm-4
+                                label.ckbox
+                                    input(type='checkbox')
+                                    span &nbsp;Media
+                hr
+                .row
+                    .col-sm-6.col-sm-offset-3.text-center
+                        button.btn.btn-success.btn-quirk.btn-wide.mr5(type="submit") Save
+                        a(href="/user/list").btn.btn-quirk.btn-wide.btn-default Cancel
+    script.
+        $(window).on('load', function () {
+            $('select[name="company"]').val('#{user.company}');
+            $('select[name="state"]').val('#{user.address.state}');
+            $('select[name="country"]').val('#{user.address.country}');
+        });
+

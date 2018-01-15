@@ -1,0 +1,52 @@
+@media screen and (max-width:1199px) {
+
+}
+
+@media screen and (max-width:991px) {
+    .mobile-header {position:fixed;top:0;width:100%;z-index:999;padding:0 !important;background-color:#fff;border-bottom:1px solid #dadada;}
+    .mobile-header-logo {width:60px;margin: 0 auto;margin-top:8px}
+    .mobile-header a {color: #ED145B;font-size:1.1em}
+    .mobile-header a:hover {color:#ED145B}
+    .mobile-header-icon-left-wrap {width:120px}
+    .mobile-header-icon-left {position:relative;float:left;border-right:1px solid #dadada;padding:2px 8px 2px 8px;height:40px;width:50px;text-align:center;display:flex;flex-wrap:wrap;justify-content:center;align-items: center}
+    .mobile-header-icon-right {position:relative;float:right;border-left:1px solid #dadada;padding:2px 8px 2px 8px;height:40px;width:50px;text-align:center;display:flex;flex-wrap:wrap;justify-content:center;align-items: center}
+    .mobile-badge {background-color:#757575;padding:2px 5px 2px 5px;border-radius:20px;color:#fff;font-size:0.5em;font-weight:700;position:absolute;top:8px;right:8px}
+    .header-photo {width:20px;height:20px;display: inline-block}
+    .home-slider {height:250px;padding-top: 15px}
+    .home-search {width: 100%;padding: 15px}
+    .home-search input {padding: 25px;font-size:1em}
+    .home-search-text {padding:10px}
+    .home-slider-title {font-size: 2em}
+    .btn-home-search {font-size:1em;padding: 15px !important}
+    .btn-home-search:hover {color:#fff !important;background-color: #BC1552}
+    .home-featured-item {margin-top:30px}
+    .single-content-wrap {padding-top:50px;padding-bottom:50px}
+}
+
+@media screen and (max-width:768px) {
+    .mobile-header {position:fixed;top:0;width:100%;z-index:999;padding:0 !important;background-color:#fff;border-bottom:1px solid #dadada;}
+    .mobile-header-logo {width:60px;margin: 0 auto;margin-top:8px}
+    .mobile-header a {color: #ED145B;font-size:1.1em}
+    .mobile-header a:hover {color:#ED145B}
+    .mobile-header-icon-left-wrap {width:120px}
+    .mobile-header-icon-left {position:relative;float:left;border-right:1px solid #dadada;padding:2px 8px 2px 8px;height:40px;width:50px;text-align:center;display:flex;flex-wrap:wrap;justify-content:center;align-items: center}
+    .mobile-header-icon-right {position:relative;float:right;border-left:1px solid #dadada;padding:2px 8px 2px 8px;height:40px;width:50px;text-align:center;display:flex;flex-wrap:wrap;justify-content:center;align-items: center}
+    .mobile-badge {background-color:#757575;padding:2px 5px 2px 5px;border-radius:20px;color:#fff;font-size:0.5em;font-weight:700;position:absolute;top:8px;right:8px}
+    .header-photo {width:20px;height:20px;display: inline-block}
+    .home-slider {height:250px;padding-top: 15px}
+    .home-search {width: 100%;padding: 15px;padding-top:0}
+    .home-search input {padding: 25px;font-size:1em}
+    .home-search-text {padding:10px}
+    .home-slider-title {font-size: 1.7em;padding:20px}
+    .home-module-title h3 {font-size:1.4em;text-align:center}
+    .btn-home-search {font-size:1em;padding: 15px !important}
+    .btn-home-search:hover {color:#fff !important;background-color: #BC1552}
+    .home-featured-container {}
+    .home-featured-wrapper {text-align:center}
+    .home-featured-item {margin-top:30px}
+    .home-featured-quote {text-align:center}
+    .beauty-tutorial-content-mobile-padding {padding:0 !important}
+    .single-content-wrap {padding-top:50px;padding-bottom:50px}
+    .product-content-wrap {padding-top:60px}
+    .sign-in-content-img {width:100%;margin:0 auto}
+    }

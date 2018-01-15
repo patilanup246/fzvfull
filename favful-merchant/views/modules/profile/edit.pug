@@ -1,0 +1,82 @@
+extends ../../layouts/admin
+
+block content
+    if (flash.length == 0)
+    else
+        .alert.alert-success.text-center
+            button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+            strong
+                i.fa.fa-exclamation-circle(aria-hidden='true')
+                | &nbsp;#{flash}
+    .panel
+        .panel-heading
+            h4.panel-title Edit Profile
+            p My Merchant Profile
+            hr
+        .panel-body
+            form.form-horizontal(method='post', action='/profile/edit/')
+                input(type="hidden", name="_csrf", value=csrfToken)
+                .row
+                    .col-sm-12
+                        h4.panel-title Login Details
+                        hr
+                        .form-group
+                            label.col-sm-2.control-label Username
+                            .col-sm-8
+                                input.form-control(type='text', name='username', id='username', value=merchant.username, disabled='disabled')
+                        .form-group
+                            label.col-sm-2.control-label Email
+                            .col-sm-8
+                                input.form-control(type='email', name='email', id='email', value=merchant.email)
+                        br
+                        h4.panel-title Company Information
+                        hr
+                        .form-group
+                            label.col-sm-2.control-label Company Name
+                            .col-sm-8
+                                input.form-control(type='text', name='companyname', id='companyname', value=merchant.company.name)
+                        .form-group
+                            label.col-sm-2.control-label Company Registration Number
+                            .col-sm-8
+                                input.form-control(type='text', name='regnumber', id='regnumber', value=merchant.company.regnumber)
+                        .form-group
+                            label.col-sm-2.control-label Phone
+                            .col-sm-8
+                                input.form-control(type='text', name='companyphone', id='companyphone', value=merchant.company.phone)
+                        .form-group
+                            label.col-sm-2.control-label Address Line 1
+                            .col-sm-8
+                                input.form-control(type='text', name='address01', id='address01', value=merchant.company.address01)
+                        .form-group
+                            label.col-sm-2.control-label Address Line 2
+                            .col-sm-8
+                                input.form-control(type='text', name='address02', id='address02', value=merchant.company.address02)
+                        .form-group
+                            label.col-sm-2.control-label City
+                            .col-sm-8
+                                input.form-control(type='text', name='city', id='city', value=merchant.company.city)
+                        .form-group
+                            label.col-sm-2.control-label State
+                            .col-sm-8
+                                input.form-control(type='text', name='state', id='state', value=merchant.company.state)
+                        .form-group
+                            label.col-sm-2.control-label Postal Code
+                            .col-sm-8
+                                input.form-control(type='text', name='postcode', id='postcode', value=merchant.company.postcode)
+                        .form-group
+                            label.col-sm-2.control-label Country
+                            .col-sm-8
+                                select.form-control(name="country", id="country")
+                                    option(value="MY") Malaysia
+                                    option(value="KR") Korea
+                hr
+                .row
+                    .col-sm-6.col-sm-offset-3.text-center
+                        button.btn.btn-success.btn-quirk.btn-wide.mr5(type="submit") Save
+                        a(href="/merchants/").btn.btn-quirk.btn-wide.btn-default Cancel
+        script.
+            $(window).on('load', function () {
+                $('select[name="status"]').val('#{merchant.status}');
+                $('select[name="country"]').val('#{merchant.company.country}');
+            });
+

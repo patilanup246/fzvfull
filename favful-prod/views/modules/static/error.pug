@@ -1,0 +1,20 @@
+extends ../../layouts/default
+
+block content
+    .container
+        .row
+            .col-md-12
+                .text-center
+                    br
+                    br
+                    h3 Please Login To Proceed
+                    br
+                    p
+                        | Sorry! This page is for member only.
+                        br
+                        Please click the button to login.
+                    br
+                    p
+                        a.white(href='/auth/facebook').btn.btn-favful.btn-outline.btn-lg
+                            i.fa.fa.fa-facebook
+                            | &nbsp&nbspJoin the Fun

@@ -1,0 +1,51 @@
+extends ../../layouts/admin
+
+block content
+    .panel
+        .panel-heading
+            .pull-left
+                h4.panel-title Order List
+                p
+                    | Manage all Favful's orders.
+            .pull-right
+                a(href="/orders/add").btn.btn-success.btn-sm
+                    i.fa.fa-plus.fa-fw
+                    | Manual Order Entry
+        .clearfix
+        .panel-body
+            if (flash.length == 0)
+            else
+                .alert.alert-info.text-center
+                    button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+                    strong
+                        i.fa.fa-exclamation-circle(aria-hidden='true')
+                        | &nbsp;#{flash}
+            .table-responsive
+                table.table.nomargin
+                    thead
+                        tr
+                            th Order ID
+                            th Order By
+                            th Paid Amount
+                            th Order Date
+                            th Action
+                    tbody
+                        each order in orders
+                            tr
+                                td(style='width:40%') #{order.orderId}
+                                td #{order.memberFullName}
+                                td MYR #{parseFloat(order.paidAmount).toFixed(2)}
+                                td #{moment(order.createdAt).format('DD-MMM-YYYY')}
+                                td
+                                    //ul.table-options
+                                    //    li.tooltips(data-toggle='tooltip', title='Edit Merchant')
+                                    //        a(href='/merchants/edit/' + merchant.id)
+                                    //            i.fa.fa-pencil
+    script.
+        $('table').DataTable({
+            "columnDefs": [
+                {"width": "50%", "targets": 0}
+            ],
+            "order": [[2, "desc"]],
+            "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, "All"]]
+        });

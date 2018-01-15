@@ -1,0 +1,246 @@
+extends ../../layouts/checkout
+
+block content
+
+    .container
+        .row
+            .col-md-9
+                .shoppingcart-margin
+                    .shoppingcart-desc
+                        h3 Shopping Cart
+                hr
+                .row
+                    .col-md-12
+                        if (!cartDetails)
+                            .text-muted.text-center
+                                | Your cart is empty
+                        if (cartDetails)
+                            for merchant in cartDetails.merchants
+                                .shopping-cart-merchant-wrap
+                                    .shopping-cart-merchant-details.small
+                                        .pull-left
+                                            b #{merchant.companyName}
+                                        .pull-right.text-muted.small
+                                            if (merchant.minShippingDay) || (merchant.maxShippingDay)
+                                                | Shipping Days: #{merchant.minShippingDay} - #{merchant.maxShippingDay} days
+                                            else
+                                                | No shipping days mentioned
+                                            | &nbsp;&bull;&nbsp;
+                                            | Shipping Fees: MYR #{parseFloat(merchant.shippingFees).toFixed(2)}
+                                    .clearfix
+                                    hr.hr-shopping-cart
+                                    .shopping-cart-item-title.small.hidden-xs
+                                        .row
+                                            .col-xs-2
+                                                .text-center
+                                                    b Photo
+                                            .col-xs-5
+                                                b Name
+                                            .col-xs-2
+                                                .text-center
+                                                    b Qty
+                                            .col-xs-2
+                                                .text-center
+                                                    b Unit Price
+                                            .col-xs-1
+
+                                    each item in merchant.items
+                                        .shopping-cart-item-wrap.small
+                                            .row
+                                                .col-xs-2
+                                                    .shopping-cart-item-image
+                                                        .product-img-wrap
+                                                            .product-img
+                                                                img.object-fit(src=item.imagePath)
+                                                .col-xs-5
+                                                    .shopping-cart-item-name
+                                                        b #{item.name}
+                                                    .shopping-cart-item-options.small
+                                                        if (item.attributes.color)
+                                                            | Color: #{item.attributes.color}
+                                                        if (item.attributes.flavor)
+                                                            | Flavor: #{item.attributes.flavor}
+                                                        if (item.attributes.design)
+                                                            | Design: #{item.attributes.design}
+                                                .col-xs-2
+                                                    .shopping-cart-item-quantity
+                                                        .text-center #{item.quantity}
+                                                .col-xs-2
+                                                    .shopping-cart-item-price
+                                                        if (item.discountedPrice)
+                                                            .text-center
+                                                                b MYR #{parseFloat(item.finalPrice).toFixed(2)}
+                                                                .small.strike MYR #{parseFloat(item.originalPrice).toFixed(2)}
+                                                .col-xs-1
+                                                    .shopping-cart-item-cross
+                                                        a(href='/removeItemInCart/' + item.id)
+                                                            i.fa.fa.fa-times.light-gray(style='font-size:0.7em;line-height:25px;vertical-align:middle')
+            .col-md-3
+                .shoppingcart-margin
+                    .shopping-cart-summary
+                        h3 Order Summary
+                    hr
+                    if (!logged.personal.fullname) || (!logged.email) || (!logged.personal.address01) || (!logged.personal.address02) || (!logged.personal.city) || (!logged.personal.state) || (!logged.personal.postcode) || (!logged.personal.country) || (!logged.personal.countrycode) || (!logged.personal.phone)
+                        b.small.text-muted Ships To:
+                        br
+                        br
+                        .alert.alert-warning
+                            |  We need your shipping details for us to deliver your orders.&nbsp;
+                            a(href='', data-toggle='modal', data-target='#shippingDetails') Update your shipping details
+
+                    else
+                        .row
+                            .col-md-12
+                                b.small.text-muted Ships To:
+                        .row
+                            .col-md-12
+                                p.small
+                                    b #{logged.personal.fullname} (#{logged.personal.phone})
+                                p.small
+                                    | #{logged.personal.address01},
+                                    br
+                                    | #{logged.personal.address02},
+                                    br
+                                    | #{logged.personal.city}, #{logged.personal.postcode}  #{logged.personal.state},
+                                    br
+                                    | #{logged.personal.country}.
+                                p.small
+                                    a(href='', data-toggle='modal', data-target='#shippingDetails') Change Shipping Details
+                    hr
+                    .shoppingcart-cost
+                        .row
+                            .col-md-6
+                                .shoppingcart-subtotal
+                                    | Sub Total:
+                                .shoppingcart-subtotal-shipping
+                                    .small.text-muted Shipping Fee:
+                            .col-md-6
+                                .shoppingcart-subtotal-price
+                                    .shoppingcart-subtotal
+                                        | MYR #{cartSubTotal}
+                                    .shoppingcart-subtotal-shipping
+                                        .small.text-muted MYR #{cartTotalShipping}
+                    hr
+                    .shoppingcart-totalprice.pull-right
+                        b MYR #{cartTotalPrice}
+                    .shoppingcart-total
+                        | Total
+                    hr
+                    .shoppingcart-checkout
+                        if (!logged.personal.fullname) || (!logged.email) || (!logged.personal.address01) || (!logged.personal.address02) || (!logged.personal.city) || (!logged.personal.state) || (!logged.personal.postcode) || (!logged.personal.country) || (!logged.personal.countrycode) || (!logged.personal.phone)
+                            a.white.btn.btn-success(type='button', data-toggle='modal', data-target='#shippingDetails', style='width:100%') Update Shipping Details
+                        else
+                            #paypal-button
+
+    #shippingDetails.modal.fade(role='dialog')
+        .modal-dialog
+            // Modal content
+            .modal-content
+                form(action='/checkout/updateUserDetails', method='post')
+                    .modal-header
+                        button.close(type='button', data-dismiss='modal') ×
+                        h4.modal-title Where do you want us to deliver to, babe?
+                    .modal-body
+                        input(type='hidden', name='_csrf' value=csrfToken)
+                        .form-group
+                            label Full Name
+                            input.form-control(type='text', id='fullname', name='fullname', value=member.personal.fullname, required='required')
+                        .form-group
+                            label Email
+                            input.form-control(type='email', id='email', name='email', value=member.email, required='required')
+                        .form-group
+                            label Phone Number
+                            input.form-control(type='text', id='phone', name='phone', value=member.personal.phone, required='required')
+                        .form-group
+                            label Address Line 1
+                            input.form-control(type='text', id='address01', name='address01', value=member.personal.address01, required='required')
+                        .form-group
+                            label Address Line 2
+                            input.form-control(type='text', id='address02', name='address02', value=member.personal.address02)
+                        .form-group
+                            label City
+                            input.form-control(type='text', id='city', name='city', value=member.personal.city, required='required')
+                        .form-group
+                            label State
+                            input.form-control(type='text', id='state', name='state', value=member.personal.state, required='required')
+                        .form-group
+                            label Postcode
+                            input.form-control(type='text', id='postcode', name='postcode', value=member.personal.postcode, required='required')
+                        .form-group
+                            label Country
+                            select.form-control.event-list(name='country' id='country', required='required')
+                                each item in countrylist
+                                    option(value=item.alpha2) #{item.name}
+                    .modal-footer
+                        button.btn.btn-success(type='submit') Submit
+                        button.btn.btn-default(type='button', data-dismiss='modal') Close
+
+
+    script.
+        braintree.client.create({
+            authorization: '#{paypalClientToken}'
+        }, function (clientErr, clientInstance) {
+            if (clientErr) {
+                console.error('Error creating client:', clientErr);
+                return;
+            }
+            braintree.paypalCheckout.create({
+                client: clientInstance
+            }, function (paypalCheckoutErr, paypalCheckoutInstance) {
+                if (paypalCheckoutErr) {
+                    console.error('Error creating PayPal Checkout:', paypalCheckoutErr);
+                    return;
+                }
+                paypal.Button.render({
+                    env: '#{environment}',
+                    style: {
+                        size: 'responsive',
+                        color: 'blue',
+                        shape: 'rect',
+                        label: 'checkout'
+                    },
+                    commit: true,
+                    payment: function () {
+                        return paypalCheckoutInstance.createPayment({
+                            flow: 'checkout',
+                            amount: '#{cartTotalPrice}',
+                            currency: 'MYR',
+                            locale: 'en_US',
+                            intent: 'sale',
+                            enableShippingAddress: true,
+                            shippingAddressEditable: false,
+                            shippingAddressOverride: {
+                                recipientName: '#{member.personal.fullname}',
+                                line1: '#{member.personal.address01}',
+                                line2: '#{member.personal.address02}',
+                                city: '#{member.personal.city}',
+                                countryCode: '#{member.personal.countrycode}',
+                                postalCode: '#{member.personal.postcode}',
+                                state: '#{member.personal.state}',
+                                phone: '#{member.personal.phone}'
+                            }
+                        });
+                    },
+
+                    onAuthorize: function (data, actions) {
+                        return paypalCheckoutInstance.tokenizePayment(data)
+                            .then(function (payload) {
+                                window.location = 'https://www.favful.com.my/checkout/processing?nonce=' + payload.nonce;
+                            });
+                    },
+
+                    onCancel: function (data) {
+                        console.log('checkout.js payment cancelled', JSON.stringify(data, 0, 2));
+                    },
+
+                    onError: function (err) {
+                        console.error('checkout.js error', err);
+                    }
+                }, '#paypal-button').then(function () {
+
+                });
+
+            });
+
+        });
+        $('#country').val('#{member.personal.countrycode}');

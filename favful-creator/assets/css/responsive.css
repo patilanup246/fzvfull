@@ -1,0 +1,16 @@
+@media screen and (max-width:1199px){
+    .profile-photo {width:140px;height:140px;margin: 0 auto;margin-bottom:50px}
+}
+
+@media screen and (max-width:991px){
+    .dashboard-sidebar {position:relative;height:150px;border:0}
+    .signout-btn {position:absolute;top:20px;right: 0px}
+    .profile-name {text-align:center}
+    .profile-username {text-align:center}
+    .profile-stats {text-align:center}
+    .profile-mypost-title {text-align:center}
+}
+
+@media screen and (max-width:768px){
+    .dashboard-sidebar {position:relative}
+}

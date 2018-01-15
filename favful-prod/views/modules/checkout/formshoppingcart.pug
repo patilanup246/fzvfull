@@ -1,0 +1,112 @@
+extends ../../layouts/checkout
+
+block content
+
+    .container
+        .row
+            .col-md-12
+                .shoppingcart-margin
+                    .deliveryform
+                        .deliveryform-desc
+                            h4 Enter your delivery address
+                        hr
+                        .deliveryform-stat
+                            .row
+                                .col-md-6
+                                    .row
+                                        .col-md-12
+                                            .form-group
+                                                | Full Name
+                                                input.form-control(type='name', placeholder='Enter your Name')
+                                    .row    
+                                        .col-md-12
+                                            .form-group
+                                                | Email address
+                                                input.form-control(type='email',placeholder='Enter your email')
+                                                small.form-text.text-muted We'll never share your email with anyone else.
+                                    .row    
+                                        .col-md-12
+                                            .form-group
+                                                | Postcode
+                                                input.form-control(type='postcode', placeholder='Postcode')
+                                    .row    
+                                        .col-md-12
+                                            .form-group
+                                                | City
+                                                input.form-control(type='city', placeholder='City')
+                                    .row    
+                                        .col-md-12
+                                            .form-group
+                                                | State
+                                                input.form-control(type='state', placeholder='State')
+                                    .row    
+                                        .col-md-12
+                                            .form-group
+                                                | Mobile Number
+                                                input.form-control(type='mobilenumber', placeholder='Mobile number')
+                                                small.form-text.text-muted To ensure delivery
+                                .col-md-6
+                                    .deliveryform-ordersummary
+                                        .deliveryform-desc
+                                            h4 Order Summary
+                                            hr
+                                        .deliveryform-desc
+                                            | You have 4 orders in your cart
+                                        br
+                                        .delivery-product-desc
+                                            .row
+                                                .col-md-7
+                                                    .deliveryformsummary
+                                                        | Product
+                                                .col-md-1
+                                                    .deliveryformsummary
+                                                        | Qty
+                                                .col-md-4
+                                                    .deliveryformsummary-price
+                                                        | Price
+                                        br
+                                        .row
+                                            .col-md-7
+                                                .deliveryformsummary
+                                                    | Himalaya Nourishing Skin Cream 150ml
+                                            .col-md-1
+                                                .deliveryformsummary
+                                                    | 1
+                                            .col-md-4
+                                                .deliveryformsummary-price
+                                                    | RM 123
+                                                br
+                                        hr 
+                                        .deliveryform-desc
+                                            .row
+                                                .col-md-8
+                                                    .deliveryformsummary
+                                                        | Subtotal
+                                                .col-md-4    
+                                                    .deliveryformsummary-price
+                                                        | RM 123
+                                        .deliveryform-desc
+                                            .row
+                                                .deliveryformsummary-shipping
+                                                    .col-md-8
+                                                        .deliveryformsummary
+                                                            | Shipping Charges  
+                                                    .col-md-4
+                                                        .deliveryformsummary-price
+                                                            small RM 123
+                                        hr
+                                        .deliveryform-desc
+                                            .row
+                                                .col-md-8
+                                                    .deliveryformsummary
+                                                        | Total
+                                                .col-md-4
+                                                    .deliveryformsummary-price
+                                                        | RM 123
+                                        .deliveryform-desc-gst
+                                            small (GST applied where applicable)
+                        br
+                        .deliveryform-desc-continue
+                            a(href='/shoppingcart/thankyou').btn.btn-follow-sidebar  Continue
+
+

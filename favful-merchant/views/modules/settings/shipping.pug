@@ -1,0 +1,58 @@
+extends ../../layouts/admin
+
+block content
+    if (flash.length == 0)
+    else
+        .alert.alert-success.text-center
+            button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+            strong
+                i.fa.fa-exclamation-circle(aria-hidden='true')
+                | &nbsp;#{flash}
+    .panel
+        .panel-heading
+            h4.panel-title Edit Fees
+            p Other Application Fees
+            hr
+        .panel-body
+            form.form-horizontal(method='post', action='/settings/shipping')
+                input(type="hidden", name="_csrf", value=csrfToken)
+
+                .row
+                    .col-sm-12
+                        h4.panel-title Shipping Duration
+                        hr
+                        .form-group
+                            label.col-sm-3.control-label Local Shipping Days
+                            .col-sm-1
+                                input.form-control(type='text', name='localMinShippingDays', id='localMinShippingDays', value=merchant.shippingDays.localMinShippingDays)
+                            .col-sm-1.text-center
+                                label.control-label.text-center to
+                            .col-sm-1
+                                input.form-control(type='text', name='localMaxShippingDays', id='localMaxShippingDays', value=merchant.shippingDays.localMaxShippingDays)
+                        .form-group
+                            label.col-sm-3.control-label International Shipping Days
+                            .col-sm-1
+                                input.form-control(type='text', name='intMinShippingDays', id='intMinShippingDays', value=merchant.shippingDays.intMinShippingDays)
+                            .col-sm-1.text-center
+                                label.control-label.text-center to
+                            .col-sm-1
+                                input.form-control(type='text', name='intMaxShippingDays', id='intMaxShippingDays', value=merchant.shippingDays.intMaxShippingDays)
+                br
+                .row
+                    .col-sm-12
+                        h4.panel-title Shipping Fees
+                        hr
+                        .form-group
+                            label.col-sm-3.control-label Local Shipping (MYR)
+                            .col-sm-8
+                                input.form-control(type='text', name='localshipping', id='localshipping', value=merchant.shippingfees.local)
+                        .form-group
+                            label.col-sm-3.control-label International Shipping (MYR)
+                            .col-sm-8
+                                input.form-control(type='text', name='intshipping', id='intshipping', value=merchant.shippingfees.international)
+                hr
+                .row
+                    .col-sm-6.col-sm-offset-3.text-center
+                        button.btn.btn-success.btn-quirk.btn-wide.mr5(type="submit") Save
+                        a(href="/dashboard").btn.btn-quirk.btn-wide.btn-default Cancel
+

@@ -1,0 +1,113 @@
+extends ../../layouts/admin
+
+block content
+    .panel
+        .panel-heading
+            h4.panel-title Add New Product
+            p Add new product to Favful.
+            hr
+        .panel-body
+            form.form-horizontal(action='/products/add', method='post', enctype='multipart/form-data')
+                input(type='hidden', name='_csrf', value=csrfToken)
+                .form-group
+                    label.col-sm-2.control-label Brand
+                    .col-sm-8
+                        select.form-control.event-list(name='brand' id='brand', required='required')
+                            each item in brands
+                                option(value=item.id) #{item.name}
+                .form-group
+                    label.col-sm-2.control-label Name
+                    .col-sm-8
+                        input.form-control(type='text', name='name', id='name', required='required', placeholder='Enter your product name')
+                .form-group
+                    label.col-sm-2.control-label Picture
+                    .col-sm-8
+                        input.form-control(type='file', name='mediafile', id='mediafile', required='required')
+                .form-group
+                    label.col-sm-2.control-label Short Description
+                    .col-sm-8
+                        textarea.form-control(name='shortdescription', id='shortdescription', rows='3', required='required', placeholder='Short description about your product')
+                .form-group
+                    label.col-sm-2.control-label Details
+                    .col-sm-8
+                        textarea.form-control(name='details', id='details', required='required', placeholder='Details about your product...')
+                .form-group
+                    label.col-sm-2.control-label Tags
+                    .col-sm-8
+                        select.form-control(style='width: 100%', name='tags', id='tags', data-placeholder='', multiple='', required='required')
+                            each item in producttags
+                                option(value=item.slug) #{item.name}
+                br
+                h4.panel-title Attribute Control
+                hr
+                .form-group
+                    label.col-sm-2.control-label Skin Type
+                    .col-sm-8
+                        select.form-control(style='width: 100%', name='skintype', id='skintype', data-placeholder='', multiple='')
+                            each item in productattributes
+                                option(value=item.slug) #{item.name}
+                .form-group
+                    label.col-sm-2.control-label Flavor
+                    .col-sm-8
+                        select.form-control(style='width: 100%', name='flavor', id='flavor', data-placeholder='', multiple='')
+                            each item in productattributes
+                                option(value=item.slug) #{item.name}
+                .form-group
+                    label.col-sm-2.control-label Color
+                    .col-sm-8
+                        select.form-control(style='width: 100%', name='color', id='color', data-placeholder='', multiple='')
+                            each item in productattributes
+                                option(value=item.slug) #{item.name}
+                .form-group
+                    label.col-sm-2.control-label Design
+                    .col-sm-8
+                        select.form-control(style='width: 100%', name='design', id='design', data-placeholder='', multiple='')
+                            each item in productattributes
+                                option(value=item.slug) #{item.name}
+                .form-group
+                    label.col-sm-2.control-label Ingredient
+                    .col-sm-8
+                        textarea.form-control(name='ingredient', id='ingredient', rows='3')
+                .form-group
+                    label.col-sm-2.control-label Volume
+                    .col-sm-8
+                        input.form-control(type='text', name='volume', id='volume')
+                br
+                h4.panel-title Pricing Control
+                hr
+                .form-group
+                    label.col-sm-2.control-label Price (MYR)
+                    .col-sm-8
+                        input.form-control(type='text', name='price', id='price', required='required')
+                .form-group
+                    label.col-sm-2.control-label Discounted Price (MYR)
+                    .col-sm-8
+                        input.form-control(type='text', name='discountedprice', id='discountedprice')
+                hr
+                .row
+                    .col-sm-6.col-sm-offset-3.text-center
+                        button.btn.btn-success.btn-quirk.btn-wide.mr5(type="submit") Save
+                        a(href="/products/list").btn.btn-quirk.btn-wide.btn-default Cancel
+
+    script.
+        $(document).ready(function () {
+            $.get('/get_signature', {})
+                .done(function (s3Hash) {
+                    $('#details').froalaEditor({
+                        imageUploadToS3: s3Hash,
+                        videoUploadToS3: s3Hash,
+                        fileUploadToS3: s3Hash,
+                        toolbarButtons: ['bold', 'italic', 'underline', '|', 'align', 'formatUL', 'formatOL', '|', 'fontSize', 'fontFamily', 'color', '|', 'insertLink', 'insertImage', 'insertVideo', '|', 'clearFormatting', 'html'],
+                        spellcheck: true,
+                        heightMin: 300,
+                        toolbarSticky: true,
+                        toolbarStickyOffset: 60,
+                        placeholderText: 'Details about your product...'
+                    })
+                });
+            $("#tags").select2({ tags: true });
+            $("#skintype").select2({ tags: true });
+            $("#flavor").select2({ tags: true });
+            $("#color").select2({ tags: true });
+            $("#design").select2({ tags: true });
+        });

@@ -1,0 +1,49 @@
+extends ../../layouts/admin
+
+block content
+    .panel
+        .panel-heading
+            .pull-left
+                h4.panel-title Merchant List
+                p
+                    | Manage all Favful's merchants.
+            .pull-right
+                a(href="/merchants/add").btn.btn-success.btn-sm
+                    i.fa.fa-plus.fa-fw
+                    | Add New Merchant
+        .clearfix
+        .panel-body
+            if (flash.length == 0)
+            else
+                .alert.alert-info.text-center
+                    button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+                    strong
+                        i.fa.fa-exclamation-circle(aria-hidden='true')
+                        | &nbsp;#{flash}
+            .table-responsive
+                table.table.nomargin
+                    thead
+                        tr
+                            th Company Name
+                            th.text-center Created On
+                            th.text-center Status
+                            th.text-center Action
+                    tbody
+                        each merchant in merchants
+                            tr
+                                td #{merchant.company.name}
+                                td.text-center #{merchant.status}
+                                td.text-center #{moment(merchant.created_at).format('DD-MMM-YYYY')}
+                                td
+                                    ul.table-options
+                                        li.tooltips(data-toggle='tooltip', title='Edit Merchant')
+                                            a(href='/merchants/edit/' + merchant.id)
+                                                i.fa.fa-pencil
+    script.
+        $('table').DataTable({
+            "columnDefs": [
+                {"width": "50%", "targets": 0}
+            ],
+            "order": [[2, "desc"]],
+            "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, "All"]]
+        });

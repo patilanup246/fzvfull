@@ -1,0 +1,36 @@
+.header
+    .container-fluid
+        .pull-left
+            .header-logo
+                a(href='/')
+                    img.object-fit(src='../img/static/favful-logo.svg')
+        if (logged)
+            .pull-right
+                .header-link
+                    a(data-toggle="modal", data-target="#showcase")
+                        i.fa.fa-plus
+                        | &nbsp;&nbsp;Showcase
+                .header-profile
+                        a(href='/dashboard')
+                            img.img-circle.object-fit(src=logged.photo)
+        else
+
+#showcase.modal.fade(role='dialog')
+    .modal-dialog
+        .modal-content
+            .modal-body
+                .row
+                    .col-xs-6
+                        a(href='/tutorial/video')
+                            .tutorial-button.text-center
+                                .tutorial-button-text
+                                    i.fa.fa-youtube-play.fa-4x
+                                    br
+                                    | CREATE A VIDEO TUTORIAL
+                    .col-xs-6
+                        a(href='/tutorial/image')
+                            .tutorial-button.text-center
+                                .tutorial-button-text
+                                    i.fa.fa-picture-o.fa-4x
+                                    br
+                                    | CREATE A IMAGE TUTORIAL

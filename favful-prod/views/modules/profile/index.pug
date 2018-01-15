@@ -1,0 +1,254 @@
+extends ../../layouts/profile
+
+block content
+    .container
+        .row
+            .col-md-3
+                .profile-photo-wrap
+                    .profile-image.text-center
+                        img.object-fit.img-circle(src=member.photo)
+                    .badge-profile-flag
+                        img.object-fit(src='../img/flags/my.svg')
+                    if member.rank === 'creator'
+                        .badge-profile-creator
+                            img.object-fit(src='../img/badge/creator.png')
+                .profile-details.text-center
+                    h4.profile-name.text-center #{member.displayname}
+                    .profile-property
+                        .profile-property-item
+                            b.small.text-muted Skin Type
+                            br
+                            span(style='text-transform:capitalize') #{member.profile.skintype}
+                        br
+                        .profile-property-item
+                            b.small.text-muted Skin Color
+                            br
+                            span(style='text-transform:capitalize') #{member.profile.skintone}
+                        br
+                        .profile-property-item
+                            b.small.text-muted Age Group
+                            br
+                            | #{member.profile.agegroup}
+                hr
+                .dashboard-buttons-wrap
+
+            hr.visible-xs
+            .col-md-9
+                .row
+                    .col-md-12
+                        .profile-all
+                            .profile-about
+                                .profile-name.hidden-xs
+                                    h3 #{member.displayname}&nbsp;
+                                        if member.rank === 'creator'
+                                            .beauty-guru-tag Beauty Guru
+                            .profile-dec-about
+                                if (member.shortintro != null || 0)
+                                    p.text-muted #{member.shortintro}
+                                else
+                                    p.text-muted
+                                        i.fa.fa-edit
+                                        | &nbsp; Add short introduction about yourself
+                hr
+                .row.overview
+                    .col-xs-4
+                        .profile-stats.text-center
+                            | &nbsp;CONTRIBUTED
+                            br
+                            .user-exp-category.text-center
+                                | &nbsp;#{contributed}
+                    .col-xs-4
+                        .profile-stats.text-center
+                            | &nbsp;BENEFITED
+                            br
+                            .user-exp-category.text-center
+                                | &nbsp;#{member.benefited}
+                    .col-xs-4
+                        .profile-stats.text-center
+                            | &nbsp;INFLUENCE
+                            br
+                            .user-exp-category
+                                - var influence = Number(member.influence).toLocaleString('en')
+                                | &nbsp;#{influence}
+
+                hr
+                ul.nav.nav-tabs.nav-justified
+                    li.active
+                        a(data-toggle='tab', href='#tutorial')
+                            i.fa.fa-book
+                            | &nbsp;&nbsp;My Tutorials
+                    li
+                        a(data-toggle='tab', href='#myinfluence')
+                            i.fa.fa-book
+                            | &nbsp;&nbsp;My Influence
+                    //li
+                    //    a(data-toggle='tab', href='#reviews')
+                    //        i.fa.fa-commenting
+                    //        | &nbsp;&nbsp;My Reviews
+                br
+
+                .tab-content
+                    #tutorial.tab-pane.fade.in.active
+                        .row
+                            if (tutorials != 0)
+                                each tutorial in tutorials
+                                    .col-md-4
+                                        .tutorial-card-wrap
+                                            .tutorial-card-author-wrap
+                                                a(href='/' + tutorial.author.username)
+                                                    .tutorial-card-author-photo
+                                                        img.img-circle.object-fit(src=tutorial.author.photo)
+                                                .tutorial-card-author-details-wrap
+                                                    a.gray(href='/' + tutorial.author.username)
+                                                        .tutorial-card-author-name
+                                                            | #{tutorial.author.displayname}
+                                                    .tutorial-card-author-stats.small.text-muted
+                                                        i.fa.fa.fa-clock-o
+                                                        span(style='text-transform:capitalize') &nbsp;#{moment(tutorial.timestamp).format('DD MMM YYYY')}
+                                            hr.no-margin
+                                            .tutorial-card-title
+                                                a.gray(href='/tutorial/' + tutorial.slug) #{tutorial.title}
+                                            .tutorial-card-thumbnail-wrap
+                                                if tutorial.type == 'video-youtube'
+                                                    .square
+                                                        .tutorial-card-thumbnail
+                                                            a(href='/tutorial/' + tutorial.slug)
+                                                                .tutorial-card-video-tint
+                                                                    i.fa.fa-youtube-play.fa-4x
+                                                                img.object-fit(src='http://img.youtube.com/vi/' + tutorial.videoid + '/0.jpg')
+                                                if tutorial.type == 'video-vimeo'
+                                                    .square
+                                                        .tutorial-card-thumbnail
+                                                            a(href='/tutorial/' + tutorial.slug)
+                                                                .tutorial-card-video-tint
+                                                                    i.fa.fa-youtube-play.fa-4x
+                                                                img.object-fit(src='http://img.youtube.com/vi/' + tutorial.youtubeid + '/0.jpg')
+                                                if tutorial.type == 'video-upload'
+                                                    .square
+                                                        .tutorial-card-thumbnail
+                                                            a(href='/tutorial/' + tutorial.slug)
+                                                                .tutorial-card-video-tint
+                                                                    i.fa.fa-youtube-play.fa-4x
+                                                                img.object-fit(src=tutorial.thumbnailpath)
+                                                if tutorial.type == 'image'
+                                                    .square
+                                                        .tutorial-card-thumbnail
+                                                            a(href='/tutorial/' + tutorial.slug)
+                                                                img.object-fit(src=tutorial.thumbnail)
+                                            br
+                                            .tutorial-card-cta-wrap.clearfix
+                                                p Product use in this tutorial:
+                                                .row
+                                                    .col-xs-12.col-md-12
+                                                        .variable-width
+                                                            if (tutorial.products)
+                                                                each item in tutorial.products
+                                                                    a.gray(href='/products/' + item.slug)
+                                                                        .product-home-widget-wrap
+                                                                            .product-home-widget-display
+                                                                                .tutorial-card-author-photo
+                                                                                    img.img-circle.object-fit(src=item.imagepath)
+                                                                            .product-home-widget-display
+                                                                                .product-home-widget-stats-name
+                                                                                    b #{item.name}
+                                                                                .product-home-widget-stats.small
+                                                                                    i #{item.brand.name}
+                                                                                .product-home-widget-stats.small
+                                                                                    | RM #{parseFloat(item.price).toFixed(2)}
+                                                            if (!tutorial.products)
+                                                                .product-home-widget-wrap.text-center
+                                                                    i No products found
+                                            //- .row
+                                            //-     .col-md-4
+                                            //-         .beauty-tutorial-writer-single-like-home
+                                            //-             if (heartvalidate >= 1)
+                                            //-                 a(href='/tutorial/unheart/' + tutorial.id)
+                                            //-                     i.fa.fa.fa-heart
+                                            //-                     | &nbsp;&nbsp;#{tutorial.heart} Benefited
+                                            //-             else
+                                            //-                 a(href='/tutorial/heart/' + tutorial.id)
+                                            //-                     i.fa.fa.fa-heart
+                                            //-                     | &nbsp;&nbsp;#{tutorial.heart} Benefited
+                                            //-     .col-md-4
+                                            //-         .beauty-tutorial-writer-single-like-home
+                                            //-             i.fa.fa.fa-comment
+                                            //-             | &nbsp;Comment
+                                            //-     .col-md-4
+                                            //-         .beauty-tutorial-writer-single-like-home
+                                            //-             i.fa.fa.fa-share
+                                            //-             | &nbsp;Share
+                            else
+                                .text-center.text-muted
+                                    h4 Sorry
+                                    p #{member.displayname} has no tutorial.
+                    #myinfluence.tab-pane.fade
+                        .setup-box
+                            .row
+                                .influence-box.text-center
+                                    .col-md-4
+                                        .profile-influence-logo
+                                            fa.fa.fa-instagram
+                                    .col-md-4
+                                        .profile-influence-desc
+                                            | #{member.instagram.followers}
+                                    .col-md-4
+                                        .profile-influence-desc
+                                            | Followers
+                                    //.col-md-3
+                                    //    .profile-influence-desc-button
+                                    //        button.btn.profile-btn-connect
+                                    //            b Connect
+                            br
+                            .row
+                                .influence-box.text-center
+                                    .col-md-4
+                                        .profile-influence-logo
+                                            fa.fa.fa-youtube-play
+                                    .col-md-4
+                                        .profile-influence-desc
+                                            | #{member.youtube.subscribers}
+                                    .col-md-4
+                                        .profile-influence-desc
+                                            | Subscribers
+                                    //.col-md-3
+                                    //    .profile-influence-desc-button
+                                    //        button.btn.profile-btn-connect
+                                    //            b Connect
+                            br
+                            .row
+                                .influence-box.text-center
+                                    .col-md-4
+                                        .profile-influence-logo
+                                            fa.fa.fa-rss-square
+                                    .col-md-4
+                                        .profile-influence-desc
+                                            | #{member.blog.monthlyviews}
+                                    .col-md-4
+                                        .profile-influence-desc
+                                            | Monthly Visitor
+                                    //.col-md-3
+                                    //    .profile-influence-desc-button
+                                    //        button.btn.profile-btn-connect
+                                    //            b Connect
+                    #reviews.tab-pane.fade.in
+                        | Sorry no reviews
+
+    script.
+        $('#skintype').val('#{member.profile.skintype}');
+        $('#skintone').val('#{member.profile.skintone}');
+        $('.variable-width').slick({
+            infinite: true,
+            dots: false,
+            speed: 300,
+            slidesToShow: 1,
+            variableWidth: true,
+            arrows: false,
+            autoplay: true,
+            autoplaySpeed: 3000
+        });
+        $('.product-home-widget-stats-name').truncate({
+            lines: 1
+        });
+        $("img").on("error", function () {
+            $(this).attr('src', '../img/static/empty-product.png');
+        });

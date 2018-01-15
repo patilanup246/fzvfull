@@ -1,0 +1,20 @@
+header
+    .headerpanel
+        .logopanel.text-center
+            a(href="/")
+                img(src="/img/static/companylogo.png" height="23px")
+        .headerbar
+            a#menuToggle.menutoggle
+                i.fa.fa-bars
+            .header-right
+                ul.headermenu
+                    li
+                        .btn-group
+                            button.btn.btn-logged(type='button', data-toggle='dropdown')
+                                | #{logged.username}
+                                span.caret
+                            ul.dropdown-menu.pull-right
+                                li
+                                    a(href='/signout')
+                                        i.fa.fa-sign-out
+                                        |  Sign Out

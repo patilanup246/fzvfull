@@ -1,0 +1,54 @@
+extends ../../layouts/admin
+
+block content
+    if (flash.length == 0)
+    else
+        .alert.alert-success.text-center
+            button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+            strong
+                i.fa.fa-exclamation-circle(aria-hidden='true')
+                | &nbsp;#{flash}
+    .panel
+        .panel-heading
+            h4.panel-title Edit Payment Settings
+            p My Payment Details
+            hr
+        .panel-body
+            form.form-horizontal(method='post', action='/profile/payment/')
+                input(type="hidden", name="_csrf", value=csrfToken)
+                .row
+                    .col-sm-12
+                        h4.panel-title Banking Information
+                        hr
+                        .form-group
+                            label.col-sm-2.control-label Bank Name
+                            .col-sm-8
+                                input.form-control(type='text', name='bankname', id='bankname', value=merchant.bank.name)
+                        .form-group
+                            label.col-sm-2.control-label Bank SWIFT Code
+                            .col-sm-8
+                                input.form-control(type='text', name='swift', id='swift', value=merchant.bank.swift)
+                        .form-group
+                            label.col-sm-2.control-label Bank Country
+                            .col-sm-8
+                                select.form-control(name="bankcountry", id="bankcountry")
+                                    option(value="MY") Malaysia
+                                    option(value="KR") Korea
+                        .form-group
+                            label.col-sm-2.control-label Beneficiary Name
+                            .col-sm-8
+                                input.form-control(type='text', name='accountname', id='accountname', value=merchant.bank.accountname)
+                        .form-group
+                            label.col-sm-2.control-label Account Number
+                            .col-sm-8
+                                input.form-control(type='text', name='accountnumber', id='accountnumber', value=merchant.bank.accountnumber)
+                hr
+                .row
+                    .col-sm-6.col-sm-offset-3.text-center
+                        button.btn.btn-success.btn-quirk.btn-wide.mr5(type="submit") Save
+                        a(href="/merchants/").btn.btn-quirk.btn-wide.btn-default Cancel
+        script.
+            $(window).on('load', function () {
+                $('select[name="bankcountry"]').val('#{merchant.bank.country}');
+            });
+

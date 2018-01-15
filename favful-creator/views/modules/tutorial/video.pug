@@ -1,0 +1,43 @@
+extends ../../layouts/default
+
+block content
+    .container.white-bg
+        .row
+            .col-md-12.text-center
+                h3(style='margin-top:25px') Showcase (Video)
+        hr
+        .row
+            .col-md-6.col-md-offset-3
+                form(action='/tutorial/video', method='post')
+                    input(type='hidden', name='_csrf' value=csrfToken)
+                    .form-group
+                        label Title
+                        input.form-control(placeholder='Does K-Beauty JAMSU Work?', id='title', name='title', required='required')
+                        .input-tips.small Title that starts with "How-to" or "best" or "vs" to get better response.
+                    .form-group
+                        label Video Link
+                        input.form-control(placeholder='https://www.youtube.com/watch?v=6vw_LesSzYM', id='videourl', name='videourl', required='required')
+                        .input-tips.small
+                            | Currently supports: YouTube, Vimeo, Dailymotion
+                    .form-group
+                        label Short Description
+                        textarea.form-control.resize-none(placeholder='Short and catchy description of your tutorial', rows = '3', id='shortdescription', name='shortdescription', required='required')
+                        .input-tips.small
+                            | Short description about your tutorial. For better result, keep it short and simple.
+                    .form-group
+                        label Tutorial
+                        textarea(id='content', name='content', required='required')
+                    hr
+                    .text-center
+                        button.btn.btn-success(type='submit', style='color:#fff !important') Submit
+                        | &nbsp;&nbsp;&nbsp;
+                        a.btn.btn-default(href='/dashboard', style='color:#aaa !important') Cancel
+                    br
+                    br
+
+    script.
+        $(document).ready(function () {
+            $('#content').summernote({
+                height: 300
+            });
+        });

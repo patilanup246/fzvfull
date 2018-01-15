@@ -1,0 +1,210 @@
+extends ../../layouts/profile
+
+block content
+    .container
+        .col-md-3
+            .profile-image.text-center
+                img.object-fit.img-circle(src=logged.photo)
+            .badge-profile-flag
+                img.object-fit(src='../img/flags/my.svg')
+            .badge-profile-creator
+                img.object-fit(src='../img/badge/creator.png')
+            .profile-details
+                h4.profile-name.text-center #{logged.displayname}
+                .profile-property
+                    .profile-property-item
+                        | Skin Type:&nbsp;
+                        //- | #{member.profile.skintype}
+                    .profile-property-item
+                        | Skin Color:&nbsp;
+                        //- | #{member.profile.skincolor}
+                    .profile-property-item
+                        | Age Group:&nbsp;
+                        |
+            .dashboard-logout
+                a(href='/signout')
+                    i.fa.fa-sign-out
+                    | &nbsp; Sign Out
+            br
+        .col-md-9
+            .row
+                .profile-all
+                    .profile-about
+                        .profile-name
+                        h3 #{logged.displayname}
+                            .profile-cog.pull-right
+                                a(href='/profile/setup')
+                                    fa.fa.fa-cog.pull-right
+                            .profile-pencil.pull-right
+                                a(href='/profile')
+                                    fa.fa.fa-pencil.pull-right
+
+                    .profile-dec-about
+                        h4 About: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            button.btn.profile-btn-follow.pull-right
+                                i.fa.fa-user
+                                b &nbsp;Follow
+            br
+            .row.overview
+                .col-md-4.user-pad.text-center
+                    i.fa.fa-book
+                    | &nbsp;CONTRIBUTED
+                    br
+                    .user-exp-category
+                        | &nbsp;2,784
+                .col-md-4.user-pad.text-center
+                    i.fa.fa-heart-o
+                    | &nbsp;BENEFITED
+                    br
+                    .user-exp-category
+                        | &nbsp;456
+                .col-md-4.user-pad.text-center
+                    i.fa.fa-user
+                    | &nbsp;INFLUENCE
+                    br
+                    .user-exp-category
+                        | &nbsp;4,901
+
+            br
+            ul.nav.nav-tabs.nav-justified
+                li.active
+                    a(data-toggle='tab', href='#tutorial')
+                        i.fa.fa-book
+                        | &nbsp;Tutorials
+                li
+                    a(data-toggle='tab', href='#QnA')
+                        i.fa.fa-heart
+                        | &nbsp;QnA
+                li
+                    a(data-toggle='tab', href='#influence')
+                        i.fa.fa-user
+                        | &nbsp;Influence
+            br
+
+            .tab-content
+                #tutorial.tab-pane.fade.in.active
+                    .row
+                        .col-md-4
+                            .profile-module-card
+                                .profile-toptutorial
+                                    .profile-toptutorial-expert-photo
+                                        img.img-circle.object-fit(src='../img/static/empty-user.png')
+                                    .profile-toptutorial-expert-details.pull-right
+                                        .profile-toptutorial-expert-name
+                                            | Username
+                                        .profile-toptutorial-expert-stats.small
+                                            | Skin Color
+                                        .profile-toptutorial-expert-stats.small
+                                            | Skin Type
+                                br
+                                .profile-toptutorial-title
+                                    a(href='#')
+                                        | Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                br
+                                .profile-toptutorial-thumbnail
+                                    img.object-fit(src='../img/static/empty-user.png')
+                            br
+                    //- .post-tutorial
+                    //-     a.btn.btn-tutorial.pull-right(href='/beautytutorial/post')
+                    //-         i.fa.fa-arrow-up
+                    //-         | &nbsp;Post a Tutorial
+                #QnA.tab-pane.fade
+                    .row
+                        .col-md-4
+                            .beauty-advisor-testimonial
+                                .beauty-advisor-testimonial-section
+                                    .beauty-advisor-title
+                                        a(href='#')
+                                            | Title
+                                    .advisor-toptutorial-title
+                                        | Lorem ipsum dolor sit amet, consectetur adipiscing elit."Denim you probably haven't heard of. Lorem ipsum dolor met consectetur adipisicing sit amet, consectetur adipisicing elit, of them jean shorts sed magna aliqua. Lorem ipsum dolor met.
+                                .beauty-tutorial-ques-details
+                                    .ques-like.pull-right
+                                        fa.fa.fa-thumbs-o-up
+                                        | &nbsp;52&nbsp;
+                                    .ques-comment.pull-right
+                                        fa.fa.fa-comment-o
+                                        | &nbsp;100&nbsp;
+                                    .ques-post-date.pull-right
+                                        fa.fa.fa-calendar-o
+                                        | &nbsp;12/2/2017&nbsp;
+                                br
+                                .beauty-advisor-expert-photo
+                                    img.img-circle(src='../img/static/empty-user.png')
+                                .beauty-advisor-expert-stats.pull-right
+                                    .beauty-advisor-writer-name
+                                        | Username
+                                    .profile-property-item
+                                        | Skin Type:&nbsp;
+                                        | skintype
+                                    .profile-property-item
+                                        | Skin Color:&nbsp;
+                                        | skincolor
+
+
+                #influence.tab-pane.fade
+                    .setup-box
+                        .row
+                            .influence-box.text-center
+                                .col-md-3
+                                    .profile-influence-logo
+                                        img(src='../img/static/favful-logo.svg')
+                                .col-md-3
+                                    .profile-influence-desc
+                                        | 2222
+                                .col-md-3
+                                    .profile-influence-desc
+                                        | Followers
+                                .col-md-3
+                                    .profile-influence-desc-button
+                                        button.btn.profile-btn-connect
+                                            b Connect
+                        br
+                        .row
+                            .influence-box.text-center
+                                .col-md-3
+                                    .profile-influence-logo
+                                        fa.fa.fa-instagram
+                                .col-md-3
+                                    .profile-influence-desc
+                                        | 2222
+                                .col-md-3
+                                    .profile-influence-desc
+                                        | Followers
+                                .col-md-3
+                                    .profile-influence-desc-button
+                                        button.btn.profile-btn-connect
+                                            b Connect
+                        br
+                        .row
+                            .influence-box.text-center
+                                .col-md-3
+                                    .profile-influence-logo
+                                        fa.fa.fa-facebook-official
+                                .col-md-3
+                                    .profile-influence-desc
+                                        | 2222
+                                .col-md-3
+                                    .profile-influence-desc
+                                        | Friends
+                                .col-md-3
+                                    .profile-influence-desc-button
+                                        button.btn.profile-btn-connect
+                                            b Connect
+                        br
+                        .row
+                            .influence-box.text-center
+                                .col-md-3
+                                    .profile-influence-logo
+                                        fa.fa.fa-user
+                                .col-md-3
+                                    .profile-influence-desc
+                                        //- | 2222
+                                .col-md-3
+                                    .profile-influence-desc
+                                        | Monthly Visitor
+                                .col-md-3
+                                    .profile-influence-desc-button
+                                        button.btn.profile-btn-connect
+                                            b Connect
+

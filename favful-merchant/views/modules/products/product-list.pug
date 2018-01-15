@@ -1,0 +1,71 @@
+extends ../../layouts/admin
+
+block content
+    .panel
+        .panel-heading
+            .pull-left
+                h4.panel-title Product List
+                p
+                    | Manage products on Favful.
+            //.pull-right
+            //    a(href="/products/add").btn.btn-success.btn-sm
+            //        i.fa.fa-plus.fa-fw
+            //        | Add A Product
+        .clearfix
+        .panel-body
+            if (flash.length == 0)
+            else
+                .alert.alert-info.text-center
+                    button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+                    strong
+                        i.fa.fa-exclamation-circle(aria-hidden='true')
+                        | &nbsp;#{flash}
+            .table-responsive
+                table.table.nomargin
+                    thead
+                        tr
+                            th Product Name
+                            th Image
+                            th Brand
+                            th Status
+                            th.text-center Action
+                    tbody
+                        each item in results
+                            tr
+                                td #{item.name}
+                                td
+                                    img(src=item.imagepath, height='20px')
+                                td #{item.brand.name}
+                                td #{item.status}
+                                td
+                                    ul.table-options
+                                        li
+                                            a(href='https://www.favful.com.my/products/' + item.slug, target='_blank')
+                                                i.fa.fa-eye
+                                        //li
+                                        //    a(href='/products/edit/' + item.id)
+                                        //        i.fa.fa-pencil
+                                    //    li
+                                    //        a(href='' data-toggle='modal' data-target='#delete_' + item.id)
+                                    //            i.fa.fa-trash
+                                    //.modal.bounceIn.animated(id='delete_' + item.id, tabindex='-1', role='dialog', aria-hidden='true', style='display: none;')
+                                    //    .modal-dialog
+                                    //        .modal-content
+                                    //            .modal-header
+                                    //                button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                                    //                h4.modal-title Delete shows
+                                    //            .modal-body
+                                    //                | Confirm to delete&nbsp;
+                                    //                b #{item.name}&nbsp;
+                                    //                | ?
+                                    //            .modal-footer
+                                    //                a.btn.btn-default(data-dismiss='modal') Cancel
+                                    //                a.btn.btn-danger(href='/products/delete/' + item.id) Delete
+    script.
+        $('table').DataTable({
+            "columnDefs": [
+                {"width": "50%", "targets": 0}
+            ],
+            "order": [[2, "desc"]],
+            "lengthMenu": [[20, 50, 100, -1], [20, 50, 100, "All"]]
+        });

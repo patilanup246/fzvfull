@@ -1,0 +1,99 @@
+extends ../../layouts/checkout
+
+block content
+    .container
+        .row
+            .col-md-12
+                .shoppingcart-margin
+                    .thankyoufont.text-center
+                        i.fa.fa.fa-check-circle.fa-5x
+                        .shoppingcart-small
+                            h3 Order Confirmed
+                    hr
+                    .row
+                        .col-md-4
+                            .shoppingcart-tq
+                                | Dear #{logged.displayname},
+                                br
+                                | Thank you for your purchase.
+                                hr
+                                | Your order will be shipped to:
+                                br
+                                b #{result.shipTo.fullname}
+                                br
+                                | #{result.shipTo.address01},
+                                br
+                                | #{result.shipTo.address02},
+                                br
+                                | #{result.shipTo.city}, #{result.shipTo.postcode}
+                                br
+                                | #{result.shipTo.country},
+                                hr
+                                .row
+                                    .col-md-6
+                                        a(href='/dashboard', style='width:100%').white.btn.btn-success View My Orders
+                                    .col-md-6
+                                        a(href='/', style='width:100%').gray.btn.btn-default Back to Home
+                        br.visible-xs
+                        .col-md-8
+                            .shoppingcart-tq-module-card
+                                .shoppingcart-order-summary
+                                    h5
+                                        | Order ID:&nbsp;
+                                        b #{result.orderId}
+                                    hr
+                                for merchant in result.merchants
+                                    .shopping-cart-merchant-wrap
+                                        .shopping-cart-merchant-details.small
+                                            .pull-left
+                                                b #{merchant.companyName}
+                                            .pull-right.text-muted.small
+                                                if (merchant.minShippingDay) || (merchant.maxShippingDay)
+                                                    | Shipping Days: #{merchant.minShippingDay} - #{merchant.maxShippingDay} days
+                                                else
+                                                    | No shipping days mentioned
+                                                | &nbsp;&bull;&nbsp;
+                                                | Shipping Fees: MYR #{parseFloat(merchant.shippingFees).toFixed(2)}
+                                        .clearfix
+                                        hr.hr-shopping-cart
+                                        .shopping-cart-item-title.small.hidden-xs
+                                            .row
+                                                .col-xs-2
+                                                    .text-center
+                                                        b Photo
+                                                .col-xs-6
+                                                    b Name
+                                                .col-xs-2
+                                                    .text-center
+                                                        b Qty
+                                                .col-xs-2
+                                                    .text-center
+                                                        b Unit Price
+
+                                        each item in merchant.items
+                                            .shopping-cart-item-wrap.small
+                                                .row
+                                                    .col-xs-2
+                                                        .shopping-cart-item-image
+                                                            .product-img-wrap
+                                                                .product-img
+                                                                    img.object-fit(src=item.imagePath)
+                                                    .col-xs-6
+                                                        .shopping-cart-item-name
+                                                            b #{item.name}
+                                                        .shopping-cart-item-options.small
+                                                            if (item.attributes.color)
+                                                                | Color: #{item.attributes.color}
+                                                            if (item.attributes.flavor)
+                                                                | Flavor: #{item.attributes.flavor}
+                                                            if (item.attributes.design)
+                                                                | Design: #{item.attributes.design}
+                                                    .col-xs-2
+                                                        .shopping-cart-item-quantity
+                                                            .text-center #{item.quantity}
+                                                    .col-xs-2
+                                                        .shopping-cart-item-price
+                                                            if (item.discountedPrice)
+                                                                .text-center
+                                                                    b MYR #{parseFloat(item.finalPrice).toFixed(2)}
+                                                                    .small.strike MYR #{parseFloat(item.originalPrice).toFixed(2)}

@@ -1,0 +1,95 @@
+extends ../../layouts/admin
+
+block content
+    .panel
+        .panel-heading
+            .pull-left
+                h4.panel-title User List
+                p
+                    | Manage all user details and access role.
+            .pull-right
+                a(href="/user/add").btn.btn-success.btn-sm
+                    i.fa.fa-plus.fa-fw
+                    | Add User
+        .clearfix
+        .panel-body
+            if (flash.length == 0)
+            else
+                .alert.alert-info.text-center
+                    button.close(type='button', data-dismiss='alert', aria-hidden='true') ×
+                    strong
+                        i.fa.fa-exclamation-circle(aria-hidden='true')
+                        | &nbsp;#{flash}
+            .table-responsive
+                table.table.nomargin
+                    thead
+                        tr
+                            th Name
+                            th Status
+                            th Email
+                            th.text-center Action
+                    tbody
+                        each user in users
+                            tr
+                                td #{user.displayname}
+                                td(style='text-transform:capitalize') #{user.status}
+                                td #{user.email}
+                                td
+                                    ul.table-options
+                                        li.tooltips(data-toggle='tooltip', title='Edit User')
+                                            a(href='/user/edit/' + user.id)
+                                                i.fa.fa-pencil
+                                        if (user.status === 'active')
+                                            li.tooltips(data-toggle='tooltip', title='Suspend User')
+                                                a(href='#' data-toggle='modal', data-target='#suspend_' + user.id)
+                                                    i.fa.fa-pause
+                                        else
+                                            li.tooltips(data-toggle='tooltip', title='Reactivate User')
+                                                a(href='#' data-toggle='modal', data-target='#reactivate_' + user.id)
+                                                    i.fa.fa-play
+                                            li.tooltips(data-toggle='tooltip', title='Delete User')
+                                                a(href='#' data-toggle='modal', data-target='#delete_' + user.id)
+                                                    i.fa.fa-trash
+                            .modal.bounceIn.animated(id='suspend_' + user.id, tabindex='-1', role='dialog', aria-hidden='true', style='display: none;')
+                                .modal-dialog
+                                    .modal-content
+                                        .modal-header
+                                            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                                            h4.modal-title Suspend User
+                                        .modal-body
+                                            .text-center
+                                                | Confirm to suspend user&nbsp;
+                                                b #{user.firstname}, #{user.lastname}
+                                                | ?
+                                        .modal-footer
+                                            a.btn.btn-warning(href="/user/suspend/" + user.id) Suspend
+                                            a.btn.btn-default(data-dismiss='modal') Cancel
+                            .modal.bounceIn.animated(id='reactivate_' + user.id, tabindex='-1', role='dialog', aria-hidden='true', style='display: none;')
+                                .modal-dialog
+                                    .modal-content
+                                        .modal-header
+                                            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                                            h4.modal-title Reactivate User
+                                        .modal-body
+                                            .text-center
+                                                | Confirm to reactivate user&nbsp;
+                                                b #{user.firstname}, #{user.lastname}
+                                                | ?
+                                        .modal-footer
+                                            a.btn.btn-success(href="/user/reactivate/" + user.id) Reactive
+                                            a.btn.btn-default(data-dismiss='modal') Cancel
+                            .modal.bounceIn.animated(id='delete_' + user.id, tabindex='-1', role='dialog', aria-hidden='true', style='display: none;')
+                                .modal-dialog
+                                    .modal-content
+                                        .modal-header
+                                            button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                                            h4.modal-title Delete User
+                                        .modal-body
+                                            .text-center
+                                                h4(style='color:red') Deleted user is not recoverable!
+                                                | Confirm to delete user&nbsp;
+                                                b #{user.firstname}, #{user.lastname}
+                                                | ?
+                                        .modal-footer
+                                            a.btn.btn-danger(href="/user/delete/" + user.id) Delete
+                                            a.btn.btn-default(data-dismiss='modal') Cancel

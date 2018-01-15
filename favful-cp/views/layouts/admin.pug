@@ -1,0 +1,40 @@
+doctype html
+html
+    head
+        title DigiCore JS - #{title}
+        meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0')
+        link(rel='stylesheet', href='/css/custom.css')
+        link(rel='stylesheet', href='/css/responsive.css')
+        link(rel='stylesheet', href='/css/quirk.css')
+        link(rel='stylesheet', href='/vendors/font-awesome/css/font-awesome.css')
+        link(rel='stylesheet', href='/vendors/summernote/summernote.css')
+        link(rel='stylesheet', href='/vendors/select2/select2.css')
+        link(rel='stylesheet', href='/vendors/froala/css/froala_editor.pkgd.min.css')
+        link(rel='stylesheet', href='/vendors/froala/css/froala_style.min.css')
+        link(rel='stylesheet', href='/vendors/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css')
+
+        script(src='/vendors/jquery/jquery.js')
+        script(src='/vendors/modernizr/modernizr.js')
+        script(src='/vendors/froala/js/froala_editor.pkgd.min.js')
+        script(src='/vendors/bootstrap/js/bootstrap.js')
+        script(src='/vendors/datatables/jquery.dataTables.js')
+        script(src='/vendors/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.js')
+
+        script#fr-fek.
+            try {
+                (function (k) {
+                    localStorage.FEK = k;
+                    t = document.getElementById('fr-fek');
+                    t.parentNode.removeChild(t);
+                })('XXd1TEWUa1c2QSDe1HAb2==')
+            } catch (e) {
+            }
+
+    body
+        include ../partials/header
+        section
+            include ../partials/sidebar
+            .mainpanel
+                .contentpanel
+                    block content
+        include ../partials/scripts

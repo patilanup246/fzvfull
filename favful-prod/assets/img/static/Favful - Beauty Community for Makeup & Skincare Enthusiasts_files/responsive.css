@@ -1,0 +1,36 @@
+@media screen and (max-width:1199px) {
+
+}
+
+@media screen and (max-width:991px) {
+    .mobile-header {position:fixed;width:100%;z-index:999;padding-top: 10px;padding-bottom:10px;background-color:#fff;border-bottom:1px solid #dadada;}
+    .mobile-header-logo {width:70px;margin: 0 auto}
+    .mobile-header a {color: #ED145B}
+    .mobile-header a:hover {color: #ED145B}
+    .home-slider {height:380px;padding-top: 15px}
+    .home-search {width: 100%;padding: 15px}
+    .home-search input {padding: 25px;font-size:1em}
+    .home-search-text {padding:10px}
+    .home-slider-title {font-size: 2em}
+    .btn-home-search {font-size:1em;padding: 15px !important}
+    .btn-home-search:hover {color:#fff !important;background-color: #BC1552}
+    .home-featured-item {margin-top:30px}
+}
+
+@media screen and (max-width:768px) {
+    .mobile-header {position:fixed;top:0;width:100%;z-index:999;padding-top: 10px;padding-bottom:10px;background-color:#fff;border-bottom:1px solid #dadada;}
+    .mobile-header-logo {width:70px;margin: 0 auto}
+    .mobile-header a {color: #ED145B}
+    .mobile-header a:hover {color: #ED145B}
+    .home-slider {height:380px;padding-top: 15px}
+    .home-search {width: 100%;padding: 15px}
+    .home-search input {padding: 25px;font-size:1em}
+    .home-search-text {padding:10px}
+    .home-slider-title {font-size: 2em}
+    .btn-home-search {font-size:1em;padding: 15px !important}
+    .btn-home-search:hover {color:#fff !important;background-color: #BC1552}
+    .home-featured-container {}
+    .home-featured-wrapper {text-align:center}
+    .home-featured-item {margin-top:30px}
+    .home-featured-quote {text-align:center}
+}
